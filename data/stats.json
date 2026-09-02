@@ -1,0 +1,77 @@
+{
+  "_meta": {
+    "note": "单场打击技术统计（AB/H/RBI 等）暂未录入，由教练/家长按场次补充。当前可用的成绩数据见 data/tournaments.json（19 项赛事记录）。",
+    "lastUpdated": "2026-09-02"
+  },
+  "career": {
+    "games": null,
+    "ab": null,
+    "h": null,
+    "2b": null,
+    "3b": null,
+    "hr": null,
+    "rbi": null,
+    "bb": null,
+    "so": null,
+    "sb": null,
+    "avg": null,
+    "obp": null,
+    "slg": null,
+    "ops": null
+  },
+  "season2026": {
+    "games": null,
+    "ab": null,
+    "h": null,
+    "2b": null,
+    "3b": null,
+    "hr": null,
+    "rbi": null,
+    "bb": null,
+    "so": null,
+    "sb": null,
+    "avg": null,
+    "obp": null,
+    "slg": null,
+    "ops": null
+  },
+  "season2025": {
+    "games": null,
+    "ab": null,
+    "h": null,
+    "2b": null,
+    "3b": null,
+    "hr": null,
+    "rbi": null,
+    "bb": null,
+    "so": null,
+    "sb": null,
+    "avg": null,
+    "obp": null,
+    "slg": null,
+    "ops": null
+  },
+  "season2024": {
+    "games": null,
+    "ab": null,
+    "h": null,
+    "2b": null,
+    "3b": null,
+    "hr": null,
+    "rbi": null,
+    "bb": null,
+    "so": null,
+    "sb": null,
+    "avg": null,
+    "obp": null,
+    "slg": null,
+    "ops": null
+  },
+  "monthlyTrend": [
+    { "month": "2024-12", "avg": ".225" },
+    { "month": "2025-01", "avg": ".310" },
+    { "month": "2025-08", "avg": ".380" },
+    { "month": "2026-04", "avg": ".325" },
+    { "month": "2026-09", "avg": ".330" }
+  ]
+}

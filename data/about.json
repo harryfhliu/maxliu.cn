@@ -1,0 +1,26 @@
+{
+  "timeline": [
+    { "year": "2026", "title": "六年级 · 关键一年", "desc": "代表蒲公英棒球联盟斩获 MLB CUP 西安站 U12 冠军；代表光照俱乐部获陕西省总决赛 U12 季军；备战小升初体育特长申请", "highlight": true },
+    { "year": "2025.8", "title": "全国锦标赛 · 最高国家级荣誉", "desc": "代表蒲公英棒球联盟红队参加棒球全国锦标赛 U10 组比赛，获得冠军组第六名——这是目前获得的最高国家级荣誉", "highlight": true },
+    { "year": "2025.1", "title": "首次全国赛事 · 立下目标", "desc": "参加 PONY 全国总决赛 9U 比赛，第一次参加全国赛事，从此定下成为棒球选手的目标", "highlight": true },
+    { "year": "2024.11", "title": "加入蒲公英棒球联盟", "desc": "加入蒲公英棒球联盟（西安），开始有机会外出参加全国性比赛", "highlight": false },
+    { "year": "2021.9", "title": "一年级 · 初识棒球", "desc": "小学一年级参加棒球社团第一次接触棒球，同年加入光照棒垒球俱乐部——这是 Max 棒球梦的起点", "highlight": true },
+    { "year": "2015.8", "title": "出生", "desc": "一个普通却特别的日子，Max 来到了这个世界", "highlight": false }
+  ],
+  "honors": [
+    { "title": "MLB CUP 春季公开赛西安站 U12 - 冠军", "desc": "蒲公英棒球联盟", "year": "2026.6", "icon": "🥇" },
+    { "title": "全国棒球锦标赛 U10 冠军组 - 第六名", "desc": "蒲公英棒球联盟红队 · 最高国家级荣誉", "year": "2025.8", "icon": "🏅" },
+    { "title": "重庆市青少年棒垒球比赛 U10 - 冠军", "desc": "蒲公英棒球联盟 · 首冠", "year": "2024.11", "icon": "🥇" },
+    { "title": "中国青少年棒球公开赛成都赛区 U10 - 亚军", "desc": "蒲公英棒球联盟", "year": "2025.5", "icon": "🥈" },
+    { "title": "陕西省总决赛 U12 - 季军", "desc": "光照俱乐部", "year": "2026.7", "icon": "🥉" },
+    { "title": "MLB CUP 春季合作赛成都站 U10 冠军组 - 季军", "desc": "蒲公英棒球联盟", "year": "2025.3", "icon": "🥉" },
+    { "title": "MLB CUP 春季公开赛西安站 U10 - 季军", "desc": "光照俱乐部", "year": "2026.6", "icon": "🥉" }
+  ],
+  "skills": [
+    { "name": "打击 (Batting)", "level": 85, "color": "#FF6B35" },
+    { "name": "守备 (Fielding)", "level": 78, "color": "#00D4AA" },
+    { "name": "跑垒 (Baserunning)", "level": 72, "color": "#818CF8" },
+    { "name": "球商 (Game IQ)", "level": 80, "color": "#F472B6" },
+    { "name": "领导力 (Leadership)", "level": 70, "color": "#FBBF24" }
+  ]
+}

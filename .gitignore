@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+dist/
+
+# Build outputs
+.astro/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.production
+
+# Temporary
+*.tmp
+*.log
+
+# Local tool data (not for public repo)
+.codebuddy/
+.workbuddy/

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "game-2025-08-06-shanghai-juxing",
+    "date": "2025-08-06",
+    "league": "2025全国青少年棒球锦标赛",
+    "round": "U10俱乐部组",
+    "opponent": "上海巨星棒球俱乐部",
+    "result": "win",
+    "score": "13:5",
+    "position": "LF-RF",
+    "stats": { "ab": 2, "h": 2, "2b": 0, "3b": 0, "hr": 0, "rbi": 1, "r": 2, "bb": 0, "so": 0, "sb": 2 },
+    "highlight": "单场2安打2得分1打点，2次盗垒，贡献关键2出局打点",
+    "tags": ["全国锦标赛", "高光时刻"],
+    "featured": true
+  },
+  {
+    "id": "game-2025-08-05-youshi",
+    "date": "2025-08-05",
+    "league": "2025全国青少年棒球锦标赛",
+    "round": "U10俱乐部组",
+    "opponent": "优势联盟棒球学院好奇人队",
+    "result": "win",
+    "score": "3:0",
+    "position": "PH",
+    "stats": { "ab": 1, "h": 0, "2b": 0, "3b": 0, "hr": 0, "rbi": 0, "r": 0, "bb": 0, "so": 1 },
+    "highlight": "代打出场，积极挥棒",
+    "tags": ["全国锦标赛"],
+    "featured": false
+  },
+  {
+    "id": "game-2025-08-02-cq-kuda",
+    "date": "2025-08-02",
+    "league": "2025全国青少年棒球锦标赛",
+    "round": "U10俱乐部组",
+    "opponent": "重庆酷达明日之星",
+    "result": "win",
+    "score": "12:3",
+    "position": "LF",
+    "stats": { "ab": 0, "h": 0, "2b": 0, "3b": 0, "hr": 0, "rbi": 0, "r": 1, "bb": 1, "so": 0 },
+    "highlight": "先发左外野，选球保送后回本垒得分",
+    "tags": ["全国锦标赛", "先发"],
+    "featured": false
+  }
+]

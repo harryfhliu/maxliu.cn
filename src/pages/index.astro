@@ -1,0 +1,516 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import tournamentsData from '../../data/tournaments.json';
+
+interface Tournament {
+  id: string;
+  date: string;
+  year: number;
+  place: number | null;
+  status: 'completed' | 'upcoming';
+}
+
+const tournaments = tournamentsData as Tournament[];
+const completed = tournaments.filter(t => t.status === 'completed');
+const totalTournaments = completed.length;
+const champions = completed.filter(t => t.place === 1).length;
+const topThree = completed.filter(t => t.place !== null && t.place <= 3).length;
+const podiumRate = totalTournaments > 0 ? Math.round((topThree / totalTournaments) * 100) : 0;
+---
+
+<BaseLayout title="Max Liu | 棒球少年 · 成长记录">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__grid"></div>
+    </div>
+    <div class="container hero__content">
+      <div class="hero__badge animate-fade-in">
+        <span>⚾</span> 棒球 · 写作 · 成长
+      </div>
+      <h1 class="hero__title animate-fade-in animate-delay-1">
+        Hi，我是<br />
+        <span class="gradient-text">Max Liu</span>
+      </h1>
+      <p class="hero__subtitle animate-fade-in animate-delay-2">
+        一名热爱棒球的六年级学生<br />
+        用汗水书写成长，用文字记录生活
+      </p>
+      <div class="hero__actions animate-fade-in animate-delay-3">
+        <a href="/baseball/" class="btn btn--primary">探索棒球之旅 →</a>
+        <a href="/about/" class="btn btn--outline">了解更多</a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="hero__stats animate-fade-in animate-delay-4">
+        <div class="stat">
+          <span class="stat__number" data-target={totalTournaments}>0</span>
+          <span class="stat__label">参赛赛事</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat__number" data-target={champions}>0</span>
+          <span class="stat__label">冠军 🥇</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat__number" data-target={podiumRate}>0</span>
+          <span class="stat__label">前三率 %</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Navigation Cards -->
+  <section class="section sections-grid">
+    <div class="container">
+      <h2 class="section__title text-center">探索 Max 的世界</h2>
+      <p class="section__subtitle text-center">从棒球场到书桌前，每一个精彩瞬间都值得被记录</p>
+
+      <div class="sections-grid__cards">
+        <a href="/baseball/" class="section-card section-card--baseball">
+          <div class="section-card__icon">⚾</div>
+          <h3 class="section-card__title">训练与比赛</h3>
+          <p class="section-card__desc">比赛记录、数据统计、训练日志、成长轨迹</p>
+          <span class="section-card__arrow">→</span>
+          <div class="section-card__glow"></div>
+        </a>
+
+        <a href="/academic/" class="section-card section-card--academic">
+          <div class="section-card__icon">🔬</div>
+          <h3 class="section-card__title">棒球学术圈</h3>
+          <p class="section-card__desc">文献研读、损伤预防、训练科学——家长的研究笔记</p>
+          <span class="section-card__arrow">→</span>
+          <div class="section-card__glow"></div>
+        </a>
+
+        <a href="/writing/" class="section-card section-card--writing">
+          <div class="section-card__icon">✍️</div>
+          <h3 class="section-card__title">文学创作</h3>
+          <p class="section-card__desc">作文、诗歌、读后感——笔尖下的思考与想象</p>
+          <span class="section-card__arrow">→</span>
+          <div class="section-card__glow"></div>
+        </a>
+
+        <a href="/life/" class="section-card section-card--life">
+          <div class="section-card__icon">📷</div>
+          <h3 class="section-card__title">生活记录</h3>
+          <p class="section-card__desc">旅行、爱好、日常点滴——多彩童年时光</p>
+          <span class="section-card__arrow">→</span>
+          <div class="section-card__glow"></div>
+        </a>
+
+        <a href="/about/" class="section-card section-card--about">
+          <div class="section-card__icon">👦</div>
+          <h3 class="section-card__title">关于 Max</h3>
+          <p class="section-card__desc">个人简介、成长时间线、荣誉墙</p>
+          <span class="section-card__arrow">→</span>
+          <div class="section-card__glow"></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Updates Preview -->
+  <section class="section latest-section">
+    <div class="container">
+      <div class="latest-header">
+        <h2 class="section__title">最新动态</h2>
+        <a href="/baseball/" class="view-all">查看全部 →</a>
+      </div>
+      <div class="latest-grid">
+        <article class="update-card update-card--featured">
+          <div class="update-card__tag tag">棒球赛事</div>
+          <h3 class="update-card__title">MLB CUP 春季公开赛西安站 U12 - 冠军 🥇</h3>
+          <p class="update-card__excerpt">代表蒲公英棒球联盟出战，Max 与队友们在西安站 U12 组别中一路过关斩将夺得冠军。</p>
+          <div class="update-card__meta">
+            <time datetime="2026-06">2026年6月</time>
+            <span class="tag tag--accent">省级赛事</span>
+          </div>
+        </article>
+        <article class="update-card">
+          <div class="update-card__tag tag">棒球赛事</div>
+          <h3 class="update-card__title">陕西省总决赛 U12 - 季军 🥉</h3>
+          <p class="update-card__excerpt">代表光照俱乐部出战2026陕西省中小学生棒垒球联赛总决赛，获得 U12 组季军。</p>
+          <time datetime="2026-07">2026年7月</time>
+        </article>
+        <article class="update-card">
+          <div class="update-card__tag tag tag--accent">文学创作</div>
+          <h3 class="update-card__title">《我的棒球梦》- 获奖作文</h3>
+          <p class="update-card__excerpt">荣获校级作文比赛一等奖，记录了三年棒球之路。</p>
+          <time datetime="2026-08">2026年8月</time>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: calc(100dvh - var(--header-height));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: var(--space-3xl) 0;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+  }
+
+  .hero__orb--1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-primary);
+    top: -10%;
+    right: -5%;
+  }
+
+  .hero__orb--2 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-accent);
+    bottom: -10%;
+    left: -5%;
+  }
+
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(255, 107, 53, 0.12);
+    border: 1px solid rgba(255, 107, 53, 0.25);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero__title {
+    font-size: var(--text-hero);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: var(--space-lg);
+    letter-spacing: -0.03em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #FFB347 50%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--space-2xl);
+    line-height: 1.8;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3xl);
+  }
+
+  /* Stats Row */
+  .hero__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xl);
+    padding: var(--space-xl) var(--space-2xl);
+    background: rgba(22, 33, 62, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat__number {
+    display: block;
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat__label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--space-xs);
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--color-border);
+  }
+
+  /* Section Grid Cards */
+  .text-center { text-align: center; }
+
+  .sections-grid__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .section-card {
+    position: relative;
+    display: block;
+    padding: var(--space-2xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .section-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-border-hover);
+  }
+
+  .section-card__icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .section-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-card__desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .section-card__arrow {
+    font-size: var(--text-lg);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .section-card__glow {
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    pointer-events: none;
+  }
+
+  .section-card:hover .section-card__glow {
+    opacity: 1;
+  }
+
+  .section-card--baseball .section-card__glow { background: radial-gradient(circle, rgba(255,107,53,0.15), transparent 70%); }
+  .section-card--academic .section-card__glow { background: radial-gradient(circle, rgba(41,128,185,0.15), transparent 70%); }
+  .section-card--writing .section-card__glow { background: radial-gradient(circle, rgba(0,212,170,0.15), transparent 70%); }
+  .section-card--life .section-card__glow { background: radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%); }
+  .section-card--about .section-card__glow { background: radial-gradient(circle, rgba(236,72,153,0.15), transparent 70%); }
+
+  /* Latest Updates */
+  .latest-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+  }
+
+  .view-all {
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .view-all:hover { color: var(--color-accent); }
+
+  .latest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--space-lg);
+  }
+
+  .update-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all var(--transition-base);
+  }
+
+  .update-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .update-card--featured {
+    grid-row: span 2;
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255,107,53,0.08) 100%);
+  }
+
+  .update-card__tag {
+    margin-bottom: var(--space-sm);
+  }
+
+  .update-card__title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+  }
+
+  .update-card--featured .update-card__title {
+    font-size: var(--text-2xl);
+  }
+
+  .update-card__excerpt {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+  }
+
+  .update-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .update-card__meta time,
+  .update-card time {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+  }
+
+  @media (max-width: 768px) {
+    .hero__stats {
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .stat-divider {
+      width: 60px;
+      height: 1px;
+    }
+
+    .latest-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .update-card--featured {
+      grid-row: span 1;
+    }
+
+    .sections-grid__cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Animate stats on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const statNumbers = entry.target.querySelectorAll('.stat__number');
+        statNumbers.forEach(el => {
+          const target = el.dataset.target;
+          if (target.includes('.')) {
+            animateFloat(el, parseFloat(target));
+          } else {
+            animateCount(el, parseInt(target));
+          }
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsEl = document.querySelector('.hero__stats');
+  if (statsEl) observer.observe(statsEl);
+
+  function animateCount(el: Element, target: number) {
+    const htmlEl = el as HTMLElement;
+    let current = 0;
+    const step = target / 40;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        htmlEl.textContent = target.toLocaleString();
+        clearInterval(timer);
+      } else {
+        htmlEl.textContent = Math.floor(current).toLocaleString();
+      }
+    }, 30);
+  }
+
+  function animateFloat(el: Element, target: number) {
+    const htmlEl = el as HTMLElement;
+    let current = 0;
+    const step = target / 40;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        htmlEl.textContent = target.toFixed(3);
+        clearInterval(timer);
+      } else {
+        htmlEl.textContent = current.toFixed(3);
+      }
+    }, 30);
+  }
+</script>

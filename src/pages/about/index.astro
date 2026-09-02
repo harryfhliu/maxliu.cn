@@ -1,0 +1,384 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import aboutData from '../../../data/about.json';
+
+const timeline = aboutData.timeline;
+const honors = aboutData.honors;
+const skills = aboutData.skills;
+---
+
+<BaseLayout title="关于 Max | Max Liu" description="了解Max - 棒球少年、小作家、不断成长的六年级学生">
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-profile">
+        <div class="avatar-wrapper">
+          <div class="avatar">
+            <img src="/images/avatar/max.jpg" alt="Max Liu" class="avatar__img" />
+            <div class="avatar__ring"></div>
+          </div>
+        </div>
+        <div class="about-info">
+          <h1 class="about-name">Liu <span class="highlight">Max</span></h1>
+          <p class="about-tagline">棒球少年 · 小作家 · 追梦人</p>
+          <p class="about-bio">
+            我是Max，一名六年级的学生，也是一名热爱棒球的运动员。
+            从一年级第一次拿起球棒到现在，棒球已经成为我生活中不可或缺的一部分。
+            除了在球场上挥洒汗水，我也喜欢用文字记录生活和思考。
+            欢迎来到我的个人网站！
+          </p>
+          <div class="about-quick-stats">
+            <div><strong>11岁</strong><span>年龄</span></div>
+            <div><strong>六年级</strong><span>年级</span></div>
+            <div><strong>投手·二垒·一垒</strong><span>位置</span></div>
+            <div><strong>5年+</strong><span>球龄</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Radar -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">⚡ 能力雷达</h2>
+      <p class="section__subtitle">棒球技能自我评估（持续更新）</p>
+
+      <div class="skills-list card">
+        {skills.map(skill => (
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">{skill.name}</span>
+              <span class="skill-value" style={`color: ${skill.color}`}>{skill.level}%</span>
+            </div>
+            <div class="skill-bar">
+              <div
+                class="skill-fill"
+                style={`width: ${skill.level}%; background: linear-gradient(90deg, ${skill.color}, ${skill.color}88)`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <h2 class="section__title">🕐 成长时间线</h2>
+
+      <div class="timeline">
+        {timeline.map((item, i) => (
+          <div class={`timeline-item ${item.highlight ? 'timeline-item--highlight' : ''}`}>
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              {i < timeline.length - 1 && <div class="timeline-line"></div>}
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-year">{item.year}</span>
+              <h3 class="timeline-title">{item.title}</h3>
+              <p class="timeline-desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Honor Wall -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">🏆 荣誉墙</h2>
+      <p class="section__subtitle">每一个奖项，都是努力的见证</p>
+
+      <div class="honors-grid">
+        {honors.map(honor => (
+          <div class="honor-card card">
+            <span class="honor-icon">{honor.icon}</span>
+            <h3 class="honor-title">{honor.title}</h3>
+            <p class="honor-desc">{honor.desc}</p>
+            <span class="honor-year">{honor.year}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* About Hero */
+  .about-hero {
+    padding: var(--space-3xl) 0;
+    background: linear-gradient(135deg, rgba(236,72,153,0.06) 0%, rgba(255,107,53,0.06) 50%, transparent 100%);
+  }
+
+  .about-profile {
+    display: flex;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  .avatar-wrapper {
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-bg-card), var(--color-surface));
+    border: 3px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar__ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 107, 53, 0.3);
+    animation: spin 20s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .about-info {
+    flex: 1;
+  }
+
+  .about-name {
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  .about-name .highlight {
+    color: var(--color-primary);
+  }
+
+  .about-tagline {
+    font-size: var(--text-lg);
+    color: var(--color-primary);
+    margin: var(--space-sm) 0 var(--space-md);
+    font-weight: 500;
+  }
+
+  .about-bio {
+    color: var(--text-secondary);
+  line-height: 1.8;
+    max-width: 550px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .about-quick-stats {
+    display: flex;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .about-quick-stats div {
+    text-align: center;
+  }
+
+  .about-quick-stats strong {
+    display: block;
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+  }
+
+  .about-quick-stats span {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* Skills */
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+  }
+
+  .skill-item {
+    width: 100%;
+  }
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+  }
+
+  .skill-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .skill-value {
+    font-weight: 700;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .skill-bar {
+    height: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 1s ease;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: var(--space-lg);
+    position: relative;
+  }
+
+  .timeline-item:not(:last-child) {
+    margin-bottom: var(--space-xl);
+  }
+
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  .timeline-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-bg-card);
+    border: 3px solid var(--color-primary);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .timeline-item--highlight .timeline-dot {
+    background: var(--color-primary);
+    box-shadow: 0 0 12px rgba(255, 107, 53, 0.5);
+  }
+
+  .timeline-line {
+    flex: 1;
+    width: 2px;
+    background: var(--color-border);
+    min-height: 40px;
+  }
+
+  .timeline-content {
+    padding-bottom: var(--space-md);
+  }
+
+  .timeline-year {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-primary);
+    background: rgba(255, 107, 53, 0.12);
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .timeline-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline-desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  /* Honors */
+  .honors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .honor-card {
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .honor-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .honor-title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .honor-desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .honor-year {
+    font-size: var(--text-xs);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .about-profile {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .about-bio {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-quick-stats {
+      justify-content: center;
+    }
+
+    .honors-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .honors-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

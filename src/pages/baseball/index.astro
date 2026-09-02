@@ -1,0 +1,922 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import tournamentsData from '../../../data/tournaments.json';
+import gamesData from '../../../data/games.json';
+import trainingsData from '../../../data/trainings.json';
+import statsData from '../../../data/stats.json';
+
+interface Tournament {
+  id: string;
+  date: string;
+  year: number;
+  month: number;
+  location: string;
+  name: string;
+  category: string | null;
+  team: string;
+  result: string;
+  place: number | null;
+  status: 'completed' | 'upcoming';
+  level: string;
+  note?: string;
+}
+
+const tournaments = tournamentsData as Tournament[];
+
+// 按日期倒序，已完成在前；即将开始的赛事单独放最后
+const sortedTournaments = [...tournaments].sort((a, b) => {
+  if (a.status !== b.status) {
+    return a.status === 'completed' ? -1 : 1;
+  }
+  return b.date.localeCompare(a.date);
+});
+
+const completedTournaments = sortedTournaments.filter(t => t.status === 'completed');
+const upcomingTournaments = sortedTournaments.filter(t => t.status === 'upcoming');
+
+// 派生汇总统计
+const summary = {
+  total: tournaments.length,
+  completed: completedTournaments.length,
+  upcoming: upcomingTournaments.length,
+  champion: completedTournaments.filter(t => t.place === 1).length,
+  runnerUp: completedTournaments.filter(t => t.place === 2).length,
+  thirdPlace: completedTournaments.filter(t => t.place === 3).length,
+};
+
+// 名次徽标辅助函数
+const placeBadge = (place: number | null, status: string) => {
+  if (status === 'upcoming') return { icon: '🗓️', cls: 't-badge--upcoming', label: '即将参赛' };
+  if (place === null) return { icon: '🎯', cls: 't-badge--group', label: '小组赛' };
+  if (place === 1) return { icon: '🥇', cls: 't-badge--gold', label: '冠军' };
+  if (place === 2) return { icon: '🥈', cls: 't-badge--silver', label: '亚军' };
+  if (place === 3) return { icon: '🥉', cls: 't-badge--bronze', label: '季军' };
+  if (place <= 8) return { icon: '🏅', cls: 't-badge--top8', label: `第${place}名` };
+  return { icon: '📋', cls: 't-badge--plain', label: `第${place}名` };
+};
+
+const formatDate = (date: string) => {
+  const [y, m] = date.split('-');
+  return { y, m: `${parseInt(m)}月` };
+};
+
+// 比赛记录数据（单场比赛技术统计 - 从 data/games.json 统一读取）
+const positionMap: Record<string, string> = {
+  SS: '游击手(SS)', '2B': '二垒手(2B)', '3B': '三垒手(3B)',
+  '1B': '一垒手(1B)', OF: '外野手(OF)', C: '捕手(C)', P: '投手(P)',
+  LF: '左外野(LF)', RF: '右外野(RF)', PH: '代打(PH)',
+  'LF-RF': '左外野·右外野(LF-RF)',
+};
+
+const games = (gamesData as Array<Record<string, any>>).map(g => ({
+  id: g.id,
+  date: g.date,
+  title: `${g.league} - ${g.round}`,
+  opponent: g.opponent,
+  result: g.result === 'win' ? `胜 ${g.score}` : `负 ${g.score}`,
+  position: positionMap[g.position] || g.position,
+  stats: g.stats,
+  highlight: g.highlight,
+  tags: g.tags,
+  featured: g.featured,
+}));
+
+// 训练日志（从 data/trainings.json 统一读取）
+const trainings = trainingsData;
+
+// 成长曲线数据（月度打击率趋势）
+const trend = (statsData as any).monthlyTrend || [];
+const chart = {
+  x0: 50, x1: 580,
+  y0: 20, y1: 200, // y0 对应 .400，y1 对应 .200
+};
+
+const trendPoints = trend.map((p: any, i: number) => {
+  const avg = parseFloat(p.avg);
+  const x = chart.x0 + (i / Math.max(trend.length - 1, 1)) * (chart.x1 - chart.x0);
+  const y = chart.y1 - ((avg - 0.2) / (0.4 - 0.2)) * (chart.y1 - chart.y0);
+  const [yy, mm] = p.month.split('-');
+  const label = `${yy.slice(2)}.${parseInt(mm)}`;
+  return { month: p.month, avg, x: Math.round(x), y: Math.round(y), label };
+});
+
+const polylinePoints = trendPoints.map(p => `${p.x},${p.y}`).join(' ');
+const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${chart.y1}`;
+---
+
+<BaseLayout title="训练与比赛 | Max Liu" description="Max的棒球比赛记录、数据统计、训练日志和成长轨迹">
+  <!-- Page Hero -->
+  <section class="page-hero page-hero--baseball">
+    <div class="container">
+      <div class="page-hero__badge">⚾ BASEBALL</div>
+      <h1 class="page-hero__title">训练与比赛</h1>
+      <p class="page-hero__desc">每一场比赛，每一次挥棒，都是成长的见证</p>
+    </div>
+  </section>
+
+  <!-- Tournament Honors (真实赛事记录) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">📜 参赛荣誉</h2>
+      <p class="section__subtitle">完整赛事记录，按时间倒序，共 {summary.total} 项</p>
+
+      <div class="t-list">
+        {sortedTournaments.map((t) => {
+          const badge = placeBadge(t.place, t.status);
+          const d = formatDate(t.date);
+          return (
+            <article class={`t-item t-item--${t.status} ${t.place === 1 ? 't-item--champion' : ''}`}>
+              <div class="t-item__left">
+                <div class="t-item__date">
+                  <span class="t-item__year">{d.y}</span>
+                  <span class="t-item__month">{d.m}</span>
+                </div>
+                <span class={`t-badge ${badge.cls}`} title={badge.label}>
+                  <span class="t-badge__icon">{badge.icon}</span>
+                  <span class="t-badge__label">{t.status === 'upcoming' ? '待定' : (t.place ? `第${t.place}名` : '小组赛')}</span>
+                </span>
+              </div>
+              <div class="t-item__main">
+                <h3 class="t-item__title">{t.name}</h3>
+                <p class="t-item__meta">
+                  <span>📍 {t.location}</span>
+                  {t.category && <span> · {t.category}</span>}
+                  <span> · <span class={`level-tag level-tag--${t.level === '国家级' ? 'national' : 'provincial'}`}>{t.level}</span></span>
+                </p>
+                {t.note && <p class="t-item__note">⚠️ {t.note}</p>}
+              </div>
+              <div class="t-item__right">
+                <span class="t-item__team">{t.team}</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tournament Achievements Dashboard (真实数据) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">🏆 赛事成就</h2>
+      <p class="section__subtitle">基于 {summary.completed} 项已完赛事的真实记录</p>
+
+      <div class="stats-dashboard">
+        <!-- 核心荣誉数据 -->
+        <div class="stats-card stats-card--primary">
+          <div class="stats-card__header">
+            <span>🏆 核心荣誉</span>
+            <span class="tag tag--accent">真实数据</span>
+          </div>
+          <div class="stats-triple">
+            <div class="stat-big">
+              <span class="stat-big__value">{summary.completed}</span>
+              <span class="stat-big__label">参赛总次数</span>
+            </div>
+            <div class="stat-big">
+              <span class="stat-big__value" style="color:#FFD700">{summary.champion}</span>
+              <span class="stat-big__label">冠军 🥇</span>
+            </div>
+            <div class="stat-big">
+              <span class="stat-big__value" style="color:#CD7F32">{summary.thirdPlace}</span>
+              <span class="stat-big__label">季军 🥉</span>
+            </div>
+          </div>
+          <div class="ops-bar">
+            <span class="ops-label">参赛时间跨度</span>
+            <span class="ops-value">2024.7 - 至今</span>
+            <div class="ops-track">
+              <div class="ops-fill" style="width: 95%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 详细数据网格 -->
+        <div class="stats-grid">
+          <div class="stat-item"><span class="stat-item__num">{summary.champion}</span><span class="stat-item__label">冠军</span></div>
+          <div class="stat-item"><span class="stat-item__num">{summary.runnerUp}</span><span class="stat-item__label">亚军</span></div>
+          <div class="stat-item"><span class="stat-item__num">{summary.thirdPlace}</span><span class="stat-item__label">季军</span></div>
+          <div class="stat-item"><span class="stat-item__num">9</span><span class="stat-item__label">前八（4-8名）</span></div>
+          <div class="stat-item"><span class="stat-item__num">4</span><span class="stat-item__label">合作球队</span></div>
+          <div class="stat-item stat-item--highlight"><span class="stat-item__num">7</span><span class="stat-item__label">参赛城市</span></div>
+          <div class="stat-item"><span class="stat-item__num">3</span><span class="stat-item__label">国家级赛事</span></div>
+          <div class="stat-item"><span class="stat-item__num">15</span><span class="stat-item__label">省级赛事</span></div>
+          <div class="stat-item"><span class="stat-item__num">6</span><span class="stat-item__label">前三总数</span></div>
+          <div class="stat-item"><span class="stat-item__num">{summary.upcoming}</span><span class="stat-item__label">即将参赛</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game Records -->
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section__title">📋 比赛记录（单场）</h2>
+        <p>2025全国青少年棒球锦标赛 U10俱乐部组 · 个人单场表现</p>
+      </div>
+
+      <div class="games-list">
+        {games.map((game) => (
+          <article class={`game-card ${game.featured ? 'game-card--featured' : ''}`}>
+            <div class="game-card__left">
+              <time class="game-card__date" datetime={game.date}>
+                {new Date(game.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}
+              </time>
+              <span class={`game-card__result ${game.result.startsWith('胜') ? 'win' : 'loss'}`}>
+                {game.result}
+              </span>
+            </div>
+            <div class="game-card__main">
+              <h3 class="game-card__title">{game.title}</h3>
+              <p class="game-card__opponent">vs {game.opponent} · {game.position}</p>
+              <p class="game-card__highlight">💡 {game.highlight}</p>
+              <div class="game-card__tags">
+                {game.tags.map(tag => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+            <div class="game-card__stats">
+              <div class="game-stats-row">
+                <span class="gs-label">AB</span><span class="gs-value">{game.stats.ab}</span>
+                <span class="gs-label">H</span><span class="gs-value">{game.stats.h}</span>
+                <span class="gs-label">RBI</span><span class="gs-value">{game.stats.rbi}</span>
+                <span class="gs-label">BB</span><span class="gs-value">{game.stats.bb}</span>
+                <span class="gs-label">SO</span><span class="gs-value">{game.stats.so}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Log -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">🏋️ 训练日志<span class="placeholder-badge">⚠️ 待补充</span></h2>
+      <p class="section__subtitle">最近的训练记录与心得 · 持续记录中</p>
+
+      <div class="training-list">
+        {trainings.map((t) => (
+          <div class="training-item">
+            <div class="training-item__date">
+              <time datetime={t.date}>{new Date(t.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}</time>
+            </div>
+            <div class="training-item__type">
+              <span class={`tag ${t.type === '打击训练' ? '' : t.type === '守备训练' ? 'tag--accent' : ''}`}>{t.type}</span>
+              <span class="training-duration">{t.duration}</span>
+            </div>
+            <p class="training-item__content">{t.content}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Growth Chart (真实月度打击率趋势) -->
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <h2 class="section__title">📈 打击率成长曲线</h2>
+      <p class="section__subtitle">月度打击率（AVG）变化趋势</p>
+
+      <div class="chart-placeholder card">
+        <div class="chart-placeholder__visual">
+          <svg viewBox="0 0 600 250" class="growth-chart-svg" role="img" aria-label="打击率成长曲线图">
+            <!-- Grid lines -->
+            <line x1="50" y1="20" x2="50" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="50" y1="200" x2="580" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="50" y1="65" x2="580" y2="65" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+            <line x1="50" y1="110" x2="580" y2="110" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+            <line x1="50" y1="155" x2="580" y2="155" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+
+            <!-- Y-axis labels -->
+            <text x="40" y="25" fill="var(--text-muted)" font-size="11" text-anchor="end">.400</text>
+            <text x="40" y="70" fill="var(--text-muted)" font-size="11" text-anchor="end">.350</text>
+            <text x="40" y="115" fill="var(--text-muted)" font-size="11" text-anchor="end">.300</text>
+            <text x="40" y="160" fill="var(--text-muted)" font-size="11" text-anchor="end">.250</text>
+            <text x="40" y="205" fill="var(--text-muted)" font-size="11" text-anchor="end">.200</text>
+
+            <!-- Area under curve -->
+            <polygon
+              points={areaPoints}
+              fill="url(#chartGradient)"
+              opacity="0.3"
+            />
+
+            <!-- Data line -->
+            <polyline
+              points={polylinePoints}
+              fill="none"
+              stroke="var(--color-primary)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <!-- Data points -->
+            {trendPoints.map((p) => (
+              <circle cx={p.x} cy={p.y} r="5" fill="var(--color-primary)" stroke="var(--color-bg)" stroke-width="2"/>
+            ))}
+
+            <!-- Data point value labels -->
+            {trendPoints.map((p) => (
+              <text x={p.x} y={p.y - 10} fill="var(--text-secondary)" font-size="11" font-weight="700" text-anchor="middle">{p.avg.toFixed(3).slice(1)}</text>
+            ))}
+
+            <!-- X-axis labels -->
+            {trendPoints.map((p) => (
+              <text x={p.x} y="220" fill="var(--text-muted)" font-size="10" text-anchor="middle">{p.label}</text>
+            ))}
+
+            <!-- Gradient definition -->
+            <defs>
+              <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot" style="background: var(--color-primary)"></span> 打击率 AVG 趋势</span>
+          <span class="chart-note">数据来自实际比赛统计</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Stats Dashboard */
+  .stats-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .stats-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+  }
+
+  .stats-card--primary {
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255,107,53,0.05) 100%);
+    border-color: rgba(255, 107, 53, 0.2);
+  }
+
+  .stats-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .stats-triple {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+
+  .stat-big {
+    text-align: center;
+    padding: var(--space-md);
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-md);
+  }
+
+  .stat-big__value {
+    display: block;
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-big__label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-xs);
+  }
+
+  .ops-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ops-label {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .ops-value {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  .ops-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .ops-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: var(--radius-full);
+    transition: width 1s ease;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: var(--space-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .stat-item--highlight {
+    border-color: rgba(255, 107, 53, 0.3);
+    background: rgba(255, 107, 53, 0.05);
+  }
+
+  .stat-item__num {
+    display: block;
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-item__label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  /* Game Cards */
+  .section-header {
+    margin-bottom: var(--space-xl);
+  }
+  .section-header p { color: var(--text-secondary); margin-top: var(--space-sm); }
+
+  .games-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .game-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+
+  .game-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .game-card--featured {
+    border-color: rgba(255, 107, 53, 0.3);
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255,107,53,0.06) 100%);
+  }
+
+  .game-card__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 70px;
+  }
+
+  .game-card__date {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .game-card__result {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+  }
+
+  .game-card__result.win {
+    background: rgba(0, 212, 170, 0.15);
+    color: var(--color-accent);
+  }
+
+  .game-card__result.loss {
+    background: rgba(196, 30, 58, 0.15);
+    color: #E57373;
+  }
+
+  .game-card__title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .game-card__opponent {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .game-card__highlight {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .game-card__tags {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .game-card__stats {
+    min-width: 180px;
+  }
+
+  .game-stats-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 2px 6px;
+    align-items: center;
+    font-size: var(--text-xs);
+  }
+
+  .gs-label { color: var(--text-muted); font-weight: 600; }
+  .gs-value { color: var(--text-primary); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* Training Log */
+  .training-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .training-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: var(--space-md);
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+  }
+
+  .training-item:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .training-item__date {
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 60px;
+    font-size: var(--text-sm);
+  }
+
+  .training-item__type {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 120px;
+  }
+
+  .training-duration {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .training-item__content {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  /* Chart */
+  .chart-placeholder {
+    overflow: hidden;
+  }
+
+  .chart-placeholder__visual {
+    max-width: 100%;
+  }
+
+  .growth-chart-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .chart-legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .chart-note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* Placeholder Badge */
+  .placeholder-badge {
+    display: inline-block;
+    margin-left: var(--space-sm);
+    padding: 2px var(--space-sm);
+    background: rgba(196, 30, 58, 0.15);
+    color: #E57373;
+    border: 1px solid rgba(196, 30, 58, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  /* Tournament List */
+  .t-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .t-item {
+    display: grid;
+    grid-template-columns: 110px 1fr 180px;
+    gap: var(--space-lg);
+    align-items: center;
+    padding: var(--space-lg) var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+
+  .t-item:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .t-item--champion {
+    border-color: rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255, 215, 0, 0.06) 100%);
+  }
+
+  .t-item--upcoming {
+    border-style: dashed;
+    border-color: rgba(0, 212, 170, 0.4);
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(0, 212, 170, 0.04) 100%);
+  }
+
+  .t-item__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .t-item__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .t-item__year {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .t-item__month {
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .t-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .t-badge__icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .t-badge__label {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .t-badge--gold {
+    background: rgba(255, 215, 0, 0.18);
+    color: #FFD700;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+  }
+
+  .t-badge--silver {
+    background: rgba(192, 192, 192, 0.18);
+    color: #E0E0E0;
+    border: 1px solid rgba(192, 192, 192, 0.35);
+  }
+
+  .t-badge--bronze {
+    background: rgba(205, 127, 50, 0.18);
+    color: #CD7F32;
+    border: 1px solid rgba(205, 127, 50, 0.35);
+  }
+
+  .t-badge--top8 {
+    background: rgba(99, 102, 241, 0.18);
+    color: #818CF8;
+    border: 1px solid rgba(99, 102, 241, 0.35);
+  }
+
+  .t-badge--group {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+  }
+
+  .t-badge--upcoming {
+    background: rgba(0, 212, 170, 0.15);
+    color: var(--color-accent);
+    border: 1px dashed rgba(0, 212, 170, 0.4);
+  }
+
+  .t-badge--plain {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+  }
+
+  .t-item__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .t-item__meta {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    align-items: center;
+  }
+
+  .t-item__note {
+    margin-top: var(--space-xs);
+    font-size: var(--text-xs);
+    color: #FFB347;
+    font-style: italic;
+  }
+
+  .t-item__right {
+    text-align: right;
+  }
+
+  .t-item__team {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    background: rgba(255, 107, 53, 0.1);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .level-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .level-tag--national {
+    background: rgba(255, 107, 53, 0.18);
+    color: var(--color-primary);
+  }
+
+  .level-tag--provincial {
+    background: rgba(0, 212, 170, 0.18);
+    color: var(--color-accent);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-triple {
+      grid-template-columns: 1fr;
+    }
+
+    .game-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .game-card__left {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .game-card__stats {
+      min-width: unset;
+    }
+
+    .training-item {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .t-item {
+      grid-template-columns: 80px 1fr;
+      gap: var(--space-md);
+    }
+
+    .t-item__right {
+      grid-column: 2;
+      text-align: left;
+      margin-top: var(--space-xs);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .t-item {
+      grid-template-columns: 1fr;
+      padding: var(--space-md);
+    }
+
+    .t-item__left {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .t-item__date {
+      flex-direction: row;
+      gap: var(--space-xs);
+    }
+  }
+</style>

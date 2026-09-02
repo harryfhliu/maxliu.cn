@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>棒球打击表现的个体特征与技能 — 范围综述研读报告</title>
+<style>
+  :root {
+    --dark: #1a1a2e; --red: #c0392b; --blue: #2980b9; --orange: #d35400;
+    --bg: #fafafa; --card: #fff; --text: #2c3e50; --muted: #7f8c8d;
+    --green: #27ae60; --gold: #b8860b; --purple: #8e44ad;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.85; font-size: 15px;
+  }
+  .container { max-width: 920px; margin:0 auto; padding: 20px; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #2c3e50);
+    color: white; padding: 44px 32px; border-radius: 12px; margin-bottom: 24px; text-align: center;
+  }
+  .hero h1 { font-size: 1.5em; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
+  .hero .meta { font-size: 0.85em; opacity: 0.8; }
+
+  .info-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-bottom:20px; }
+  .info-item { background:var(--card); border-radius:8px; padding:12px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .info-item .lbl { font-size:0.7em; color:var(--muted); }
+  .info-item .val { font-size:1em; font-weight:700; color:var(--dark); }
+
+  .section {
+    background:var(--card); border-radius:10px; padding:24px; margin-bottom:18px;
+    box-shadow:0 1px 6px rgba(0,0,0,0.04); border-left:4px solid var(--blue);
+  }
+  .section h2 { font-size:1.15em; color:var(--dark); margin-bottom:10px; border-bottom:2px solid #eee; padding-bottom:6px; }
+  .section h3 { font-size:1em; color:#34495e; margin:14px 0 6px; }
+  .section ul, .section ol { padding-left:20px; }
+  .section li { margin-bottom:5px; }
+
+  table { width:100%; border-collapse:collapse; font-size:0.8em; margin:10px 0; }
+  th { background:var(--dark); color:white; padding:8px 8px; text-align:left; }
+  td { padding:6px 8px; border-bottom:1px solid #e8e8e8; }
+  tr:nth-child(even) td { background:#f8f9fa; }
+
+  .figure-container { text-align:center; margin:16px 0; }
+  .figure-container img { max-width:100%; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+  .figure-container .caption { font-size:0.75em; color:var(--muted); margin-top:4px; font-style:italic; }
+
+  .callout { padding:12px 16px; border-radius:8px; margin:10px 0; }
+  .callout-green { background:#eafaf1; border:1px solid #27ae60; }
+  .callout-blue { background:#ecf6ff; border:1px solid #2980b9; }
+  .callout-red { background:#fff0f0; border:1px solid #c0392b; }
+  .callout-orange { background:#fef5e7; border:1px solid #d35400; }
+
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.7em; font-weight:600; margin-right:4px; }
+  .tag-green { background:#d5f5e3; color:#27ae60; }
+  .tag-blue { background:#d4e6f1; color:#2980b9; }
+  .tag-red { background:#f9d6d5; color:#c0392b; }
+
+  .footer { text-align:center; padding:20px; color:var(--muted); font-size:0.8em; }
+  @media (max-width:640px) { .container{padding:10px;} .hero{padding:28px 14px;} .section{padding:14px;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>棒球打击表现的个体特征与技能</h1>
+  <div class="meta">Tremblay M, Couëpel B, Abboud J, Descarreaux M</div>
+  <div class="meta"><em>Sports Medicine - Open</em> (2025) · 范围综述 · 22项研究</div>
+  <span class="tag tag-red" style="margin-top:8px;display:inline-block">打击生物力学</span>
+  <span class="tag tag-blue">最新综述</span>
+  <span class="tag tag-green">🟢 开放获取</span>
+</div>
+
+<div class="info-bar">
+  <div class="info-item"><div class="lbl">研究类型</div><div class="val">范围综述</div></div>
+  <div class="info-item"><div class="lbl">检索文献</div><div class="val">1,948 篇</div></div>
+  <div class="info-item"><div class="lbl">最终纳入</div><div class="val">22 篇</div></div>
+  <div class="info-item"><div class="lbl">数据库</div><div class="val">3 个</div></div>
+  <div class="info-item"><div class="lbl">检索截止</div><div class="val">2024.08</div></div>
+  <div class="info-item"><div class="lbl">期刊</div><div class="val">Sports Med-Open</div></div>
+</div>
+
+<!-- 核心摘要 -->
+<div class="section">
+  <h2>📋 核心摘要</h2>
+  <div class="callout callout-red">
+    <strong>研究问题：</strong>棒球打击优异表现的核心个体特征或技能到底是什么？身高体重重要吗？力量重要吗？视觉能力重要吗？
+  </div>
+  <p>这篇2025年发表的范围综述系统检索了 MEDLINE、SPORTDiscus 和 PsycINFO 三大数据库从建库至2024年8月的全部相关文献，最终从 <strong>1,948 篇</strong>中筛选出 <strong>22 项横断面研究</strong>，全面梳理了与棒球打击表现相关的个体特征和技能。</p>
+  <p><strong>核心答案：</strong>更高的身高体重、上肢和下肢肌肉力量、爆发力、速度，以及更好的眼球运动技能、视觉系统特征、预判能力和眼手协调——都与优异的打击表现显著相关。但研究分布极不均衡：体能测试研究占了绝对多数，而感知-认知技能（预判、视觉运动协调）虽然理论上对打击至关重要，研究数量却少得多。</p>
+</div>
+
+<!-- PRISMA流图 -->
+<div class="section">
+  <h2>📊 文献筛选过程 (PRISMA)</h2>
+  <div class="figure-container">
+    <img src="images_batting/prisma_flow.jpeg" alt="PRISMA Flow Diagram">
+    <div class="caption">图1：PRISMA 流程图 — 从1,948篇初始文献到22篇最终纳入</div>
+  </div>
+</div>
+
+<!-- 打击表现指标 -->
+<div class="section">
+  <h2>⚾ 打击表现指标：三类衡量标准</h2>
+  <p>本文最重要的贡献之一是系统梳理了打击表现的<strong>三类衡量指标</strong>，不同研究使用不同的指标来衡量"打得好不好"：</p>
+
+  <h3>📊 比赛统计数据（Game Statistics）— 10项研究使用</h3>
+  <table>
+    <tr><th>指标</th><th>缩写</th><th>使用研究数</th></tr>
+    <tr><td>打击率</td><td>BA</td><td>8</td></tr>
+    <tr><td>长打率</td><td>SLG</td><td>8</td></tr>
+    <tr><td>上垒率</td><td>OBP</td><td>6</td></tr>
+    <tr><td>本垒打</td><td>HR</td><td>4</td></tr>
+    <tr><td>三振</td><td>K</td><td>3</td></tr>
+  </table>
+
+  <h3>📈 高级统计数据（Advanced Statistics）— 5项研究</h3>
+  <p>好球带外追打率 (Chase%)、强击球率 (Hard-Hit%)、好球带接触率 (Z-Contact%) 等 Statcast 风格指标。</p>
+
+  <h3>🔬 击球指标（Hitting Metrics）— 7项研究</h3>
+  <table>
+    <tr><th>指标</th><th>研究数</th><th>为什么重要</th></tr>
+    <tr><td>挥棒速度</td><td>5</td><td>决定击球力量的直接因素</td></tr>
+    <tr><td>球离棒速度</td><td>4</td><td>MLB Statcast 核心追踪指标</td></tr>
+    <tr><td>击球距离</td><td>2</td><td>长打能力的直接体现</td></tr>
+  </table>
+  <div class="callout callout-blue">
+    <strong>💡 方法学启示：</strong>如果你是教练或球探，不能只看打击率。同一个球员可能打击率一般但强击球率和离棒速度顶级——后者可能更能预测未来的打击产出。
+  </div>
+</div>
+
+<!-- 样本分布 -->
+<div class="section">
+  <h2>👥 样本分布：研究偏向了谁？</h2>
+  <table>
+    <tr><th>人群</th><th>研究数</th><th>占比</th></tr>
+    <tr><td>职业（小联盟/MLB）</td><td>10</td><td>45% — 最多</td></tr>
+    <tr><td>大学</td><td>5</td><td>23%</td></tr>
+    <tr><td>高中</td><td>3</td><td>14%</td></tr>
+    <tr><td>青少年</td><td>2</td><td>9%</td></tr>
+    <tr><td>业余</td><td>2</td><td>9%</td></tr>
+    <tr><td style="color:var(--red)"><strong>含女性运动员</strong></td><td style="color:var(--red)"><strong>2</strong></td><td style="color:var(--red)"><strong>9% — 严重不足</strong></td></tr>
+  </table>
+  <div class="callout callout-red">
+    <strong>⚠️ 研究空白：</strong>青少年和女性棒球打击研究极度匮乏。77% 的研究聚焦于成年业余/大学/职业男性球员。
+  </div>
+</div>
+
+<!-- 结果综述图 -->
+<div class="section">
+  <h2>📊 个体特征与打击表现的关联总览</h2>
+  <div class="figure-container">
+    <img src="images_batting/results_figure.jpeg" alt="Results Overview">
+    <div class="caption">图：个体特征/技能类别与打击表现指标的关联概览</div>
+  </div>
+</div>
+
+<!-- 人体测量 -->
+<div class="section">
+  <h2>📏 人体测量指标（8项研究）</h2>
+  <table>
+    <tr><th>指标</th><th>关联发现</th><th>关键证据</th></tr>
+    <tr><td><strong>身高</strong></td><td>✅ 球离棒速度↑、挥棒速度↑、强击球率↑<br>❌ 与打击率/长打率无一致关联</td><td>多研究一致发现身高与击球力量相关，但与传统的安打率无关</td></tr>
+    <tr><td><strong>体重</strong></td><td>✅ 球离棒速度↑、强击球率↑<br>⚠️ 本垒打结果混合</td><td>更重的球员击球更远更快，但不一定更多安打</td></tr>
+    <tr><td><strong>BMI</strong></td><td>✅ 与多项进攻统计正相关（男性）<br>❌ 日本女性职业球员无关联</td><td>可能存在性别和人群差异</td></tr>
+    <tr><td><strong>体脂率</strong></td><td>❌ 与HR/SLG/TB无关联</td><td>仅1项研究</td></tr>
+  </table>
+  <div class="callout callout-green">
+    <strong>🎯 实践启示：</strong>身高体重更多影响的是击球力量（power），而不是击球精准度（contact）。选材时要区分你是要一个大炮还是一个安打机器。
+  </div>
+</div>
+
+<!-- 体能测试 -->
+<div class="section">
+  <h2>💪 体能测试（9项研究）</h2>
+
+  <h3>肌肉力量 — 强相关！</h3>
+  <table>
+    <tr><th>测试</th><th>关联</th></tr>
+    <tr><td><strong>握力</strong></td><td>✅ 与HR/SLG/球离棒速度/强击球率正相关（多研究一致）</td></tr>
+    <tr><td><strong>1-RM卧推</strong></td><td>✅ 绝对值与挥棒速度正相关；相对值无关联</td></tr>
+    <tr><td><strong>1-RM深蹲</strong></td><td>✅ 与BA/OBP正相关</td></tr>
+    <tr><td><strong>背力</strong></td><td>✅ 与球离棒速度正相关</td></tr>
+  </table>
+
+  <h3>爆发力 — 对挥棒速度最直接的影响</h3>
+  <table>
+    <tr><th>测试</th><th>关联</th></tr>
+    <tr><td><strong>后抛药球</strong></td><td>✅ 挥棒速度的预测变量</td></tr>
+    <tr><td><strong>旋转药球投掷</strong></td><td>✅ 与球离棒速度和挥棒速度正相关</td></tr>
+    <tr><td><strong>立定跳远</strong></td><td>✅ 与多项进攻统计和球离棒速度正相关</td></tr>
+    <tr><td><strong>反向纵跳 (CMJ)</strong></td><td>⚠️ 仅日本女性职业球员中发现关联，其他研究未发现</td></tr>
+  </table>
+
+  <h3>速度·柔韧·平衡·协调</h3>
+  <table>
+    <tr><th>测试</th><th>发现</th></tr>
+    <tr><td>冲刺（10码/30码）</td><td>❌ 与打击表现无正向关联（甚至负相关）</td></tr>
+    <tr><td>躯干柔韧性</td><td>✅ 与球离棒速度正相关</td></tr>
+    <tr><td>轴心腿动态平衡 (SEBT)</td><td>✅ 预测挥棒速度（高级组）</td></tr>
+    <tr><td>侧步测试</td><td>✅ 与球离棒速度正相关</td></tr>
+  </table>
+
+  <div class="callout callout-orange">
+    <strong>🏋️ 训练启示：</strong>旋转爆发力（药球投掷）比直线冲刺速度对打击更重要。握力和躯干柔韧性是不可忽视的基础素质。下蹲力量直接与上垒率相关——打击从地面开始发力。
+  </div>
+</div>
+
+<!-- 视觉-知觉-运动技能 -->
+<div class="section">
+  <h2>👁️ 视觉·知觉·视觉运动技能</h2>
+  <p>棒球打击本质上是一个<strong>截击任务 (interceptive task)</strong>——打者必须在不到0.4秒内识别球种、判断轨迹、做出挥棒决策。理论上，感知-认知技能应该至为关键，但相关研究仅有 <strong>4+4+4=12 项研究中的子集</strong>，远少于体能研究。</p>
+
+  <h3>视觉技能关键发现</h3>
+  <table>
+    <tr><th>技能</th><th>关联</th><th>含义</th></tr>
+    <tr><td><strong>眼动追踪指数</strong></td><td>✅ 与安打率正相关</td><td>能更快更准地追踪球的轨迹，打出更多安打</td></tr>
+    <tr><td><strong>平滑追踪准确性</strong></td><td>✅ 预测好球带外挥棒率</td><td>追踪球的能力决定了是否追打坏球</td></tr>
+    <tr><td><strong>对比敏感度</strong></td><td>✅ 预测三振率</td><td>在复杂背景下分辨球的能力与不被三振相关</td></tr>
+    <tr><td><strong>深度知觉</strong></td><td>✅ 预测保送率</td><td>判断球的距离深度与选球能力相关</td></tr>
+    <tr><td><strong>视力清晰度</strong></td><td>❌ 与多项统计无关联</td><td>看得"清楚" ≠ 打得好——这不意外，20/20 视力基本是职业球员标配</td></tr>
+  </table>
+
+  <h3>知觉技能关键发现</h3>
+  <table>
+    <tr><th>技能</th><th>关联</th></tr>
+    <tr><td><strong>预判能力</strong>（时间遮蔽任务）</td><td>✅ 与BA/SLG/OBP/BB正相关；快球提前识别→更多保送</td></tr>
+    <tr><td><strong>视觉识别速度</strong>（速示测试）</td><td>✅ 与打击率正相关</td></tr>
+  </table>
+
+  <h3>视觉运动技能关键发现</h3>
+  <table>
+    <tr><th>技能</th><th>关联</th></tr>
+    <tr><td><strong>手动控制指数</strong></td><td>✅ 与安打率正相关</td></tr>
+    <tr><td><strong>眼手协调</strong></td><td>✅ 预测保送率和三振率</td></tr>
+    <tr><td><strong>反应时间</strong></td><td>✅ 预测保送率</td></tr>
+  </table>
+
+  <div class="callout callout-blue">
+    <strong>🧠 盲区启示：</strong>这是当前打击研究最大的一片空白。22项研究中仅少数覆盖了感知-认知维度，但证据指向非常一致——预判能力、眼动追踪和眼手协调都是打击表现的核心构成。教练和球探系统不应只看体测数据。
+  </div>
+</div>
+
+<!-- 总结 -->
+<div class="section" style="border-left-color: var(--red);">
+  <h2>🔑 核心结论与训练启示</h2>
+
+  <h3>✅ 有强证据支持的因素</h3>
+  <ol>
+    <li><strong>身高体重 → 击球力量</strong>（球离棒速度、强击球率），但与安打率无关</li>
+    <li><strong>握力 → 多项进攻统计</strong>，是最一致的力量预测指标</li>
+    <li><strong>旋转爆发力 → 挥棒速度</strong>，药球投掷训练有直接迁移价值</li>
+    <li><strong>眼动追踪/预判/眼手协调 → 选球和安打能力</strong></li>
+  </ol>
+
+  <h3>⚠️ 需要更多证据的方向</h3>
+  <ul>
+    <li>女性棒球运动员的全部打击表现相关因素（仅2项研究！）</li>
+    <li>青少年发展阶段的打击能力预测因素</li>
+    <li>感知-认知训练的纵向干预效果</li>
+    <li>各项因素在打击表现中的相对权重（哪个最重要？）</li>
+  </ul>
+
+  <h3>🎯 对教练和球探的实践建议</h3>
+  <table>
+    <tr><th>维度</th><th>关注什么</th><th>别只盯着什么</th></tr>
+    <tr><td>体能评估</td><td>握力·旋转爆发力·下蹲力量·躯干柔韧性</td><td>单纯冲刺速度·绝对力量数字</td></tr>
+    <tr><td>视觉评估</td><td>眼动追踪·对比敏感度·深度知觉</td><td>视力清晰度(大家都差不多)</td></tr>
+    <tr><td>认知评估</td><td>预判能力·视觉识别速度·眼手协调</td><td>—（这一块几乎被忽视）</td></tr>
+    <tr><td>训练设计</td><td>平衡体能+感知认知训练</td><td>纯力量训练忽略视觉运动技能</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>研读基于 Tremblay M et al. (2025). What are the Individual Characteristics or Skills Associated with Baseball Batting Performance? A Scoping Review. <em>Sports Medicine - Open</em>, 11:150.</p>
+  <p>编者：於菟子Max爱棒球</p>
+</div>
+
+</div>
+
+<!-- Back link -->
+<div style="text-align:center;padding:20px;background:#e8f5e9;margin-top:30px;border-radius:8px">
+  📥 <strong>论文下载：</strong><a href="pdf/Batting_Performance_Scoping_Review_2025.pdf" style="color:#27ae60;font-weight:bold">Tremblay et al. (2025) — Scoping Review (PDF, 1.6 MB)</a>
+</div>
+<div style="text-align:center;padding:20px;background:#f0f0f0;margin-top:0;margin-bottom:0">
+  <a href="../" style="color:#2980b9;text-decoration:none;font-size:14px">← 返回棒球学术圈首页</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import academicData from '../../../data/academic.json';
+
+interface Report {
+  id: string;
+  title: string;
+  authors: string;
+  meta: string;
+  description: string;
+  link: string;
+  tags: string[];
+  featured: boolean;
+  color: string;
+}
+
+interface Paper {
+  title: string;
+  authors: string;
+  journal: string;
+  citations: string;
+  pdf?: string;
+  external?: string;
+}
+
+const reports = academicData.reports as Report[];
+const papers = academicData.papers as Paper[];
+const stats = academicData.stats;
+const intro = academicData.intro;
+---
+
+<BaseLayout title="棒球学术圈 | Max Liu" description="青少年棒球运动员训练与损伤预防 - 文献研读与分析">
+  <!-- Page Hero -->
+  <section class="page-hero page-hero--academic">
+    <div class="container">
+      <div class="page-hero__badge">🔬 ACADEMIC</div>
+      <h1 class="page-hero__title">棒球学术圈</h1>
+      <p class="page-hero__desc">{academicData.tagline}</p>
+    </div>
+  </section>
+
+  <!-- 简介 -->
+  <section class="section section--intro">
+    <div class="container">
+      <div class="intro-card card">
+        <h2 class="intro-card__title">📖 关于本专栏</h2>
+        {intro.map((p) => <p class="intro-card__text">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 统计 -->
+  <section class="section section--stats">
+    <div class="container">
+      <div class="stat-grid">
+        {stats.map((s) => (
+          <div class="stat-card">
+            <span class="stat-card__n">{s.n}</span>
+            <span class="stat-card__d">{s.d}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 文献研读报告 -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">📄 文献研读报告</h2>
+      <p class="section__subtitle">深度研读笔记 · 将顶级学术论文转化为可应用的训练洞见</p>
+
+      <div class="reports-list">
+        {reports.map((r) => (
+          <a
+            href={r.link}
+            class={`report-card ${r.featured ? 'report-card--featured' : ''}`}
+            style={`border-left-color: ${r.color}`}
+          >
+            <div class="report-card__body">
+              <h3 class="report-card__title">
+                {r.title}
+                {r.featured && <span class="report-card__new">🆕</span>}
+              </h3>
+              <div class="report-card__meta">{r.authors} · {r.meta}</div>
+              <p class="report-card__desc">{r.description}</p>
+              <div class="report-card__tags">
+                {r.tags.map((tag) => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+            <span class="report-card__arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 论文库 -->
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <h2 class="section__title">📚 研读论文库</h2>
+      <p class="section__subtitle">核心文献清单 · 提供原文 PDF 或开放获取链接</p>
+
+      <div class="papers-table card">
+        <table>
+          <thead>
+            <tr>
+              <th>论文</th>
+              <th>作者</th>
+              <th>期刊/年</th>
+              <th>被引</th>
+              <th>全文</th>
+            </tr>
+          </thead>
+          <tbody>
+            {papers.map((p) => (
+              <tr>
+                <td class="papers-table__title">{p.title}</td>
+                <td class="papers-table__authors">{p.authors}</td>
+                <td class="papers-table__journal">{p.journal}</td>
+                <td class="papers-table__citations">{p.citations}</td>
+                <td class="papers-table__link">
+                  {p.pdf && <a href={p.pdf} target="_blank" rel="noopener" title="下载 PDF">📄</a>}
+                  {p.external && <a href={p.external} target="_blank" rel="noopener" title="开放获取链接">🔗</a>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="disclaimer">本站内容仅供学术交流与运动科普使用，原始文献版权归属各出版商及作者。</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Intro */
+  .section--intro {
+    padding-bottom: 0;
+  }
+
+  .intro-card {
+    padding: var(--space-2xl);
+  }
+
+  .intro-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+
+  .intro-card__text {
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Stats */
+  .section--stats {
+    padding-top: var(--space-xl);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl) var(--space-md);
+    text-align: center;
+  }
+
+  .stat-card__n {
+    display: block;
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: #5dade2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-card__d {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  /* Reports */
+  .reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .report-card {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid #2980b9;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-base);
+  }
+
+  .report-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .report-card--featured {
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(192, 57, 43, 0.06) 100%);
+    border-color: rgba(192, 57, 43, 0.3);
+  }
+
+  .report-card__body {
+    flex: 1;
+  }
+
+  .report-card__title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  .report-card__new {
+    margin-left: var(--space-xs);
+    font-size: 0.8em;
+  }
+
+  .report-card__meta {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .report-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+  }
+
+  .report-card__tags {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .report-card__arrow {
+    align-self: center;
+    font-size: var(--text-2xl);
+    color: #5dade2;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Papers Table */
+  .papers-table {
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  .papers-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .papers-table thead th {
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: var(--space-md);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .papers-table tbody td {
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+
+  .papers-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .papers-table__title {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 240px;
+  }
+
+  .papers-table__authors {
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .papers-table__journal {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+
+  .papers-table__citations {
+    color: #5dade2;
+    font-weight: 700;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .papers-table__link {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .papers-table__link a {
+    font-size: var(--text-lg);
+    margin: 0 4px;
+  }
+
+  .disclaimer {
+    margin-top: var(--space-xl);
+    text-align: center;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .report-card {
+      flex-direction: column;
+    }
+
+    .report-card__arrow {
+      align-self: flex-end;
+    }
+
+    .papers-table__authors,
+    .papers-table__journal {
+      display: none;
+    }
+
+    .papers-table__title {
+      min-width: 160px;
+    }
+  }
+</style>

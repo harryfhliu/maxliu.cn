@@ -1,0 +1,161 @@
+{
+  "editor": "於菟子Max爱棒球",
+  "tagline": "青少年棒球运动员训练与损伤预防 — 文献研读与分析",
+  "intro": [
+    "这里汇集了青少年棒球运动员训练和损伤预防领域核心文献的深度研读笔记。研究主题涵盖投球、打击、体能、视觉运动技能等棒球运动的各个方面，每一篇研读都经过仔细阅读、数据提取和整合分析，力求将顶级学术论文的精华转化为教练、家长和球员可实际应用的训练洞见。",
+    "研究范围涵盖投球生物力学、打击表现、损伤流行病学、负荷管理、预防方案五大主题，数据来源包括 AMSSM、ASMI、IOC 等权威机构的立场声明和原创研究。"
+  ],
+  "stats": [
+    { "n": "11 篇", "d": "核心文献研读" },
+    { "n": "6 篇", "d": "深度综述报告" },
+    { "n": "1900+", "d": "总被引量覆盖" },
+    { "n": "⚾", "d": "Pitch Smart 数据溯源" }
+  ],
+  "reports": [
+    {
+      "id": "weighted-ball-training",
+      "title": "加重球训练：球速神器还是伤肘元凶？",
+      "authors": "Okoroha KR et al. (Sports Health 2018) + Fleisig GS et al. (2016) + Hodgins JL et al. (AJSM 2016)",
+      "meta": "总被引 380+ 次 · Level 1 RCT",
+      "description": "基于 ASMI 团队 38 名 13-18 岁投手随机对照试验 (RCT, Level 1 证据)。三个硬核发现：① 6 周加重球球速 +1.0 m/s，但实验组 24% 肘损伤率 vs 对照组 0%；② 隐藏杀手是肩外旋 +4.3°，跨过 UCL 风险红线；③ Hodgins 2016 纽约州 10 年 UCL 重建手术 +193%。包含 9 项家长/教练速查卡和 6 项科学替代方案。",
+      "link": "/academic/papers/Weighted_Ball_Training_2018.html",
+      "tags": ["🆕 第9期", "Level 1 RCT", "青少年禁忌", "速查卡"],
+      "featured": true,
+      "color": "#c0392b"
+    },
+    {
+      "id": "trasolini-biomechanics",
+      "title": "投掷运动员生物力学分析：六个阶段、动力链与重返运动",
+      "authors": "Trasolini NA et al.",
+      "meta": "Arthroscopy Sports Med Rehab 2022 · 被引 67 次",
+      "description": "Wake Forest 骨科团队的专家综述，系统讲解了棒球投掷的六个阶段、动力链核心概念（腿+躯干=51-55%动能来源）、26 项关键表现指标 (KPI)、六大损伤风险因素，以及五步重返运动方案。重点阐明了髋-肩分离、肘内翻扭矩和活动范围异常如何预测损伤。",
+      "link": "/academic/papers/Trasolini_2022_Biomechanics_Throwing.html",
+      "tags": ["投掷生物力学", "动力链", "重返运动"],
+      "featured": false,
+      "color": "#2980b9"
+    },
+    {
+      "id": "batting-scoping-review",
+      "title": "棒球打击表现的个体特征与技能：范围综述",
+      "authors": "Tremblay M et al.",
+      "meta": "Sports Medicine - Open 2025 · 最新综述",
+      "description": "系统检索 1,948 篇文献后纳入 22 项研究的范围综述。全面梳理了与打击表现相关的五类个体特征：人体测量、体能、视觉技能、知觉技能和视觉运动技能。发现握力、旋转爆发力、眼动追踪和预判能力是最一致的预测因素。",
+      "link": "/academic/papers/Batting_Scoping_Review_2025.html",
+      "tags": ["打击研究", "范围综述", "2025新发表"],
+      "featured": false,
+      "color": "#8e44ad"
+    },
+    {
+      "id": "lyman-review",
+      "title": "青少年棒球投球疼痛的循证先驱：Lyman 两篇奠基性研究综述",
+      "authors": "Lyman S et al.",
+      "meta": "MSSE 2001 + AJSM 2002 · 合计被引 1300+ 次",
+      "description": "ASMI 铁三角（Lyman×Fleisig×Andrews）的奠基性工作。首次用纵向队列追踪了 298 名投手的疼痛模式，随后扩大至 476 人进行球种×球数×机制的三维独立分析。这是 MLB Pitch Smart 指南的原始数据基础。",
+      "link": "/academic/papers/Lyman_Review.html",
+      "tags": ["Pitch Smart起源", "被引1300+", "曲球伤肩·滑球伤肘"],
+      "featured": false,
+      "color": "#16a085"
+    },
+    {
+      "id": "melugin-2018",
+      "title": "棒球损伤预防：从青少年到职业",
+      "authors": "Melugin HP et al.",
+      "meta": "Curr Rev Musculoskelet Med 2018 · 被引 66 次",
+      "description": "最直接相关的综述。系统梳理了从青少年到职业棒球损伤流行病学的差异，提出\"不同级别需要不同的预防策略\"。详述了横滨棒球-9 (YKB-9) 预防方案和 Nordic 腘绳肌训练的循证依据。",
+      "link": "/academic/papers/Melugin_2018_Baseball.html",
+      "tags": ["最直接相关", "YKB-9", "分级预防", "🎬 视频"],
+      "featured": false,
+      "color": "#d35400"
+    },
+    {
+      "id": "difiori-2014",
+      "title": "AMSSM 立场声明：青少年运动过度使用损伤与倦怠",
+      "authors": "DiFiori JP et al.",
+      "meta": "BJSM/CJSM 2014 · 被引 786 次",
+      "description": "AMSSM 七位专家系统检索 953 篇文献后撰写的官方立场声明。涵盖过度使用损伤的风险因素体系、运动专项化争议、运动准备度概念、高风险应力性骨折和骨骺损伤识别，以及基于 SORT 分级系统的预防建议。",
+      "link": "/academic/papers/DiFiori_2014_AMSSM.html",
+      "tags": ["AMSSM", "SORT分级", "运动专项化"],
+      "featured": false,
+      "color": "#7f8c8d"
+    }
+  ],
+  "papers": [
+    {
+      "title": "6-Week Weighted Baseball RCT",
+      "authors": "Okoroha KR et al.",
+      "journal": "Sports Health 2018",
+      "citations": "100+",
+      "external": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6044122/"
+    },
+    {
+      "title": "Biomechanical Analysis of Weighted-Ball",
+      "authors": "Fleisig GS et al.",
+      "journal": "Sports Health 2016",
+      "citations": "70+",
+      "external": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5435148/"
+    },
+    {
+      "title": "UCL Reconstruction Epidemiology (NY 10yr)",
+      "authors": "Hodgins JL et al.",
+      "journal": "AJSM 2016",
+      "citations": "212",
+      "external": "https://pubmed.ncbi.nlm.nih.gov/26797699/"
+    },
+    {
+      "title": "Throwing Biomechanics & Return to Sport",
+      "authors": "Trasolini NA et al.",
+      "journal": "ASMAR 2022",
+      "citations": "67",
+      "pdf": "/academic/papers/pdf/Trasolini_2022_Biomechanics_Throwing.pdf"
+    },
+    {
+      "title": "Batting Performance Scoping Review",
+      "authors": "Tremblay M et al.",
+      "journal": "Sports Med-Open 2025",
+      "citations": "最新",
+      "pdf": "/academic/papers/pdf/Batting_Performance_Scoping_Review_2025.pdf"
+    },
+    {
+      "title": "AMSSM Overuse Injuries & Burnout",
+      "authors": "DiFiori JP et al.",
+      "journal": "BJSM 2014",
+      "citations": "786",
+      "pdf": "/academic/papers/pdf/01_Overuse_Injuries_Burnout_Youth_Sports_DiFiori_2014.pdf"
+    },
+    {
+      "title": "Injury Prevention in Baseball",
+      "authors": "Melugin HP et al.",
+      "journal": "CRMM 2018",
+      "citations": "66",
+      "pdf": "/academic/papers/pdf/02_Injury_Prevention_Baseball_Youth_to_Pros_Melugin_2018.pdf"
+    },
+    {
+      "title": "Training-Injury Prevention Paradox",
+      "authors": "Gabbett TJ",
+      "journal": "BJSM 2016",
+      "citations": "1530",
+      "pdf": "/academic/papers/pdf/03_Training_Injury_Prevention_Paradox_Gabbett_2016.pdf"
+    },
+    {
+      "title": "YKB-9 Prevention Program",
+      "authors": "Sakata J et al.",
+      "journal": "AJSM 2017",
+      "citations": "60",
+      "pdf": "/academic/papers/pdf/sakata2017.pdf"
+    },
+    {
+      "title": "Lyman 2001 — Elbow & Shoulder Pain",
+      "authors": "Lyman S et al.",
+      "journal": "MSSE 2001",
+      "citations": "549",
+      "pdf": "/academic/papers/pdf/Lyman_2001_Longitudinal_Elbow_Shoulder_Pain.pdf"
+    },
+    {
+      "title": "Lyman 2002 — Pitch Type/Count/Mechanics",
+      "authors": "Lyman S et al.",
+      "journal": "AJSM 2002",
+      "citations": "769",
+      "pdf": "/academic/papers/pdf/Lyman_2002_Pitch_Type_Count_Mechanics.pdf"
+    }
+  ]
+}

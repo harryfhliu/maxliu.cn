@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投掷运动员生物力学分析及其对重返运动的影响 — 研读报告</title>
+<style>
+  :root { --dark:#1a1a2e; --red:#c0392b; --blue:#2980b9; --orange:#d35400; --bg:#fafafa; --card:#fff; --text:#2c3e50; --muted:#7f8c8d; --green:#27ae60; --gold:#b8860b; --purple:#8e44ad; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.85; font-size:15px; }
+  .container { max-width:920px; margin:0 auto; padding:20px; }
+  .hero { background:linear-gradient(135deg,var(--dark),#2c3e50); color:white; padding:44px 32px; border-radius:12px; margin-bottom:24px; text-align:center; }
+  .hero h1 { font-size:1.4em; font-weight:800; margin-bottom:6px; line-height:1.3; }
+  .hero .meta { font-size:0.85em; opacity:0.8; }
+  .info-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-bottom:20px; }
+  .info-item { background:var(--card); border-radius:8px; padding:12px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .info-item .lbl { font-size:0.7em; color:var(--muted); }
+  .info-item .val { font-size:1em; font-weight:700; color:var(--dark); }
+  .section { background:var(--card); border-radius:10px; padding:24px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.04); border-left:4px solid var(--blue); }
+  .section h2 { font-size:1.15em; color:var(--dark); margin-bottom:10px; border-bottom:2px solid #eee; padding-bottom:6px; }
+  .section h3 { font-size:1em; color:#34495e; margin:14px 0 6px; }
+  .section ul, .section ol { padding-left:20px; }
+  .section li { margin-bottom:5px; }
+  table { width:100%; border-collapse:collapse; font-size:0.82em; margin:10px 0; }
+  th { background:var(--dark); color:white; padding:8px 8px; text-align:left; }
+  td { padding:6px 8px; border-bottom:1px solid #e8e8e8; }
+  tr:nth-child(even) td { background:#f8f9fa; }
+  .svg-container { text-align:center; margin:16px 0; background:#f8f9fa; border-radius:8px; padding:16px; }
+  .svg-container svg { max-width:100%; }
+  .svg-container .caption { font-size:0.75em; color:var(--muted); margin-top:4px; font-style:italic; }
+  .callout { padding:12px 16px; border-radius:8px; margin:10px 0; }
+  .callout-green { background:#eafaf1; border:1px solid var(--green); }
+  .callout-blue { background:#ecf6ff; border:1px solid var(--blue); }
+  .callout-red { background:#fff0f0; border:1px solid var(--red); }
+  .callout-orange { background:#fef5e7; border:1px solid var(--orange); }
+  .callout-purple { background:#f5f0f9; border:1px solid var(--purple); }
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.7em; font-weight:600; margin-right:4px; }
+  .tag-red { background:#f9d6d5; color:var(--red); }
+  .tag-blue { background:#d4e6f1; color:var(--blue); }
+  .tag-green { background:#d5f5e3; color:var(--green); }
+  .tag-orange { background:#ffeaa7; color:var(--orange); }
+  .stat-highlight { display:inline-block; font-family:"SF Mono",monospace; font-size:1.1em; font-weight:800; color:var(--red); }
+  .footer { text-align:center; padding:20px; color:var(--muted); font-size:0.8em; }
+  @media (max-width:640px) { .container{padding:10px;} .hero{padding:28px 14px;} .section{padding:14px;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>投掷运动员的生物力学分析<br>及其对重返运动的影响</h1>
+  <div class="meta">Trasolini NA, Nicholson KF, Mylott J, Bullock GS, Hulburt TC, Waterman BR</div>
+  <div class="meta"><em>Arthroscopy, Sports Medicine, and Rehabilitation</em> (2022) · Vol 4(1): e83-e91 · 被引 67 次</div>
+  <span class="tag tag-red">投掷生物力学</span><span class="tag tag-blue">重返运动</span><span class="tag tag-green">🟢 开放获取</span><span class="tag tag-orange">专家意见</span>
+</div>
+
+<div class="info-bar">
+  <div class="info-item"><div class="lbl">证据级别</div><div class="val">V 级</div></div>
+  <div class="info-item"><div class="lbl">期刊</div><div class="val">ASMAR</div></div>
+  <div class="info-item"><div class="lbl">发表年份</div><div class="val">2022</div></div>
+  <div class="info-item"><div class="lbl">被引次数</div><div class="val">67</div></div>
+  <div class="info-item"><div class="lbl">参考文献</div><div class="val">56 篇</div></div>
+  <div class="info-item"><div class="lbl">所属机构</div><div class="val">Wake Forest</div></div>
+</div>
+
+<div class="section">
+  <h2>📋 核心摘要</h2>
+  <p>投掷运动是肌肉骨骼损伤的常见来源，尤其涉及肩部和肘部。本文系统回顾了投掷生物力学、<strong>关键表现指标（KPI）</strong>、病理力学和重返运动的最新进展，特别聚焦棒球投球。</p>
+  <div class="callout callout-red">
+    <strong>核心论点：</strong>投掷的六个阶段通过<strong>动力链（Kinetic Chain）</strong>协调能量传递——<strong>腿部和躯干贡献了投掷动能的 51%-55%</strong>。动力链功能障碍时，上肢被迫"追赶"，显著增加损伤风险。
+  </div>
+</div>
+
+<!-- Fig 1: Throwing Phases Diagram -->
+<div class="section">
+  <h2>⚾ 投掷的六个阶段</h2>
+  <p>投掷是一个复杂的多阶段运动，每个阶段通过身体将能量传递给球。理解各阶段的生物力学特征是分析和预防损伤的前提。</p>
+  <div class="svg-container">
+    <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="phase1g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c0392b"/><stop offset="100%" stop-color="#e74c3c"/></linearGradient>
+        <linearGradient id="phase2g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d35400"/><stop offset="100%" stop-color="#e67e22"/></linearGradient>
+        <linearGradient id="phase3g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#b8860b"/><stop offset="100%" stop-color="#f39c12"/></linearGradient>
+        <linearGradient id="phase4g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#27ae60"/><stop offset="100%" stop-color="#2ecc71"/></linearGradient>
+        <linearGradient id="phase5g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2980b9"/><stop offset="100%" stop-color="#3498db"/></linearGradient>
+        <linearGradient id="phase6g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8e44ad"/><stop offset="100%" stop-color="#9b59b6"/></linearGradient>
+      </defs>
+      <!-- Arrow through all phases -->
+      <path d="M40,350 C40,310 760,310 760,270" stroke="#ddd" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+      <defs><marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0,10 3,0 6" fill="#999"/></marker></defs>
+      
+      <!-- Phase cards -->
+      <rect x="10" y="50" width="120" height="240" rx="8" fill="url(#phase1g)"/>
+      <text x="70" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">① 准备期</text>
+      <text x="70" y="120" text-anchor="middle" fill="white" font-size="10">Wind-up</text>
+      <text x="70" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="70" dy="0">重心转移至驱动腿</tspan>
+        <tspan x="70" dy="14">膝弯曲 + 躯干旋转</tspan>
+        <tspan x="70" dy="14">髋铰链激活后链</tspan>
+        <tspan x="70" dy="14">跨步腿抬起</tspan>
+      </text>
+      
+      <rect x="140" y="50" width="120" height="240" rx="8" fill="url(#phase2g)"/>
+      <text x="200" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">② 跨步期</text>
+      <text x="200" y="120" text-anchor="middle" fill="white" font-size="10">Stride</text>
+      <text x="200" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="200" dy="0">地面反作用力推动</tspan>
+        <tspan x="200" dy="14">步幅≥80%身高</tspan>
+        <tspan x="200" dy="14">肩外展~90°</tspan>
+        <tspan x="200" dy="14">髋-肩分离开始</tspan>
+      </text>
+      
+      <rect x="270" y="50" width="120" height="240" rx="8" fill="url(#phase3g)"/>
+      <text x="330" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">③ 引拍期</text>
+      <text x="330" y="120" text-anchor="middle" fill="white" font-size="10">Cocking</text>
+      <text x="330" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="330" dy="0">骨盆停止旋转</tspan>
+        <tspan x="330" dy="14">肩外旋 170°-180°</tspan>
+        <tspan x="330" dy="14">肘屈曲 &gt;90°</tspan>
+        <tspan x="330" dy="14">能量传递至上半身</tspan>
+      </text>
+      
+      <rect x="400" y="50" width="120" height="240" rx="8" fill="url(#phase4g)"/>
+      <text x="460" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">④ 加速期</text>
+      <text x="460" y="120" text-anchor="middle" fill="white" font-size="10">Acceleration</text>
+      <text x="460" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="460" dy="0">⚠️ 最高力和扭矩</tspan>
+        <tspan x="460" dy="14">肩内旋~6,200°/s</tspan>
+        <tspan x="460" dy="14">肘伸展~4,600°/s</tspan>
+        <tspan x="460" dy="14">→ 球出手</tspan>
+      </text>
+      
+      <rect x="530" y="50" width="120" height="240" rx="8" fill="url(#phase5g)"/>
+      <text x="590" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">⑤ 减速期</text>
+      <text x="590" y="120" text-anchor="middle" fill="white" font-size="10">Deceleration</text>
+      <text x="590" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="590" dy="0">最大盂肱牵张力</tspan>
+        <tspan x="590" dy="14">旋转袖凹面压缩</tspan>
+        <tspan x="590" dy="14">躯干继续前倾</tspan>
+        <tspan x="590" dy="14">前臂旋前</tspan>
+      </text>
+      
+      <rect x="660" y="50" width="120" height="240" rx="8" fill="url(#phase6g)"/>
+      <text x="720" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="700">⑥ 跟随期</text>
+      <text x="720" y="120" text-anchor="middle" fill="white" font-size="10">Follow-through</text>
+      <text x="720" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="9.5">
+        <tspan x="720" dy="0">最大肩内旋后</tspan>
+        <tspan x="720" dy="14">剩余动能消散</tspan>
+        <tspan x="720" dy="14">跨步腿缓冲</tspan>
+        <tspan x="720" dy="14">肩胛回到休息位</tspan>
+      </text>
+      
+      <!-- Time flow -->
+      <text x="400" y="325" text-anchor="middle" fill="#999" font-size="11">图1：投掷的六个阶段 — 能量通过身体从下到上的顺序传递</text>
+      <text x="400" y="345" text-anchor="middle" fill="#bbb" font-size="10">基于 Fleisig et al. 经典描述</text>
+    </svg>
+    <div class="caption">图1：投掷六个阶段及其关键生物力学特征（自绘示意图，基于原文 Fig 1）</div>
+  </div>
+</div>
+
+<!-- Kinetic Chain -->
+<div class="section">
+  <h2>🔗 动力链：投掷能量的核心机制</h2>
+  <p>投掷运动员通过<strong>核心和下肢能量向上肢扭矩、旋转和角速度的同步传递</strong>来产生球速。身体像一个扭簧加载，能量从下肢→髋→躯干→肩→肘→手腕→球顺序传递。</p>
+  
+  <div class="svg-container">
+    <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Chain links -->
+      <defs><linearGradient id="chainGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3498db"/><stop offset="100%" stop-color="#e74c3c"/></linearGradient></defs>
+      
+      <!-- Base with legs -->
+      <rect x="320" y="260" width="160" height="30" rx="4" fill="#1a1a2e"/>
+      <text x="400" y="280" text-anchor="middle" fill="white" font-size="12" font-weight="700">腿部和躯干 = 51%-55% 动能来源</text>
+      
+      <!-- Power flow arrows -->
+      <g stroke="url(#chainGrad)" stroke-width="4" fill="none">
+        <path d="M180,230 C150,200 120,180 80,160" marker-end="url(#redArrow)"/>
+        <path d="M290,200 C270,170 240,140 210,110" marker-end="url(#redArrow)"/>
+        <path d="M400,170 C400,140 400,100 400,70" marker-end="url(#redArrow)"/>
+      </g>
+      
+      <!-- Chain blocks -->
+      <rect x="130" y="215" width="100" height="30" rx="15" fill="#27ae60"/>
+      <text x="180" y="235" text-anchor="middle" fill="white" font-size="11" font-weight="700">下肢力量</text>
+      
+      <rect x="240" y="185" width="100" height="30" rx="15" fill="#2980b9"/>
+      <text x="290" y="205" text-anchor="middle" fill="white" font-size="11" font-weight="700">髋与骨盆</text>
+      
+      <rect x="350" y="155" width="100" height="30" rx="15" fill="#8e44ad"/>
+      <text x="400" y="175" text-anchor="middle" fill="white" font-size="11" font-weight="700">躯干（扭簧）</text>
+      
+      <rect x="240" y="125" width="100" height="30" rx="15" fill="#d35400"/>
+      <text x="290" y="145" text-anchor="middle" fill="white" font-size="11" font-weight="700">肩胛胸廓</text>
+      
+      <rect x="350" y="95" width="100" height="30" rx="15" fill="#c0392b"/>
+      <text x="400" y="115" text-anchor="middle" fill="white" font-size="11" font-weight="700">肩与肘 → 球</text>
+      
+      <!-- Connectors -->
+      <line x1="230" y1="230" x2="240" y2="200" stroke="#999" stroke-width="2"/>
+      <line x1="340" y1="200" x2="350" y2="170" stroke="#999" stroke-width="2"/>
+      <line x1="300" y1="140" x2="240" y2="140" stroke="#999" stroke-width="2"/>
+      <line x1="300" y1="110" x2="350" y2="110" stroke="#999" stroke-width="2"/>
+      
+      <!-- Hip-shoulder separation -->
+      <rect x="500" y="170" width="280" height="110" rx="10" fill="#fef5e7" stroke="#d35400" stroke-width="1.5"/>
+      <text x="640" y="195" text-anchor="middle" fill="#d35400" font-size="12" font-weight="700">★ 髋-肩分离</text>
+      <text x="640" y="215" text-anchor="middle" fill="#666" font-size="10">骨盆与躯干旋转差异</text>
+      <text x="640" y="232" text-anchor="middle" fill="#666" font-size="10">是动力链效率的关键指标</text>
+      <text x="640" y="252" text-anchor="middle" fill="#d35400" font-size="10">→ 与球速直接相关</text>
+      <text x="640" y="270" text-anchor="middle" fill="#999" font-size="9">前足着地时测量</text>
+    </svg>
+    <div class="caption">图2：投掷动力链 — 能量从下肢到上肢的顺序传递，髋-肩分离是核心效率指标</div>
+  </div>
+
+  <div class="callout callout-orange">
+    <strong>临床启示：</strong>动力链任何环节故障（如髋内旋不足、肩胛运动障碍），上肢被迫"追赶"——导致肩肘负荷急剧增加，这是很多投手损伤的根源。
+  </div>
+</div>
+
+<!-- KPIs Table -->
+<div class="section">
+  <h2>📊 关键表现指标（KPI）</h2>
+  <p>现代投掷分析测量 <strong>26 项以上</strong>生物力学指标，以下是 <strong>最具临床相关性的 KPI</strong>（原文表 2）：</p>
+  
+  <table>
+    <tr><th>类别</th><th>关键 KPI</th><th style="text-align:center">临床意义</th></tr>
+    <tr>
+      <td><strong>全局</strong></td>
+      <td>球速度（Ball Velocity）</td>
+      <td style="text-align:center">表现的金标准输出</td>
+    </tr>
+    <tr>
+      <td><strong>步幅</strong></td>
+      <td>步幅长度 ≥ 80% 身高</td>
+      <td style="text-align:center">保护性因素，超过此值肘扭矩不再增加</td>
+    </tr>
+    <tr>
+      <td><strong>地面反作用力</strong></td>
+      <td>后腿/前导腿 GRF 最大值</td>
+      <td style="text-align:center">下肢发力效率</td>
+    </tr>
+    <tr>
+      <td><strong>骨盆与躯干</strong></td>
+      <td>足部着地时髋-肩分离</td>
+      <td style="text-align:center">⚡ 最关键的 KPI — 与球速直接相关</td>
+    </tr>
+    <tr>
+      <td><strong>骨盆与躯干</strong></td>
+      <td>足部着地时躯干侧倾/前屈</td>
+      <td style="text-align:center">动力链对齐度</td>
+    </tr>
+    <tr>
+      <td><strong>骨盆与躯干</strong></td>
+      <td>最大骨盆—躯干旋转速度时间差</td>
+      <td style="text-align:center">能量传递时序</td>
+    </tr>
+    <tr>
+      <td><strong>肩部</strong></td>
+      <td>足部着地时肩外展/水平外展</td>
+      <td style="text-align:center">关节位置安全性</td>
+    </tr>
+    <tr>
+      <td><strong>肩部</strong></td>
+      <td>最大肩外旋（MER）170°-180°</td>
+      <td style="text-align:center">球速关键决定因素</td>
+    </tr>
+    <tr>
+      <td><strong>肘部</strong></td>
+      <td>最大肘内翻扭矩</td>
+      <td style="text-align:center">⚠️ 损伤最强预测因子</td>
+    </tr>
+    <tr>
+      <td><strong>肘部</strong></td>
+      <td>球出手时肘角度</td>
+      <td style="text-align:center">与损伤和表现均相关</td>
+    </tr>
+    <tr>
+      <td><strong>角速度</strong></td>
+      <td>胸廓/肱骨/肘伸展/骨盆角速度最大值</td>
+      <td style="text-align:center">功率输出效率</td>
+    </tr>
+  </table>
+  
+  <div class="callout callout-blue">
+    <strong>💡 关键洞察：</strong>球速虽然是最终目标，但<strong>肘内翻扭矩</strong>和<strong>髋-肩分离</strong>是比球速更重要的安全和效率指标。高球速 + 高扭矩 ≠ 好投手。
+  </div>
+</div>
+
+<!-- Pathomechanics -->
+<div class="section">
+  <h2>🔬 病理力学：什么导致了损伤？</h2>
+  <p>文献中仅 <strong>5%</strong> 的研究比较了受伤与未受伤运动员的特征，仅 <strong>2%</strong> 直接研究了损伤预防。但这少数高质量研究已经揭示了关键因素。</p>
+  
+  <h3>六大损伤风险因素</h3>
+  <div class="svg-container">
+    <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="10" width="250" height="95" rx="8" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="135" y="40" text-anchor="middle" fill="#c0392b" font-size="13" font-weight="700">⚠️ 肘内翻扭矩</text>
+      <text x="135" y="60" text-anchor="middle" fill="#666" font-size="10">高扭矩投手肘部损伤率更高</text>
+      <text x="135" y="78" text-anchor="middle" fill="#999" font-size="9">23名职业投手·3年随访</text>
+
+      <rect x="270" y="10" width="250" height="95" rx="8" fill="#fef5e7" stroke="#d35400" stroke-width="1.5"/>
+      <text x="395" y="40" text-anchor="middle" fill="#d35400" font-size="13" font-weight="700">⏱️ 早期躯干旋转</text>
+      <text x="395" y="60" text-anchor="middle" fill="#666" font-size="10">髋-肩分离丧失</text>
+      <text x="395" y="78" text-anchor="middle" fill="#e74c3c" font-size="9">肩部力增加体重9.2%</text>
+
+      <rect x="530" y="10" width="250" height="95" rx="8" fill="#ecf6ff" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="655" y="40" text-anchor="middle" fill="#2980b9" font-size="13" font-weight="700">🔄 肩活动范围异常</text>
+      <text x="655" y="60" text-anchor="middle" fill="#666" font-size="10">赛季前外旋<5°差异 → 损伤风险</text>
+      <text x="655" y="78" text-anchor="middle" fill="#e74c3c" font-size="9">OR = 1.90 (Pozzi Meta分析)</text>
+
+      <rect x="10" y="115" width="250" height="95" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+      <text x="135" y="145" text-anchor="middle" fill="#27ae60" font-size="13" font-weight="700">💪 疲劳效应</text>
+      <text x="135" y="165" text-anchor="middle" fill="#666" font-size="10">第3局起肘扭矩每局+0.84 Nm</text>
+      <text x="135" y="183" text-anchor="middle" fill="#999" font-size="9">28名青少年·模拟比赛·髋肩分离降低</text>
+
+      <rect x="270" y="115" width="250" height="95" rx="8" fill="#f5f0f9" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="395" y="145" text-anchor="middle" fill="#8e44ad" font-size="13" font-weight="700">🏃 球出手时膝屈曲异常</text>
+      <text x="395" y="165" text-anchor="middle" fill="#666" font-size="10">前导膝稳定机制破坏</text>
+      <text x="395" y="183" text-anchor="middle" fill="#999" font-size="9">能量传递效率下降</text>
+
+      <rect x="530" y="115" width="250" height="95" rx="8" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="655" y="145" text-anchor="middle" fill="#c0392b" font-size="13" font-weight="700">🎯 肩外旋扭矩</text>
+      <text x="655" y="165" text-anchor="middle" fill="#666" font-size="10">MER阶段关键负荷指标</text>
+      <text x="655" y="183" text-anchor="middle" fill="#999" font-size="9">Chalmers et al. 综述确认</text>
+    </svg>
+    <div class="caption">图3：投掷损伤的六大风险因素 — 基于 Chalmers 等综述</div>
+  </div>
+
+  <h3>KPI 的可修改性</h3>
+  <p>一项对 <strong>46 名投手</strong>间隔 12 个月进行的系列投掷评估发现：首次评估中识别的缺陷有 <strong>44%</strong> 已被纠正。虽然尚未证明能减少损伤，但这表明生物力学反馈确实能改变投掷动作。</p>
+  
+  <div class="callout callout-red">
+    <strong>⚠️ 研究空白：</strong>尚无前瞻性研究确认"修正异常KPI → 降低损伤率"这一因果链。需要纵向投掷分析数据 + 损伤报告，但让对照组不修正病理力学存在伦理限制。
+  </div>
+</div>
+
+<!-- Return to Sport -->
+<div class="section">
+  <h2>🏥 重返运动：如何利用生物力学分析安全回归</h2>
+  
+  <div class="svg-container">
+    <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+      <!-- Protocol flow -->
+      <rect x="100" y="15" width="600" height="45" rx="10" fill="#1a1a2e"/>
+      <text x="400" y="43" text-anchor="middle" fill="white" font-size="13" font-weight="700">① 伤前基线投掷分析（Pre-injury Baseline）</text>
+      
+      <path d="M400,60 L400,85" stroke="#999" stroke-width="2" marker-end="url(#downArrow)"/>
+      <defs><marker id="downArrow" markerWidth="8" markerHeight="8" refX="4" refY="7"><polygon points="0 0,8 0,4 7" fill="#999"/></marker></defs>
+      
+      <rect x="100" y="85" width="600" height="45" rx="10" fill="#ecf6ff"/>
+      <text x="400" y="113" text-anchor="middle" fill="#2980b9" font-size="13" font-weight="700">② 恢复阶段：无痛/无肿胀 → 恢复ROM → 恢复力量 → 正常肩胛位置</text>
+      
+      <path d="M400,130 L400,155" stroke="#999" stroke-width="2" marker-end="url(#downArrow)"/>
+      
+      <rect x="100" y="155" width="600" height="45" rx="10" fill="#eafaf1"/>
+      <text x="400" y="183" text-anchor="middle" fill="#27ae60" font-size="13" font-weight="700">③ 进阶阶段：无症状增强式训练 → 间歇性投掷 → 工作量监测</text>
+      
+      <path d="M400,200 L400,225" stroke="#c0392b" stroke-width="2" marker-end="url(#downArrow)"/>
+      
+      <rect x="100" y="225" width="600" height="65" rx="10" fill="#fff0f0" stroke="#c0392b" stroke-width="2"/>
+      <text x="400" y="250" text-anchor="middle" fill="#c0392b" font-size="13" font-weight="700">⭐ ④ 生物力学评估（关键节点）</text>
+      <text x="400" y="272" text-anchor="middle" fill="#666" font-size="11">
+        3D运动捕捉 · 识别持续性病理力学 · 对比伤前基线 · 可穿戴设备监测
+      </text>
+      
+      <path d="M400,290 L400,315" stroke="#999" stroke-width="2" marker-end="url(#downArrow)"/>
+      
+      <rect x="150" y="315" width="500" height="35" rx="10" fill="#27ae60"/>
+      <text x="400" y="338" text-anchor="middle" fill="white" font-size="14" font-weight="700">⑤ 重返完全比赛（Return to Full Competition）</text>
+    </svg>
+    <div class="caption">图4：重返运动五步方案 — 基于 Sgroi &amp; Zajac 框架，整合生物力学评估（原文 Fig 5）</div>
+  </div>
+
+  <p>常规的<strong>伤前基线投掷评估</strong>可以建立运动员真实的 ROM、力量和力学基线，在恢复方案中用于比较。本文强调在"力学评估"阶段使用 3D 运动捕捉识别 KPI 异常，这在防止再损伤中具有关键潜力。</p>
+</div>
+
+<!-- Methods -->
+<div class="section">
+  <h2>🖥️ 现代分析方法</h2>
+  
+  <table>
+    <tr><th>方法</th><th>设备配置</th><th>特点</th></tr>
+    <tr>
+      <td><strong>金标准：3D 运动捕捉</strong></td>
+      <td>12 个相机 + 4 个高速视频 + 3 个力板<br>41 个逆反射标记</td>
+      <td>✅ 测量 26+ 项 KPI<br>✅ 30 年验证史<br>❌ 需实验室环境</td>
+    </tr>
+    <tr>
+      <td><strong>可穿戴技术（Motus等）</strong></td>
+      <td>袖套式惯性传感器</td>
+      <td>✅ 比赛内可用<br>✅ 实时监测肘扭矩<br>⚠️ 值与金标准有偏差</td>
+    </tr>
+    <tr>
+      <td><strong>无标记追踪（MLB Hawk-Eye）</strong></td>
+      <td>12 个球场相机<br>100/50 fps</td>
+      <td>✅ 不影响比赛<br>✅ 追踪：出手点、转速、轨迹<br>⚠️ 精度 ~2cm</td>
+    </tr>
+    <tr>
+      <td><strong>机器学习肩胛预测</strong></td>
+      <td>3D捕捉 + AI算法</td>
+      <td>🔮 预测肩胛位置 ±10°<br>🔮 正在快速改进</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Training Implications -->
+<div class="section" style="border-left-color: var(--red);">
+  <h2>🎯 对青少年投手训练的启示</h2>
+  
+  <ol>
+    <li><strong>别只练手臂：</strong>腿部和躯干提供 51%-55% 的投掷动能。核心和下肢训练不是可选项目</li>
+    <li><strong>关注髋-肩分离：</strong>这可能是最重要的可训练 KPI。训练中培养"下体先转→上体后转"的时序感</li>
+    <li><strong>活动范围筛查不可跳：</strong>赛季前肩外旋 <5°（投掷侧 vs 非投掷侧）就是红旗。定期筛查 ROM</li>
+    <li><strong>疲劳即风险：</strong>模拟比赛第 3 局起肘扭矩持续上升。比赛用球数控制必须严格执行</li>
+    <li><strong>伤后恢复要用数据说话：</strong>主观"感觉好了"不够，需要 3D 分析对比伤前 KPI 基线</li>
+    <li><strong>步幅是保护因素：</strong>> 80% 身高的步幅可以防止肘扭矩继续增加，步幅不足是危险信号</li>
+  </ol>
+
+  <div class="callout callout-purple">
+    <strong>展望：</strong>无标记追踪（如 MLB Hawk-Eye）和可穿戴设备正在让生物力学分析从实验室进入球场。未来每个投手都有可能获得个性化的 KPI 基准线和实时反馈——这在青少年伤预防中将是革命性的。
+  </div>
+</div>
+
+<div class="footer">
+  <p>研读基于 Trasolini NA et al. (2022). Biomechanical Analysis of the Throwing Athlete and Its Impact on Return to Sport. <em>Arthroscopy, Sports Medicine, and Rehabilitation</em>, 4(1): e83-e91. DOI: 10.1016/j.asmr.2021.09.027</p>
+  <p>图片来源：原文 CC BY-NC-ND 4.0 许可 | 示意图：自绘 | 编者：於菟子Max爱棒球</p>
+</div>
+
+<div style="text-align:center;padding:20px;background:#e8f5e9;margin-top:30px;margin-bottom:0;border-radius:8px">
+  📥 <strong>论文下载：</strong><a href="pdf/Trasolini_2022_Biomechanics_Throwing.pdf" style="color:#27ae60;font-weight:bold">Trasolini et al. (2022) — 投掷运动员生物力学分析 (PDF, 1.4 MB)</a>
+</div>
+<div style="text-align:center;padding:20px;background:#f0f0f0;margin-top:0;margin-bottom:0">
+  <a href="../" style="color:#2980b9;text-decoration:none;font-size:14px">← 返回棒球学术圈首页</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import writingsData from '../../../data/writings.json';
+import MarkdownIt from 'markdown-it';
+
+interface Writing {
+  id: string;
+  type: 'essay' | 'poem';
+  title: string;
+  date: string;
+  category: string;
+  content: string;
+  tags: string[];
+  award?: string;
+}
+
+const writings = writingsData as Writing[];
+
+export function getStaticPaths() {
+  return writings.map(w => ({ params: { slug: w.id } }));
+}
+
+const { slug } = Astro.params;
+const writing = writings.find(w => w.id === slug);
+
+const md = new MarkdownIt();
+const dateStr = new Date(writing!.date).toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={`${writing!.title} | 文学创作 | Max Liu`}
+  description={writing!.type === 'essay' ? writing!.title : `Max 的原创诗歌《${writing!.title}》`}
+>
+  <section class="page-hero page-hero--writing">
+    <div class="container">
+      <div class="page-hero__badge">{writing!.type === 'essay' ? '🏆 获奖作文' : '📝 诗歌'}</div>
+      <h1 class="page-hero__title">{writing!.title}</h1>
+      <p class="page-hero__desc">{dateStr} · {writing!.category}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <article class="writing-detail card">
+        {writing!.type === 'essay' ? (
+          <div class="prose" set:html={md.render(writing!.content)} />
+        ) : (
+          <div class="poem-body">{writing!.content}</div>
+        )}
+
+        <div class="writing-detail__tags">
+          {writing!.tags.map(tag => <span class="tag tag--accent">{tag}</span>)}
+        </div>
+      </article>
+
+      <a href="/writing/" class="back-link">← 返回全部作品</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .writing-detail {
+    padding: var(--space-2xl) var(--space-2xl);
+  }
+
+  /* 作文 prose 样式 */
+  .prose {
+    color: var(--text-secondary);
+    line-height: 2;
+  }
+
+  .prose :global(h2) {
+    color: var(--text-primary);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin: var(--space-xl) 0 var(--space-md);
+  }
+
+  .prose :global(h3) {
+    color: var(--color-primary);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin: var(--space-lg) 0 var(--space-sm);
+  }
+
+  .prose :global(p) {
+    margin-bottom: var(--space-md);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--color-primary);
+    padding-left: var(--space-lg);
+    margin: var(--space-xl) 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .prose :global(strong) {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  /* 诗歌正文排版 */
+  .poem-body {
+    white-space: pre-line;
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    line-height: 2.4;
+    text-align: center;
+    letter-spacing: 0.03em;
+    padding: var(--space-lg) 0;
+  }
+
+  .writing-detail__tags {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: var(--space-xl);
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .writing-detail {
+      padding: var(--space-lg);
+    }
+  }
+</style>

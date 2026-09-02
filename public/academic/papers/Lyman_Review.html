@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyman 青少年棒球投球疼痛研究综述</title>
+<style>
+  :root {
+    --dark: #1a1a2e; --red: #c0392b; --blue: #2980b9; --orange: #d35400;
+    --bg: #fafafa; --card: #fff; --text: #2c3e50; --muted: #7f8c8d;
+    --green: #27ae60; --gold: #b8860b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.85; font-size: 15px;
+  }
+  .container { max-width: 900px; margin:0 auto; padding: 20px; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #2c3e50);
+    color: white; padding: 44px 32px; border-radius: 12px; margin-bottom: 28px; text-align: center;
+  }
+  .hero h1 { font-size: 1.6em; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
+  .hero .sub { font-size: 1em; opacity: 0.85; margin-bottom: 10px; }
+  .hero .badge { display:inline-block; background:var(--red); padding:3px 14px; border-radius:14px; font-size:0.8em; font-weight:600; margin-top:8px; }
+
+  .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:24px; }
+  .info-card { background:var(--card); border-radius:8px; padding:14px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .info-card .lbl { font-size:0.7em; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+  .info-card .val { font-size:1em; font-weight:700; color:var(--dark); }
+
+  .section {
+    background:var(--card); border-radius:10px; padding:26px; margin-bottom:20px;
+    box-shadow:0 1px 6px rgba(0,0,0,0.04); border-left:4px solid var(--blue);
+  }
+  .section h2 { font-size:1.2em; color:var(--dark); margin-bottom:12px; border-bottom:2px solid #eee; padding-bottom:6px; }
+  .section h3 { font-size:1.05em; color:#34495e; margin:16px 0 8px; }
+  .section ul, .section ol { padding-left:20px; }
+  .section li { margin-bottom:6px; }
+
+  table { width:100%; border-collapse:collapse; font-size:0.85em; margin:12px 0; }
+  th { background:var(--dark); color:white; padding:9px 10px; text-align:left; }
+  td { padding:8px 10px; border-bottom:1px solid #e8e8e8; }
+  tr:nth-child(even) td { background:#f8f9fa; }
+
+  .callout {
+    padding:14px 18px; border-radius:8px; margin:12px 0;
+  }
+  .callout-red { background:linear-gradient(135deg,#fff0f0,#fadbd8); border:1px solid #e74c3c; }
+  .callout-blue { background:linear-gradient(135deg,#ecf6ff,#d4e6f1); border:1px solid #2980b9; }
+  .callout-green { background:linear-gradient(135deg,#eafaf1,#d5f5e3); border:1px solid #27ae60; }
+  .callout-orange { background:linear-gradient(135deg,#fef5e7,#fdebd0); border:1px solid #e67e22; }
+
+  .stat-box {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:12px 0;
+  }
+  .stat { background:var(--dark); color:white; border-radius:8px; padding:12px; text-align:center; }
+  .stat .n { font-size:1.4em; font-weight:800; display:block; }
+  .stat .d { font-size:0.7em; opacity:0.85; margin-top:2px; }
+
+  .timeline { position:relative; padding-left:24px; margin:12px 0; }
+  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--blue); }
+  .timeline-item { position:relative; margin-bottom:14px; padding-left:20px; }
+  .timeline-item::before { content:''; position:absolute; left:-20px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--blue); }
+
+  .footer { text-align:center; padding:20px; color:var(--muted); font-size:0.8em; }
+
+  @media (max-width:640px) { .container{padding:10px;} .hero{padding:28px 16px;} .section{padding:16px;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>青少年棒球投球疼痛的循证先驱</h1>
+  <div class="sub">Stephen Lyman 两篇奠基性研究的系统综述</div>
+  <div class="sub" style="font-size:0.85em;">Lyman et al. (2001) MSSE · Lyman et al. (2002) AJSM</div>
+  <span class="badge">被引 1300+ 次 | Pitch Smart 指南数据基础</span>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 1: AUTHOR PROFILES -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>🏛️ 研究团队：ASMI 铁三角</h2>
+
+  <h3>Stephen Lyman, PhD</h3>
+  <p><strong>流行病学家 / 生物统计学家</strong>，就职于美国运动医学研究所（ASMI）和美国棒球基金会（American Baseball Foundation）。在团队中的角色是<strong>研究设计、大规模数据收集和统计建模</strong>——他不进实验室测量生物力学，而是确保追踪几百个孩子一整季的数据最终能得出经得起统计检验的结论。两篇论文的通讯作者。</p>
+
+  <h3>Glenn S. Fleisig, PhD</h3>
+  <p>全球最权威的<strong>投球生物力学研究者</strong>，ASMI 研究主任。三十年来主导了几乎所有关键投球生物力学研究，从青少年到 MLB 投手的运动学分析都出自他的实验室。他的生物力学数据是 Lyman 论文中「投球机制」变量的来源。同时也是 MLB Pitch Smart 指南的主要制定者。</p>
+
+  <h3>James R. Andrews, MD</h3>
+  <p>全世界最著名的<strong>运动骨科医生</strong>，Tommy John 手术的代名词。从 Nolan Ryan 到 Roger Clemens，数不清的 MLB 投手的肘部都经过他的手。他的临床视角确保了研究结论具有真实的医学意义——不只是一堆统计数字。</p>
+
+  <div class="callout callout-blue">
+    <strong>团队分工：</strong>Fleisig 提供生物力学视角 → Lyman 设计研究+跑数据 → Andrews 拍板临床意义。这个铁三角的组合是 2000 年代初期投球研究能取得突破的关键。
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 2: RESEARCH CONTEXT -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>📖 研究的历史背景：为什么这两篇如此重要</h2>
+
+  <div class="timeline">
+    <div class="timeline-item"><strong>1990 年代以前：</strong>青少年棒球的"保护"措施是每周局数限制——但没有任何数据支持。没人知道投多少球太多，也没人知道变化球到底伤不伤手臂。</div>
+    <div class="timeline-item"><strong>1996 年：</strong>Andrews 在临床上观察到 Tommy John 手术患者年龄越来越小，触动 ASMI 团队启动青少年投球前瞻性研究。</div>
+    <div class="timeline-item"><strong>Lyman 2001（MSSE）：</strong>第一次有人用纵向追踪回答"疼不疼"而非"是否受伤"。<strong>发现 47% 的 9–12 岁投手报告过肘部或肩部疼痛。</strong></div>
+    <div class="timeline-item"><strong>Lyman 2002（AJSM）：</strong>扩大样本、收紧方法，第一次用统计学明确量化了不同球种、球数和投球机制各自独立的疼痛风险。<strong>这才是 Pitch Smart 指南的真正数据基础。</strong></div>
+    <div class="timeline-item"><strong>2014 年至今：</strong>MLB Pitch Smart 指南发布并不断更新。全美青少年联赛普遍实行年龄分层的球数限制、休息天数和球种限制。</div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 3: LYMAN 2001 -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>📄 Lyman 2001 — 纵向追踪：疼痛发生率与风险因素</h2>
+  
+  <div class="info-grid">
+    <div class="info-card"><div class="lbl">期刊</div><div class="val">MSSE</div></div>
+    <div class="info-card"><div class="lbl">被引</div><div class="val">549</div></div>
+    <div class="info-card"><div class="lbl">设计</div><div class="val">前瞻性队列</div></div>
+    <div class="info-card"><div class="lbl">赛季</div><div class="val">1997–1998</div></div>
+    <div class="info-card"><div class="lbl">样本</div><div class="val">298 名投手</div></div>
+    <div class="info-card"><div class="lbl">年龄</div><div class="val">8–12 岁</div></div>
+  </div>
+
+  <div class="stat-box">
+    <div class="stat"><span class="n">47%</span><span class="d">报告过肘/肩疼痛</span></div>
+    <div class="stat"><span class="n">32%</span><span class="d">肩部疼痛经历</span></div>
+    <div class="stat"><span class="n">25.5%</span><span class="d">肘部疼痛经历</span></div>
+    <div class="stat"><span class="n">398</span><span class="d">个投手-赛季数据</span></div>
+    <div class="stat"><span class="n">2,699</span><span class="d">次投球出场</span></div>
+    <div class="stat"><span class="n">43 球</span><span class="d">场均投球数</span></div>
+  </div>
+
+  <h3>核心方法创新</h3>
+  <p>这是第一个不依赖"损伤诊断"作为终点的研究。每场比赛后电话追踪投手询问手臂不适，然后由研究者分四级评估严重程度。这意味着它捕捉到了那些"疼了但还在投"的病例——而这些正是后续严重损伤的前兆。</p>
+
+  <div class="callout callout-red">
+    <strong>关键发现：比赛投球数与疼痛</strong>
+    <ul>
+      <li>投球 ≥75 球 vs &lt;25 球 → 肩部疼痛风险 <strong>OR = 3.2</strong>（P &lt; 0.01）</li>
+      <li>每增加 10 球，肘部疼痛风险上升 6%</li>
+      <li>比赛中手臂疲劳 → 肘痛和肩痛均显著增加</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-green">
+    <strong>意外发现：变速球的保护效应</strong>
+    <p>在 11–12 岁组，投变速球的投手肘部疼痛风险 <strong>降低 73%</strong>（OR = 0.27, P = 0.01）。而曲球和滑球在该研究中未显示统计学显著的伤害效应——这可能是因为样本中使用者太少（&lt;10%），而非真正安全。</p>
+  </div>
+
+  <div class="callout callout-orange">
+    <strong>累计投球数的 J 形曲线</strong>
+    <p>赛季累计 &lt;300 球 → 肘痛风险最高（训练量不足？）。300–599 球 → <strong>保护效应</strong>（OR = 0.54, P = 0.02）。≥600 球 → 风险回升（OR = 2.07）。这与 Gabbett 后来的"训练-损伤预防悖论"异曲同工。</p>
+  </div>
+
+  <h3>2001 年论文的具体建议</h3>
+  <table>
+    <tr><th style="width:5%">#</th><th>建议</th><th style="width:12%">证据</th></tr>
+    <tr><td>1</td><td>单场不超过 <strong>75 球</strong></td><td>OR=3.2</td></tr>
+    <tr><td>2</td><td>赛季不超过 600 球</td><td>OR=2.07</td></tr>
+    <tr><td>3</td><td>手臂疲劳时立即换下投手</td><td>强相关</td></tr>
+    <tr><td>4</td><td>鼓励学习变速球，不建议曲球/滑球</td><td>OR=0.27</td></tr>
+    <tr><td>5</td><td>限制非联盟比赛投球（旅行队等）</td><td>显著风险</td></tr>
+    <tr><td>6</td><td><strong>用投球数替代局数</strong>作为限制指标</td><td>更精确</td></tr>
+  </table>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 4: LYMAN 2002 -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>📄 Lyman 2002 — 三因素独立分析：球种·球数·机制</h2>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="lbl">期刊</div><div class="val">AJSM</div></div>
+    <div class="info-card"><div class="lbl">被引</div><div class="val">769</div></div>
+    <div class="info-card"><div class="lbl">样本</div><div class="val">476 名投手</div></div>
+    <div class="info-card"><div class="lbl">年龄</div><div class="val">9–14 岁</div></div>
+    <div class="info-card"><div class="lbl">随访</div><div class="val">整季追踪</div></div>
+    <div class="info-card"><div class="lbl">赛季</div><div class="val">1999</div></div>
+  </div>
+
+  <h3>研究升级点</h3>
+  <p>2001 年论文建立了方法论基础，但颗粒度不够——使用曲线球的投手太少，统计效能不足以检测伤害效应。2002 年论文<strong>将样本扩大到 476 人、追加了投球机制的录像评分、并改进了统计方法</strong>，首次实现了球种、球数和机制三个因素各自独立的风险评估。</p>
+
+  <div class="callout callout-red">
+    <strong>核心发现一：不同球种对应不同部位的疼痛风险</strong>
+    <table>
+      <tr><th>球种</th><th>肩部疼痛风险</th><th>肘部疼痛风险</th><th>临床启示</th></tr>
+      <tr><td><strong>曲球 (Curveball)</strong></td><td>显著增加（OR ≈ 1.6–1.8）</td><td>未显著</td><td>肩部风险主要来自曲球</td></tr>
+      <tr><td><strong>滑球 (Slider)</strong></td><td>未显著</td><td>显著增加（OR ≈ 1.8–2.0）</td><td>肘部风险主要来自滑球</td></tr>
+      <tr><td><strong>变速球 (Changeup)</strong></td><td>未增加</td><td>未增加</td><td>最安全的"变化球"</td></tr>
+      <tr><td><strong>快球 (Fastball)</strong></td><td>基线</td><td>基线</td><td>参照基准</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:0.9em;color:var(--muted);">这是第一次有人用统计学明确量化了不同球种对肩和肘的<strong>差异效应</strong>——不是「变化球都有害」，而是「曲球伤肩、滑球伤肘」。</p>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>核心发现二：投球数与疼痛呈剂量-反应关系</strong>
+    <p>在控制球种和机制后，投球数增加仍然独立地与肘部和肩部疼痛风险显著相关。每增加一定数量的投球，疼痛风险按比例上升——这为后来 Pitch Smart 的年龄分层球数限制提供了直接的数据支撑。</p>
+  </div>
+
+  <div class="callout callout-orange">
+    <strong>核心发现三：不正确的投球机制独立增加风险</strong>
+    <p>通过对投球录像的系统评估，研究识别出特定机制问题（如侧投 arm slot 过低、过早打开躯干等）与疼痛风险独立相关。关键结论是：<strong>这些机制问题带来的风险，是在球种和球数之上叠加的。</strong>一个投球数正常的投手，如果机制不好，仍然处于高风险状态。</p>
+  </div>
+
+  <h3>2002 年论文的核心贡献</h3>
+  <ol>
+    <li>首次用大数据将<strong>球种-肩/肘效应的解剖特异性</strong>量化出来</li>
+    <li>确立了<strong>剂量-反应关系</strong>——为定量限制提供了科学依据</li>
+    <li>证明了<strong>投球机制是独立的可干预风险因素</strong>——不只是"少投"就行，还要"投得对"</li>
+    <li>直接成为 <strong>MLB Pitch Smart 指南</strong>的数据基础</li>
+  </ol>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 5: INTEGRATED INSIGHTS -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>🔬 两篇合并解读：从数据到训练实践</h2>
+
+  <h3>1. "疼痛"本身就是值得追踪的终点</h3>
+  <p>Lyman 团队最大的方法论贡献，是把"自我报告的疼痛"而非"临床诊断的损伤"作为研究终点。后来的研究证实：青少年投手的手臂疼痛是后续严重损伤（UCL 撕裂、骨骺应力损伤等）的可靠前兆。这意味着教练和家长不需要等医生诊断——投手说疼就应该停。</p>
+
+  <h3>2. 球种限制需要精细化</h3>
+  <div class="callout callout-blue">
+    <strong>综合两篇论文的证据链：</strong>曲球→ 肩部风险；滑球→ 肘部风险；变速球→ 无增加风险（甚至可能保护性）。Pitch Smart 建议 14 岁前不投曲球、16 岁前不投滑球——这个年龄分层直接来自 Lyman 2002 的数据。
+  </div>
+
+  <h3>3. 三个独立因素必须同时管理</h3>
+  <table>
+    <tr><th>因素</th><th>可干预？</th><th>具体措施</th></tr>
+    <tr><td>球种</td><td>✅ 规则限制</td><td>年龄分层球种许可</td></tr>
+    <tr><td>球数</td><td>✅ 比赛规则</td><td>单场/单周/赛季上限+强制休息天数</td></tr>
+    <tr><td>机制</td><td>✅ 教练干预</td><td>避免侧投、避免过早打开躯干、保持肘部在肩以上</td></tr>
+  </table>
+
+  <h3>4. 累计负荷管理的 J 形曲线</h3>
+  <p>Lyman 2001 发现赛季累计 &lt;300 球的投手肘痛风险最高——太少也不行。这个发现比 Gabbett 2016 年提出 ACWR 模型早了 15 年。核心启示：<strong>循序渐进地增加负荷是保护性的，完全不投或突然大量投才是危险的。</strong></p>
+
+  <h3>5. "局数限制"是过时的保护措施</h3>
+  <p>Lyman 明确指出，年轻投手往往每局投更多球（更多的保送、更少的出局效率），所以局数限制实际上允许较差投手面临更大的负荷。这个结论直接推动了全美青少年联赛从"局数制"转向"球数制"。</p>
+</div>
+
+<!-- ========================================== -->
+<!-- SECTION 6: PITCH SMART LEGACY -->
+<!-- ========================================== -->
+<div class="section">
+  <h2>⚾ 从 Lyman 到 Pitch Smart：一篇论文改变了整个行业</h2>
+
+  <div class="stat-box">
+    <div class="stat"><span class="n">MLB</span><span class="d">Pitch Smart 指南制定者</span></div>
+    <div class="stat"><span class="n">全美</span><span class="d">青少年联赛采纳球数限制</span></div>
+    <div class="stat"><span class="n">年龄分层</span><span class="d">7–18 岁分级球数+休息规则</span></div>
+    <div class="stat"><span class="n">球种限制</span><span class="d">14 岁前不投曲球<br>16 岁前不投滑球</span></div>
+  </div>
+
+  <p>MLB Pitch Smart 指南的核心框架几乎可以直接追溯到 Lyman 的两篇论文：</p>
+  <ul>
+    <li><strong>球数限制</strong> → Lyman 2001 的 75 球阈值 + Lyman 2002 的剂量-反应数据</li>
+    <li><strong>休息天数</strong> → Lyman 2001 的"累计负荷"和手臂疲劳数据</li>
+    <li><strong>球种年龄限制</strong> → Lyman 2002 的曲球/滑球部位特异性风险</li>
+    <li><strong>避免全年投球</strong> → Lyman 2001 的"联盟外投球"和赛季累计球数发现</li>
+    <li><strong>教练教育</strong> → Lyman 反复强调教练对风险因素认知不足</li>
+  </ul>
+
+  <div class="callout callout-green">
+    <strong>研究影响总结：</strong>Lyman 不是一个家喻户晓的名字，但他的两篇论文是整个青少年棒球安全体系从"我觉得应该这样"转向"数据告诉我们必须这样"的转折点。1300+ 次引用不是数字游戏——每一次引用都是一次将数据驱动的保护措施推广到新联赛、新地区、新一代投手的过程。
+  </div>
+</div>
+
+<div class="footer">
+  <p>综述基于 Lyman S et al. (2001). <em>Med Sci Sports Exerc</em>, 33(11):1803–1810 · Lyman S et al. (2002). <em>Am J Sports Med</em>, 30(4):463–468.</p>
+  <p>编者：於菟子Max爱棒球 · 2026-07-06</p>
+</div>
+
+</div>
+<div style="text-align:center;padding:20px;background:#e8f5e9;margin-top:30px;margin-bottom:0;border-radius:8px">📥 <strong>论文下载：</strong><a href="pdf/Lyman_2001_Longitudinal_Elbow_Shoulder_Pain.pdf" style="color:#27ae60;font-weight:bold">Lyman et al. (2001) MSSE (72 KB)</a> &nbsp;|&nbsp; <a href="pdf/Lyman_2002_Pitch_Type_Count_Mechanics.pdf" style="color:#27ae60;font-weight:bold">Lyman et al. (2002) AJSM (49 KB)</a></div>
+<div style="text-align:center;padding:20px;background:#f0f0f0;margin-top:0;margin-bottom:0"><a href="../" style="color:#2980b9;text-decoration:none;font-size:14px">← 返回棒球学术圈首页</a></div>
+</body>
+</html>

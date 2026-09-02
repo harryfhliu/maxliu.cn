@@ -1,0 +1,331 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description = "Max Liu's personal website - baseball player, writer, and growing athlete", ogImage = "/images/avatar/max.jpg" } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#0F0F1A" />
+  <link rel="canonical" href={canonicalURL} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta property="og:site_name" content="Max Liu | 刘Max" />
+
+  <!-- WeChat Mini Program friendly -->
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- 字体本地化：使用系统字体栈，避免依赖 Google Fonts（国内访问慢/不稳定） -->
+  <title>{title}</title>
+</head>
+<body>
+  <header class="header" role="banner">
+    <nav class="header__inner container" aria-label="主导航">
+      <a href="/" class="header__logo" aria-label="首页">
+        <span class="header__logo-icon">⚾</span>
+        <span class="header__logo-text">Max<span class="highlight">Liu</span></span>
+      </a>
+
+      <button
+        class="header__toggle"
+        id="mobile-menu-toggle"
+        aria-label="打开菜单"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="header__nav" id="main-nav" role="menubar">
+        <li role="none"><a href="/baseball/" role="menuitem">训练与比赛</a></li>
+        <li role="none"><a href="/academic/" role="menuitem">棒球学术圈</a></li>
+        <li role="none"><a href="/writing/" role="menuitem">文学创作</a></li>
+        <li role="none"><a href="/life/" role="menuitem">生活记录</a></li>
+        <li role="none"><a href="/about/" role="menuitem">关于Max</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" role="main">
+    <slot />
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner container">
+      <div class="footer__brand">
+        <span class="footer__logo">⚾ Max Liu</span>
+        <p class="footer__desc">记录成长，追逐梦想</p>
+      </div>
+      <div class="footer__links">
+        <a href="/">首页</a>
+        <a href="/baseball/">训练与比赛</a>
+        <a href="/academic/">学术圈</a>
+        <a href="/writing/">写作</a>
+        <a href="/about/">关于</a>
+      </div>
+      <div class="footer__copyright">
+        <p>&copy; {new Date().getFullYear()} Max Liu. All rights reserved.</p>
+        <p class="footer__tech">Powered by Astro & GitHub Pages</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const nav = document.getElementById('main-nav');
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      nav?.classList.toggle('is-open');
+      toggle.classList.toggle('is-open');
+    });
+
+    // Close menu on link click (mobile)
+    nav?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        nav?.classList.remove('is-open');
+        toggle?.classList.remove('is-open');
+      });
+    });
+  </script>
+</body>
+</html>
+
+<style is:global>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-header);
+    height: var(--header-height);
+    background: rgba(15, 15, 26, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition-base);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .header__logo:hover {
+    color: var(--text-primary);
+  }
+
+  .header__logo-icon {
+    font-size: var(--text-2xl);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .header__logo-text .highlight {
+    color: var(--color-primary);
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+  }
+
+  .header__nav a {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .header__nav a:hover,
+  .header__nav a:focus-visible {
+    color: var(--text-primary);
+    background: rgba(255, 107, 53, 0.1);
+  }
+
+  .header__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .header__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all var(--transition-base);
+  }
+
+  .header__toggle.is-open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .header__toggle.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .header__toggle.is-open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  @media (max-width: 768px) {
+    .header__toggle {
+      display: flex;
+    }
+
+    .header__nav {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex-direction: column;
+      background: rgba(15, 15, 26, 0.97);
+      backdrop-filter: blur(20px);
+      padding: var(--space-xl);
+      gap: var(--space-sm);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+    }
+
+    .header__nav.is-open {
+      transform: translateX(0);
+    }
+
+    .header__nav a {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      font-size: var(--text-lg);
+      border-radius: var(--radius-md);
+    }
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: auto;
+    padding: var(--space-3xl) 0 var(--space-xl);
+    background: var(--color-bg-elevated);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .footer__logo {
+    font-size: var(--text-xl);
+    font-weight: 800;
+  }
+
+  .footer__desc {
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  .footer__links a {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .footer__links a:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__copyright {
+    text-align: right;
+  }
+
+  .footer__copyright p {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer__tech {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      text-align: center;
+    }
+
+    .footer__links {
+      justify-content: center;
+    }
+
+    .footer__copyright {
+      text-align: center;
+    }
+  }
+
+  /* Main content spacing for fixed header */
+  main {
+    padding-top: var(--header-height);
+    min-height: calc(100dvh - var(--header-height));
+  }
+</style>
