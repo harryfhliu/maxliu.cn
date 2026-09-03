@@ -5,6 +5,29 @@ import aboutData from '../../../data/about.json';
 const timeline = aboutData.timeline;
 const honors = aboutData.honors;
 const skills = aboutData.skills;
+
+// 五边形雷达图参数与坐标计算（5 个技能轴，间隔 72°）
+const radar = { cx: 200, cy: 205, R: 125 };
+const radarAngle = (i: number) => ((-90 + i * 72) * Math.PI) / 180;
+const radarPoint = (i: number, ratio: number) => ({
+  x: radar.cx + radar.R * ratio * Math.cos(radarAngle(i)),
+  y: radar.cy + radar.R * ratio * Math.sin(radarAngle(i)),
+});
+const gridLevels = [0.2, 0.4, 0.6, 0.8, 1.0];
+const gridPolygons = gridLevels.map((ratio) =>
+  skills
+    .map((_: any, i: number) => {
+      const p = radarPoint(i, ratio);
+      return `${p.x},${p.y}`;
+    })
+    .join(' ')
+);
+const dataPoints = skills
+  .map((s: any, i: number) => {
+    const p = radarPoint(i, s.level / 100);
+    return `${p.x},${p.y}`;
+  })
+  .join(' ');
 ---
 
 <BaseLayout title="关于 Max | Max Liu" description="了解Max - 棒球少年、小作家、不断成长的六年级学生">
@@ -18,8 +41,8 @@ const skills = aboutData.skills;
           </div>
         </div>
         <div class="about-info">
-          <h1 class="about-name">Liu <span class="highlight">Max</span></h1>
-          <p class="about-tagline">棒球少年 · 小作家 · 追梦人</p>
+          <h1 class="about-name">Max <span class="highlight">Liu</span></h1>
+          <p class="about-tagline">棒球少年 · 幻想家 · 追梦人</p>
           <p class="about-bio">
             我是Max，一名六年级的学生，也是一名热爱棒球的运动员。
             从一年级第一次拿起球棒到现在，棒球已经成为我生活中不可或缺的一部分。
@@ -29,7 +52,7 @@ const skills = aboutData.skills;
           <div class="about-quick-stats">
             <div><strong>11岁</strong><span>年龄</span></div>
             <div><strong>六年级</strong><span>年级</span></div>
-            <div><strong>投手·二垒·一垒</strong><span>位置</span></div>
+            <div><strong>P / 1B / 2B</strong><span>位置</span></div>
             <div><strong>5年+</strong><span>球龄</span></div>
           </div>
         </div>
@@ -43,21 +66,37 @@ const skills = aboutData.skills;
       <h2 class="section__title">⚡ 能力雷达</h2>
       <p class="section__subtitle">棒球技能自我评估（持续更新）</p>
 
-      <div class="skills-list card">
-        {skills.map(skill => (
-          <div class="skill-item">
-            <div class="skill-header">
-              <span class="skill-name">{skill.name}</span>
-              <span class="skill-value" style={`color: ${skill.color}`}>{skill.level}%</span>
-            </div>
-            <div class="skill-bar">
-              <div
-                class="skill-fill"
-                style={`width: ${skill.level}%; background: linear-gradient(90deg, ${skill.color}, ${skill.color}88)`}
-              ></div>
-            </div>
-          </div>
-        ))}
+      <div class="radar-wrap card">
+        <div class="radar-chart">
+          <svg viewBox="0 0 400 400" class="radar-svg" role="img" aria-label="能力五边形雷达图">
+            <!-- 网格 -->
+            {gridPolygons.map((pts: string) => (
+              <polygon points={pts} class="radar-grid" />
+            ))}
+            <!-- 轴线 -->
+            {skills.map((_: any, i: number) => {
+              const p = radarPoint(i, 1);
+              return <line x1={radar.cx} y1={radar.cy} x2={p.x} y2={p.y} class="radar-axis" />;
+            })}
+            <!-- 数据多边形 -->
+            <polygon points={dataPoints} class="radar-data" />
+            <!-- 数据点 -->
+            {skills.map((s: any, i: number) => {
+              const p = radarPoint(i, s.level / 100);
+              return <circle cx={p.x} cy={p.y} r="4" class="radar-dot" style={`fill: ${s.color}`} />;
+            })}
+            <!-- 标签 -->
+            {skills.map((s: any, i: number) => {
+              const p = radarPoint(i, 1.28);
+              return (
+                <text x={p.x} y={p.y} text-anchor="middle" class="radar-label">
+                  <tspan x={p.x} dy="-4">{s.name.split(' ')[0]}</tspan>
+                  <tspan x={p.x} dy="18" class="radar-label__score">{s.level}</tspan>
+                </text>
+              );
+            })}
+          </svg>
+        </div>
       </div>
     </div>
   </section>
@@ -203,46 +242,55 @@ const skills = aboutData.skills;
     color: var(--text-muted);
   }
 
-  /* Skills */
-  .skills-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
+  /* Skills Radar */
+  .radar-wrap {
     padding: var(--space-xl);
   }
 
-  .skill-item {
+  .radar-chart {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .radar-svg {
     width: 100%;
+    height: auto;
+    display: block;
   }
 
-  .skill-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--space-sm);
+  .radar-grid {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
   }
 
-  .skill-name {
+  .radar-axis {
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+  }
+
+  .radar-data {
+    fill: rgba(255, 107, 53, 0.2);
+    stroke: var(--color-primary);
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+
+  .radar-dot {
+    stroke: var(--color-bg);
+    stroke-width: 2;
+  }
+
+  .radar-label {
+    fill: var(--text-secondary);
+    font-size: 13px;
     font-weight: 600;
-    font-size: var(--text-sm);
   }
 
-  .skill-value {
+  .radar-label__score {
+    fill: var(--text-muted);
+    font-size: 11px;
     font-weight: 700;
-    font-size: var(--text-sm);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .skill-bar {
-    height: 10px;
-    background: rgba(255,255,255,0.05);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-  }
-
-  .skill-fill {
-    height: 100%;
-    border-radius: var(--radius-full);
-    transition: width 1s ease;
   }
 
   /* Timeline */

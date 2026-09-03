@@ -1,0 +1,262 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import musicData from '../../../data/music.json';
+
+interface Song {
+  id: string;
+  title: string;
+  date: string;
+  type: string;
+  description: string;
+  songid: string;
+  url: string;
+  color: string;
+}
+
+const songs = musicData.songs as Song[];
+const intro = musicData.intro;
+const stats = [
+  { n: `${songs.length} 首`, d: '原创棒球歌曲' },
+  { n: '2025.7', d: '首支作品上线' },
+  { n: 'QQ音乐', d: '官方平台发布' },
+];
+---
+
+<BaseLayout title="音乐作品 | Max Liu" description="Max 的原创棒球歌曲 — 从球场到麦克风，用旋律记录成长">
+  <!-- Page Hero -->
+  <section class="page-hero page-hero--music">
+    <div class="container">
+      <div class="page-hero__badge">🎵 MUSIC</div>
+      <h1 class="page-hero__title">音乐作品</h1>
+      <p class="page-hero__desc">{musicData.tagline}</p>
+    </div>
+  </section>
+
+  <!-- 简介 -->
+  <section class="section section--intro">
+    <div class="container">
+      <div class="intro-card card">
+        <h2 class="intro-card__title">🎧 关于这些歌</h2>
+        {intro.map((p) => <p class="intro-card__text">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 统计 -->
+  <section class="section section--stats">
+    <div class="container">
+      <div class="stat-grid">
+        {stats.map((s) => (
+          <div class="stat-card">
+            <span class="stat-card__n">{s.n}</span>
+            <span class="stat-card__d">{s.d}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 歌曲列表 -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section__title">🎼 原创作品</h2>
+      <p class="section__subtitle">按创作时间倒序 · 点击播放条即可站内收听</p>
+
+      <div class="songs-grid">
+        {songs.map((song, i) => (
+          <article class="song-card" style={`--song-color: ${song.color}`}>
+            <div class="song-card__top">
+              <span class="song-card__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="song-card__tag">{song.type}</span>
+              <span class="song-card__date">{song.date}</span>
+            </div>
+            <h3 class="song-card__title">{song.title}</h3>
+            <p class="song-card__desc">{song.description}</p>
+            <div class="song-card__player">
+              <iframe
+                src={`https://i.y.qq.com/n2/m/outchain/player/index.html?songid=${song.songid}`}
+                width="100%"
+                height="66"
+                frameborder="0"
+                allowtransparency="true"
+                loading="lazy"
+                title={`播放《${song.title}》`}
+              ></iframe>
+            </div>
+            <a class="song-card__link" href={song.url} target="_blank" rel="noopener">
+              在 QQ 音乐打开
+              <span class="song-card__link-arrow">↗</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Intro */
+  .section--intro {
+    padding-bottom: 0;
+  }
+
+  .intro-card {
+    padding: var(--space-2xl);
+  }
+
+  .intro-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+
+  .intro-card__text {
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Stats */
+  .section--stats {
+    padding-top: var(--space-xl);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl) var(--space-md);
+    text-align: center;
+  }
+
+  .stat-card__n {
+    display: block;
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: #C084FC;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-card__d {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  /* Songs Grid */
+  .songs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .song-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--song-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+
+  .song-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .song-card__top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .song-card__num {
+    font-size: var(--text-xs);
+    font-weight: 800;
+    color: var(--song-color);
+    letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .song-card__tag {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--song-color);
+    background: color-mix(in srgb, var(--song-color) 14%, transparent);
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-full);
+  }
+
+  .song-card__date {
+    margin-left: auto;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .song-card__title {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+    letter-spacing: -0.01em;
+  }
+
+  .song-card__desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+    flex: 1;
+  }
+
+  .song-card__player {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--space-md);
+    background: #f9fafb;
+  }
+
+  .song-card__player iframe {
+    display: block;
+  }
+
+  .song-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .song-card__link:hover {
+    color: var(--song-color);
+  }
+
+  .song-card__link-arrow {
+    transition: transform var(--transition-fast);
+  }
+
+  .song-card__link:hover .song-card__link-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  @media (max-width: 768px) {
+    .songs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

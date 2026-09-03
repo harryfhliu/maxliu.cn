@@ -1,0 +1,189 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import gamesData from '../../../../data/games.json';
+
+const positionMap: Record<string, string> = {
+  SS: '游击手(SS)', '2B': '二垒手(2B)', '3B': '三垒手(3B)',
+  '1B': '一垒手(1B)', OF: '外野手(OF)', C: '捕手(C)', P: '投手(P)',
+  LF: '左外野(LF)', RF: '右外野(RF)', PH: '代打(PH)',
+  'LF-RF': '左外野·右外野(LF-RF)',
+};
+
+const games = (gamesData as Array<Record<string, any>>).map(g => ({
+  id: g.id,
+  date: g.date,
+  title: `${g.league} - ${g.round}`,
+  opponent: g.opponent,
+  result: g.result === 'win' ? `胜 ${g.score}` : `负 ${g.score}`,
+  position: positionMap[g.position] || g.position,
+  stats: g.stats,
+  highlight: g.highlight,
+  tags: g.tags,
+  featured: g.featured,
+}));
+---
+
+<BaseLayout title="比赛记录 | Max Liu" description="Max 的单场比赛技术统计记录">
+  <section class="page-hero page-hero--baseball">
+    <div class="container">
+      <div class="page-hero__badge">⚾ BASEBALL</div>
+      <h1 class="page-hero__title">比赛记录</h1>
+      <p class="page-hero__desc">单场个人表现 · 技术统计</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <a href="/baseball/" class="back-link">← 返回训练与比赛</a>
+
+      <div class="games-list">
+        {games.map((game) => (
+          <article class={`game-card ${game.featured ? 'game-card--featured' : ''}`}>
+            <div class="game-card__left">
+              <time class="game-card__date" datetime={game.date}>
+                {new Date(game.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}
+              </time>
+              <span class={`game-card__result ${game.result.startsWith('胜') ? 'win' : 'loss'}`}>
+                {game.result}
+              </span>
+            </div>
+            <div class="game-card__main">
+              <h3 class="game-card__title">{game.title}</h3>
+              <p class="game-card__opponent">vs {game.opponent} · {game.position}</p>
+              <p class="game-card__highlight">💡 {game.highlight}</p>
+              <div class="game-card__tags">
+                {game.tags.map(tag => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+            <div class="game-card__stats">
+              <div class="game-stats-row">
+                <span class="gs-label">AB</span><span class="gs-value">{game.stats.ab}</span>
+                <span class="gs-label">H</span><span class="gs-value">{game.stats.h}</span>
+                <span class="gs-label">RBI</span><span class="gs-value">{game.stats.rbi}</span>
+                <span class="gs-label">BB</span><span class="gs-value">{game.stats.bb}</span>
+                <span class="gs-label">SO</span><span class="gs-value">{game.stats.so}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .games-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .game-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+
+  .game-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .game-card--featured {
+    border-color: rgba(255, 107, 53, 0.3);
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255,107,53,0.06) 100%);
+  }
+
+  .game-card__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 70px;
+  }
+
+  .game-card__date {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .game-card__result {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+  }
+
+  .game-card__result.win {
+    background: rgba(0, 212, 170, 0.15);
+    color: var(--color-accent);
+  }
+
+  .game-card__result.loss {
+    background: rgba(196, 30, 58, 0.15);
+    color: #E57373;
+  }
+
+  .game-card__title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .game-card__opponent {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .game-card__highlight {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .game-card__tags {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .game-card__stats {
+    min-width: 180px;
+  }
+
+  .game-stats-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 2px 6px;
+    align-items: center;
+    font-size: var(--text-xs);
+  }
+
+  .gs-label { color: var(--text-muted); font-weight: 600; }
+  .gs-value { color: var(--text-primary); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+
+  @media (max-width: 768px) {
+    .game-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .game-card__left {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .game-card__stats {
+      min-width: unset;
+    }
+  }
+</style>

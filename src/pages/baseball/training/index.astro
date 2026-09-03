@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import trainingsData from '../../../../data/trainings.json';
+
+interface Training {
+  start: string;
+  end: string;
+  title: string;
+  gain: string;
+}
+
+const trainings = trainingsData as Training[];
+const isDateRange = (end: string) => end.includes('.');
+---
+
+<BaseLayout title="训练日志 | Max Liu" description="Max 的真实棒球训练记录与心得">
+  <section class="page-hero page-hero--baseball">
+    <div class="container">
+      <div class="page-hero__badge">⚾ BASEBALL</div>
+      <h1 class="page-hero__title">训练日志</h1>
+      <p class="page-hero__desc">真实训练记录 · 从集训到日常 · 共 {trainings.length} 条</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <a href="/baseball/" class="back-link">← 返回训练与比赛</a>
+
+      <div class="training-list">
+        {trainings.map((t) => (
+          <div class="training-item">
+            <div class="training-item__date">
+              <time class="training-item__start">{t.start}</time>
+              <span class="training-item__end">{isDateRange(t.end) ? `→ ${t.end}` : `· ${t.end}`}</span>
+            </div>
+            <div class="training-item__main">
+              <h3 class="training-item__title">{t.title}</h3>
+              <p class="training-item__content">{t.gain}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .training-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .training-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-lg) var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+  }
+
+  .training-item:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .training-item__date {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .training-item__start {
+    font-weight: 800;
+    color: var(--color-primary);
+    font-size: var(--text-base);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .training-item__end {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .training-item__main {
+    min-width: 0;
+  }
+
+  .training-item__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+  }
+
+  .training-item__content {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .training-item {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+  }
+</style>

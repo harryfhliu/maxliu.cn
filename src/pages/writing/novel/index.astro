@@ -1,0 +1,186 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import novelData from '../../../../data/novel.json';
+
+interface Chapter {
+  n: number;
+  title: string;
+  content: string;
+}
+
+const novel = novelData as {
+  title: string;
+  subtitle: string;
+  author: string;
+  authorNote: string;
+  type: string;
+  cover: string;
+  intro: string[];
+  chapters: Chapter[];
+};
+
+const chapters = novel.chapters;
+---
+
+<BaseLayout title={`${novel.title} | 文学创作 | Max Liu`} description={`转载长篇小说《${novel.title}》，作者：${novel.author}（${novel.authorNote}）`}>
+  <section class="page-hero page-hero--writing">
+    <div class="container">
+      <div class="page-hero__badge">📖 转载 · 长篇小说</div>
+      <h1 class="page-hero__title">《{novel.title}》</h1>
+      <p class="page-hero__desc">又名《{novel.subtitle}》</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <a href="/writing/" class="back-link">← 返回文学创作</a>
+
+      <div class="novel-intro card">
+        <div class="novel-intro__cover">
+          <img src={novel.cover} alt={`《${novel.title}》封面`} />
+        </div>
+        <div class="novel-intro__body">
+          <div class="novel-intro__author">
+            <span class="novel-intro__tag">{novel.type}</span>
+            <span>作者：{novel.author}（{novel.authorNote}）</span>
+          </div>
+          <div class="novel-intro__text">
+            {novel.intro.map(p => <p>{p}</p>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <h2 class="section__title">📑 章节目录</h2>
+      <p class="section__subtitle">共 {chapters.length} 章 · 点击章节开始阅读</p>
+
+      <div class="chapter-grid">
+        {chapters.map(c => (
+          <a href={`/writing/novel/${c.n}/`} class="chapter-item">
+            <span class="chapter-item__n">第{c.n}章</span>
+            <span class="chapter-item__title">{c.title}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .novel-intro {
+    display: flex;
+    gap: var(--space-2xl);
+    align-items: flex-start;
+    padding: var(--space-2xl);
+  }
+
+  .novel-intro__cover {
+    flex-shrink: 0;
+    width: 220px;
+  }
+
+  .novel-intro__cover img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    display: block;
+  }
+
+  .novel-intro__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .novel-intro__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    flex-wrap: wrap;
+  }
+
+  .novel-intro__tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(0, 212, 170, 0.15);
+    color: var(--color-accent);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+
+  .novel-intro__text p {
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+  }
+
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .chapter-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-fast);
+  }
+
+  .chapter-item:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .chapter-item__n {
+    flex-shrink: 0;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chapter-item__title {
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .novel-intro {
+      flex-direction: column;
+      padding: var(--space-xl);
+    }
+
+    .novel-intro__cover {
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    .chapter-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .chapter-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

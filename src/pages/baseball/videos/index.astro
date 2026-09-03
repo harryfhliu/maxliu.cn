@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import videosData from '../../../../data/videos.json';
+
+const videos = videosData as Array<Record<string, any>>;
+---
+
+<BaseLayout title="精彩视频 | Max Liu" description="Max 的比赛与训练精彩视频">
+  <section class="page-hero page-hero--baseball">
+    <div class="container">
+      <div class="page-hero__badge">⚾ BASEBALL</div>
+      <h1 class="page-hero__title">精彩视频</h1>
+      <p class="page-hero__desc">比赛与训练的精彩瞬间 · 共 {videos.length} 个</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <a href="/baseball/" class="back-link">← 返回训练与比赛</a>
+
+      <div class="videos-grid">
+        {videos.map(v => (
+          <div class="video-item card">
+            <video class="video-item__player" src={v.video} controls playsinline preload="metadata" />
+            <div class="video-item__info">
+              <span class="tag tag--accent">{v.type}</span>
+              <h3 class="video-item__title">{v.title}</h3>
+              {v.description && <p class="video-item__desc">{v.description}</p>}
+              <time class="video-item__date" datetime={v.date}>
+                {new Date(v.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </time>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 360px));
+    gap: var(--space-lg);
+  }
+
+  .video-item {
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .video-item__player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+    display: block;
+  }
+
+  .video-item__info {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .video-item__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-top: var(--space-xs);
+  }
+
+  .video-item__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+    line-height: 1.6;
+  }
+
+  .video-item__date {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  @media (max-width: 768px) {
+    .videos-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

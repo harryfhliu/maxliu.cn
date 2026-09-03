@@ -24,3 +24,7 @@ Thumbs.db
 # Local tool data (not for public repo)
 .codebuddy/
 .workbuddy/
+
+# 本地源文档（不公开）
+棒球比赛参赛统计.md
+棒球训练记录.md

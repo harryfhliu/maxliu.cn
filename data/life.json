@@ -1,38 +1,59 @@
 [
   {
-    "id": "summer-camp-2026",
-    "title": "2026棒球夏令营 - 那些难忘的瞬间",
-    "date": "2026-07-15",
-    "category": "旅行/活动",
-    "images": 3,
-    "excerpt": "两周的封闭式夏令营，和来自全国各地的棒球少年们一起训练、比赛、生活。有汗水，有泪水，更有终身难忘的友谊...",
-    "tags": ["棒球", "夏令营", "友谊"]
-  },
-  {
-    "id": "family-trip-qingdao",
-    "title": "青岛之旅 - 海边的棒球少年",
-    "date": "2026-06-08",
+    "id": "shenzhen-trip-2025",
+    "title": "深圳之旅 - 温暖的寒假",
+    "date": "2025-01-26",
     "category": "家庭旅行",
-    "images": 12,
-    "excerpt": "端午假期全家去青岛旅游，在海边发现了棒球场！忍不住上去挥了几棒，被游客围观了哈哈...",
-    "tags": ["旅行", "家庭", "海边"]
+    "photos": [
+      "/images/life/shenzhen-2025/shenzhen-1.jpg",
+      "/images/life/shenzhen-2025/shenzhen-2.jpg",
+      "/images/life/shenzhen-2025/shenzhen-3.jpg",
+      "/images/life/shenzhen-2025/shenzhen-4.jpg",
+      "/images/life/shenzhen-2025/shenzhen-5.jpg",
+      "/images/life/shenzhen-2025/shenzhen-6.jpg",
+      "/images/life/shenzhen-2025/shenzhen-7.jpg",
+      "/images/life/shenzhen-2025/shenzhen-8.jpg",
+      "/images/life/shenzhen-2025/shenzhen-9.jpg",
+      "/images/life/shenzhen-2025/shenzhen-10.jpg"
+    ],
+    "excerpt": "2025年寒假，来到深圳这座温暖的城市旅行。繁华的都市风光、宜人的滨海景色，一路的欢乐时光都定格在这些照片里。",
+    "tags": ["旅行", "深圳", "寒假"]
   },
   {
-    "id": "birthday-party",
-    "title": "11岁生日 - 棒球主题派对",
-    "date": "2026-08-18",
-    "category": "日常生活",
-    "images": 8,
-    "excerpt": "今年生日特别有意义，爸爸妈妈给我办了一个棒球主题的生日派对！收到了梦寐以求的新球棒...",
-    "tags": ["生日", "成长"]
+    "id": "lanzhou-trip-2024",
+    "title": "兰州行",
+    "date": "2024-10-05",
+    "category": "旅行视频",
+    "video": "/videos/lanzhou.mp4",
+    "excerpt": "2024年10月，前往兰州旅行。黄河之滨的独特风情、城市的烟火气息，都用镜头记录了下来。",
+    "tags": ["兰州", "旅行", "视频"]
   },
   {
-    "id": "hobbies-piano",
-    "title": "除了棒球 - 我也爱弹钢琴",
-    "date": "2026-02-10",
-    "category": "兴趣爱好",
-    "images": 5,
-    "excerpt": "大家都以为我只喜欢运动，其实我也很喜欢音乐。学了四年钢琴，虽然不如棒球那么痴迷，但每次弹琴都很享受...",
-    "tags": ["钢琴", "音乐", "爱好"]
+    "id": "dalian-trip-2024",
+    "title": "大连之旅 - 海边的春节假期",
+    "date": "2024-02-14",
+    "category": "家庭旅行",
+    "photos": [
+      "/images/life/dalian-2024/dalian-1.jpg",
+      "/images/life/dalian-2024/dalian-2.jpg",
+      "/images/life/dalian-2024/dalian-3.jpg",
+      "/images/life/dalian-2024/dalian-4.jpg",
+      "/images/life/dalian-2024/dalian-5.jpg",
+      "/images/life/dalian-2024/dalian-6.jpg",
+      "/images/life/dalian-2024/dalian-7.jpg",
+      "/images/life/dalian-2024/dalian-8.jpg",
+      "/images/life/dalian-2024/dalian-9.jpg"
+    ],
+    "excerpt": "2024年春节假期，和爸爸妈妈来到了美丽的大连，进行了为期4天的旅行。漫步滨海路、欣赏城市夜景，海风、沙滩与一路的欢声笑语，都定格在这些照片里。",
+    "tags": ["旅行", "家庭", "大连", "春节"]
+  },
+  {
+    "id": "sanxingdui-exploration",
+    "title": "三星堆探秘",
+    "date": "2023-08-01",
+    "category": "旅行视频",
+    "video": "/videos/sanxingdui.mp4",
+    "excerpt": "2023年8月，来到了四川广汉三星堆，现在跟着我的镜头一起参观一下三星堆博物馆吧。",
+    "tags": ["三星堆", "旅行", "视频"]
   }
 ]

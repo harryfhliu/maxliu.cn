@@ -1,0 +1,143 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import novelData from '../../../../data/novel.json';
+
+interface Chapter {
+  n: number;
+  title: string;
+  content: string;
+}
+
+export function getStaticPaths() {
+  return (novelData as any).chapters.map((c: Chapter) => ({
+    params: { chapter: String(c.n) },
+  }));
+}
+
+const novel = novelData as { title: string; chapters: Chapter[] };
+const chapters = novel.chapters;
+
+const { chapter } = Astro.params;
+const n = parseInt(chapter as string, 10);
+const current = chapters.find(c => c.n === n);
+const prev = chapters.find(c => c.n === n - 1);
+const next = chapters.find(c => c.n === n + 1);
+
+const paragraphs = current!.content.split(/\n+/).filter(Boolean);
+---
+
+<BaseLayout
+  title={`第${n}章 ${current!.title} | ${novel.title} | Max Liu`}
+  description={`《${novel.title}》第${n}章 ${current!.title}`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <a href="/writing/novel/" class="back-link">← 返回目录</a>
+
+      <article class="chapter card">
+        <header class="chapter__header">
+          <h1 class="chapter__title">第{n}章 {current!.title}</h1>
+          <p class="chapter__novel">《{novel.title}》</p>
+        </header>
+
+        <div class="chapter__body">
+          {paragraphs.map(p => <p>{p}</p>)}
+        </div>
+
+        <nav class="chapter__nav">
+          {prev ? (
+            <a class="chapter__nav-link" href={`/writing/novel/${prev.n}/`}>← 上一章</a>
+          ) : (
+            <span class="chapter__nav-empty"></span>
+          )}
+          <a class="chapter__nav-link chapter__nav-link--center" href="/writing/novel/">目 录</a>
+          {next ? (
+            <a class="chapter__nav-link" href={`/writing/novel/${next.n}/`}>下一章 →</a>
+          ) : (
+            <span class="chapter__nav-empty"></span>
+          )}
+        </nav>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .chapter {
+    padding: var(--space-2xl);
+  }
+
+  .chapter__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chapter__title {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+  }
+
+  .chapter__novel {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .chapter__body p {
+    text-indent: 2em;
+    color: var(--text-secondary);
+    line-height: 2;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-base);
+  }
+
+  .chapter__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .chapter__nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .chapter__nav-link:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .chapter__nav-link--center {
+    color: var(--color-accent);
+  }
+
+  .chapter__nav-empty {
+    width: 90px;
+  }
+
+  @media (max-width: 768px) {
+    .chapter {
+      padding: var(--space-lg);
+    }
+
+    .chapter__nav-empty {
+      display: none;
+    }
+  }
+</style>

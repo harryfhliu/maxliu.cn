@@ -14,11 +14,11 @@ interface Writing {
   award?: string;
 }
 
-const writings = writingsData as Writing[];
-
 export function getStaticPaths() {
-  return writings.map(w => ({ params: { slug: w.id } }));
+  return (writingsData as Writing[]).map(w => ({ params: { slug: w.id } }));
 }
+
+const writings = writingsData as Writing[];
 
 const { slug } = Astro.params;
 const writing = writings.find(w => w.id === slug);

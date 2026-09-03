@@ -1,0 +1,99 @@
+{
+  "tagline": "从球场到麦克风，用旋律记录棒球少年的成长",
+  "intro": [
+    "这里是 Max 的原创音乐作品，全部已在 QQ 音乐上线。每一首歌，都诞生于球场上某个真实的瞬间——可能是低谷时的自我追问，可能是突破后的痛快呐喊，也可能是送别队友时的不舍。",
+    "点击卡片中的播放条即可在站内直接收听；也可以点击「在 QQ 音乐打开」前往详情页。"
+  ],
+  "songs": [
+    {
+      "id": "qinfen-nianya",
+      "title": "勤奋碾压",
+      "date": "2026.8",
+      "type": "原创",
+      "description": "2026年8月初在潼关与渭南队一起训练，感受到勤奋是成为球员的必经之路。深知天赋短板的我，发誓要靠勤奋弥补不足，誓要战到最后。",
+      "songid": "692652228",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=692652228",
+      "color": "#FF6B35"
+    },
+    {
+      "id": "last-summer",
+      "title": "最后的夏天",
+      "date": "2026.8",
+      "type": "原创",
+      "description": "几个队友的最后一届 U12 比赛，很多人面临升学后不再打球的问题。这首《最后的夏天》送给他们。",
+      "songid": "692525812",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=692525812",
+      "color": "#F472B6"
+    },
+    {
+      "id": "strikeout-song",
+      "title": "三振歌",
+      "date": "2026.6",
+      "type": "原创",
+      "description": "2026年6月 MLB CUP 西安站，满垒后 Max 登场，以两个三振、一个接杀稳住局面，凭此拿下赛会 mini 金手套奖——Max 的第一个个人荣誉。",
+      "songid": "692561493",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=692561493",
+      "color": "#FBBF24"
+    },
+    {
+      "id": "against-wind-pitcher",
+      "title": "逆风投手",
+      "date": "2026.4",
+      "type": "原创",
+      "description": "2026年4月省联赛第一站，满垒危机时登板投球，化解了危机。",
+      "songid": "692521948",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=692521948",
+      "color": "#60A5FA"
+    },
+    {
+      "id": "bunt-king",
+      "title": "触击王宣言",
+      "date": "2026.3",
+      "type": "原创",
+      "description": "队内对抗中频频用触击抢分成功，队友赞誉 Max 是「触击王」，随后创作了这首歌。",
+      "songid": "692525802",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=692525802",
+      "color": "#34D399"
+    },
+    {
+      "id": "an-da",
+      "title": "安打",
+      "date": "2025.8",
+      "type": "原创",
+      "description": "找到状态并连续在比赛中安打得分后创作，记录那段时间最酣畅淋漓的感觉。",
+      "songid": "595304794",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=595304794",
+      "color": "#FF8A65"
+    },
+    {
+      "id": "happy-meaning",
+      "title": "快乐的意义",
+      "date": "2025.8",
+      "type": "原创",
+      "description": "2025年8月平湖比赛期间创作，状态低迷的时候，认真思考了「为什么打棒球」这个问题。",
+      "songid": "595304941",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=595304941",
+      "color": "#A78BFA"
+    },
+    {
+      "id": "yuan-xing",
+      "title": "远行",
+      "date": "2025.7",
+      "type": "原创",
+      "description": "出发赴平湖前所作，希望自己每一次出征都能有所收获。",
+      "songid": "592277247",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=592277247",
+      "color": "#38BDF8"
+    },
+    {
+      "id": "home-run-dream",
+      "title": "梦想的本垒打",
+      "date": "2025.7",
+      "type": "原创",
+      "description": "2025年7月集训中有感而作，希望能够尽快提升自己的打击能力。",
+      "songid": "590808638",
+      "url": "https://i.y.qq.com/v8/playsong.html?songid=590808638",
+      "color": "#FB7185"
+    }
+  ]
+}

@@ -228,6 +228,29 @@ a:hover {
   --hero-badge-color: #818CF8;
 }
 
+.page-hero--music {
+  --hero-tint: rgba(167, 139, 250, 0.10);
+  --hero-badge-bg: rgba(167, 139, 250, 0.18);
+  --hero-badge-color: #C084FC;
+}
+
+/* === 返回链接（子页面通用） === */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--color-primary);
+}
+
 /* === Card Component Base === */
 .card {
   background: var(--color-bg-card);

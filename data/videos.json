@@ -1,0 +1,17 @@
+[
+  {
+    "id": "championship-2025",
+    "title": "全国锦标赛精彩镜头",
+    "date": "2025-08-10",
+    "type": "比赛",
+    "video": "/videos/games/championship-2025.mp4"
+  },
+  {
+    "id": "pinghu-2025-training",
+    "title": "浙江平湖集训与比赛",
+    "date": "2025-08-07",
+    "type": "比赛",
+    "description": "蒲公英棒球联盟集训与比赛画面，配乐为原创歌曲《安打》",
+    "video": "/videos/games/pinghu-2025.mp4"
+  }
+]

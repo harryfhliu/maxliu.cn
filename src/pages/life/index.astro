@@ -14,21 +14,26 @@ const lifeRecords = lifeData;
     </div>
   </section>
 
-  <!-- Photo Grid / Life Records -->
   <section class="section">
     <div class="container">
       <div class="life-grid">
         {lifeRecords.map(record => (
           <article class="life-card">
-            <div class="life-card__image">
-              <div class="life-card__placeholder">
-                <span class="life-card__icon">{record.category.includes('旅行') ? '🌊' : record.category.includes('生日') ? '🎂' : record.category.includes('音乐') ? '🎹' : '📸'}</span>
-                <span class="life-card__photo-count">📷 {record.images}张照片</span>
-              </div>
-            </div>
+            <a href={`/life/${record.id}/`} class="life-card__cover">
+              {record.video ? (
+                <>
+                  <video class="life-card__cover-video" src={record.video} preload="metadata" muted playsinline />
+                  <span class="life-card__play">▶</span>
+                </>
+              ) : (
+                <img class="life-card__cover-img" src={record.photos[0]} alt={record.title} loading="lazy" />
+              )}
+            </a>
             <div class="life-card__content">
               <span class="life-card__category">{record.category}</span>
-              <h3 class="life-card__title">{record.title}</h3>
+              <a href={`/life/${record.id}/`} class="life-card__title-link">
+                <h3 class="life-card__title">{record.title}</h3>
+              </a>
               <time class="life-card__date" datetime={record.date}>
                 {new Date(record.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
               </time>
@@ -52,6 +57,8 @@ const lifeRecords = lifeData;
   }
 
   .life-card {
+    display: flex;
+    flex-direction: column;
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -65,29 +72,48 @@ const lifeRecords = lifeData;
     box-shadow: var(--shadow-md);
   }
 
-  .life-card__image {
+  .life-card__cover {
+    display: block;
+    position: relative;
     aspect-ratio: 16 / 9;
+    background: #000;
     overflow: hidden;
   }
 
-  .life-card__placeholder {
+  .life-card__cover-img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .life-card__cover:hover .life-card__cover-img {
+    transform: scale(1.05);
+  }
+
+  .life-card__cover-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .life-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 107, 53, 0.9);
+    color: #fff;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
-    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg-elevated) 100%);
-  }
-
-  .life-card__icon {
-    font-size: 3rem;
-  }
-
-  .life-card__photo-count {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
+    font-size: 1.2rem;
+    padding-left: 3px;
+    pointer-events: none;
   }
 
   .life-card__content {
@@ -102,11 +128,21 @@ const lifeRecords = lifeData;
     letter-spacing: 0.05em;
   }
 
+  .life-card__title-link {
+    text-decoration: none;
+  }
+
   .life-card__title {
     font-size: var(--text-lg);
     font-weight: 700;
     margin: var(--space-sm) 0;
     line-height: 1.4;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .life-card__title-link:hover .life-card__title {
+    color: var(--color-accent);
   }
 
   .life-card__date {
@@ -121,6 +157,10 @@ const lifeRecords = lifeData;
     font-size: var(--text-sm);
     line-height: 1.7;
     margin-bottom: var(--space-md);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .life-card__tags {

@@ -4,6 +4,7 @@ import tournamentsData from '../../../data/tournaments.json';
 import gamesData from '../../../data/games.json';
 import trainingsData from '../../../data/trainings.json';
 import statsData from '../../../data/stats.json';
+import videosData from '../../../data/videos.json';
 
 interface Tournament {
   id: string;
@@ -82,7 +83,17 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
 }));
 
 // 训练日志（从 data/trainings.json 统一读取）
-const trainings = trainingsData;
+interface Training {
+  start: string;
+  end: string;
+  title: string;
+  gain: string;
+}
+const trainings = trainingsData as Training[];
+const isDateRange = (end: string) => end.includes('.');
+
+// 比赛/训练视频（从 data/videos.json 统一读取）
+const videos = videosData as Array<Record<string, any>>;
 
 // 成长曲线数据（月度打击率趋势）
 const trend = (statsData as any).monthlyTrend || [];
@@ -121,7 +132,7 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
       <p class="section__subtitle">完整赛事记录，按时间倒序，共 {summary.total} 项</p>
 
       <div class="t-list">
-        {sortedTournaments.map((t) => {
+        {sortedTournaments.slice(0, 5).map((t) => {
           const badge = placeBadge(t.place, t.status);
           const d = formatDate(t.date);
           return (
@@ -151,6 +162,9 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
             </article>
           );
         })}
+      </div>
+      <div class="view-more-wrap">
+        <a href="/baseball/tournaments/" class="view-more-link">查看全部 {summary.total} 项赛事 →</a>
       </div>
     </div>
   </section>
@@ -217,7 +231,7 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
       </div>
 
       <div class="games-list">
-        {games.map((game) => (
+        {games.slice(0, 5).map((game) => (
           <article class={`game-card ${game.featured ? 'game-card--featured' : ''}`}>
             <div class="game-card__left">
               <time class="game-card__date" datetime={game.date}>
@@ -247,28 +261,61 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
           </article>
         ))}
       </div>
+      <div class="view-more-wrap">
+        <a href="/baseball/games/" class="view-more-link">查看全部 {games.length} 场比赛 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos (比赛/训练视频) -->
+  <section class="section section--videos">
+    <div class="container">
+      <h2 class="section__title">🎬 精彩视频</h2>
+      <p class="section__subtitle">比赛与训练的精彩瞬间</p>
+
+      <div class="videos-grid">
+        {videos.slice(0, 5).map(v => (
+          <div class="video-item card">
+            <video class="video-item__player" src={v.video} controls playsinline preload="metadata" />
+            <div class="video-item__info">
+              <span class="tag tag--accent">{v.type}</span>
+              <h3 class="video-item__title">{v.title}</h3>
+              {v.description && <p class="video-item__desc">{v.description}</p>}
+              <time class="video-item__date" datetime={v.date}>
+                {new Date(v.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </time>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="view-more-wrap">
+        <a href="/baseball/videos/" class="view-more-link">查看全部 {videos.length} 个视频 →</a>
+      </div>
     </div>
   </section>
 
   <!-- Training Log -->
   <section class="section">
     <div class="container">
-      <h2 class="section__title">🏋️ 训练日志<span class="placeholder-badge">⚠️ 待补充</span></h2>
-      <p class="section__subtitle">最近的训练记录与心得 · 持续记录中</p>
+      <h2 class="section__title">🏋️ 训练日志</h2>
+      <p class="section__subtitle">真实训练记录 · 从集训到日常，每一滴汗水都被记录</p>
 
       <div class="training-list">
-        {trainings.map((t) => (
+        {trainings.slice(0, 5).map((t) => (
           <div class="training-item">
             <div class="training-item__date">
-              <time datetime={t.date}>{new Date(t.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}</time>
+              <time class="training-item__start">{t.start}</time>
+              <span class="training-item__end">{isDateRange(t.end) ? `→ ${t.end}` : `· ${t.end}`}</span>
             </div>
-            <div class="training-item__type">
-              <span class={`tag ${t.type === '打击训练' ? '' : t.type === '守备训练' ? 'tag--accent' : ''}`}>{t.type}</span>
-              <span class="training-duration">{t.duration}</span>
+            <div class="training-item__main">
+              <h3 class="training-item__title">{t.title}</h3>
+              <p class="training-item__content">{t.gain}</p>
             </div>
-            <p class="training-item__content">{t.content}</p>
           </div>
         ))}
+      </div>
+      <div class="view-more-wrap">
+        <a href="/baseball/training/" class="view-more-link">查看全部 {trainings.length} 条训练记录 →</a>
       </div>
     </div>
   </section>
@@ -585,10 +632,10 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
 
   .training-item {
     display: grid;
-    grid-template-columns: auto auto 1fr;
-    gap: var(--space-md);
-    align-items: center;
-    padding: var(--space-md) var(--space-lg);
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-lg) var(--space-xl);
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -600,27 +647,113 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
   }
 
   .training-item__date {
-    font-weight: 700;
-    color: var(--color-primary);
-    min-width: 60px;
-    font-size: var(--text-sm);
-  }
-
-  .training-item__type {
     display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    min-width: 120px;
+    flex-direction: column;
+    gap: var(--space-xs);
   }
 
-  .training-duration {
-    color: var(--text-muted);
+  .training-item__start {
+    font-weight: 800;
+    color: var(--color-primary);
+    font-size: var(--text-base);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .training-item__end {
     font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .training-item__main {
+    min-width: 0;
+  }
+
+  .training-item__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
   }
 
   .training-item__content {
     color: var(--text-secondary);
     font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  /* View More */
+  .view-more-wrap {
+    text-align: center;
+    margin-top: var(--space-xl);
+  }
+
+  .view-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-2xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .view-more-link:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: rgba(255, 107, 53, 0.06);
+  }
+
+  /* Videos */
+  .section--videos {
+    padding-top: var(--space-xl);
+  }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 360px));
+    gap: var(--space-lg);
+  }
+
+  .video-item {
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .video-item__player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
+    display: block;
+  }
+
+  .video-item__info {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .video-item__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-top: var(--space-xs);
+  }
+
+  .video-item__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+    line-height: 1.6;
+  }
+
+  .video-item__date {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
   }
 
   /* Chart */
@@ -664,20 +797,6 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
     font-size: var(--text-xs);
     color: var(--text-muted);
     font-style: italic;
-  }
-
-  /* Placeholder Badge */
-  .placeholder-badge {
-    display: inline-block;
-    margin-left: var(--space-sm);
-    padding: 2px var(--space-sm);
-    background: rgba(196, 30, 58, 0.15);
-    color: #E57373;
-    border: 1px solid rgba(196, 30, 58, 0.3);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    vertical-align: middle;
   }
 
   /* Tournament List */
