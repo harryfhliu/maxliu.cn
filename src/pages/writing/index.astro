@@ -78,7 +78,7 @@ const novel = (novelData as any) as {
           <a href={`/writing/${w.id}/`} class="writing-card card">
             <div class="writing-card__head">
               <span class={`writing-card__type ${w.type === 'essay' ? 'writing-card__type--essay' : ''}`}>
-                {w.type === 'essay' ? '🏆 获奖作文' : '📝 诗歌'}
+                {w.type === 'essay' ? '📝 习作' : '📝 诗歌'}
               </span>
               <time class="writing-card__date" datetime={w.date}>
                 {new Date(w.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}

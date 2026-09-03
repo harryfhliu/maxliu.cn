@@ -37,7 +37,7 @@ const dateStr = new Date(writing!.date).toLocaleDateString('zh-CN', {
 >
   <section class="page-hero page-hero--writing">
     <div class="container">
-      <div class="page-hero__badge">{writing!.type === 'essay' ? '🏆 获奖作文' : '📝 诗歌'}</div>
+      <div class="page-hero__badge">{writing!.type === 'essay' ? '📝 习作' : '📝 诗歌'}</div>
       <h1 class="page-hero__title">{writing!.title}</h1>
       <p class="page-hero__desc">{dateStr} · {writing!.category}</p>
     </div>
