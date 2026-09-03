@@ -42,7 +42,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <header class="header" role="banner">
     <nav class="header__inner container" aria-label="主导航">
       <a href="/" class="header__logo" aria-label="首页">
-        <span class="header__logo-icon">⚾</span>
+        <span class="header__logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="logo-ball" focusable="false">
+            <circle class="logo-ball__body" cx="50" cy="50" r="46" />
+            <path class="logo-ball__seam" d="M50 4 C20 22 20 78 50 96" />
+            <path class="logo-ball__seam" d="M50 4 C80 22 80 78 50 96" />
+          </svg>
+        </span>
         <span class="header__logo-text">Max<span class="highlight">Liu</span></span>
       </a>
 
@@ -74,7 +80,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <footer class="footer" role="contentinfo">
     <div class="footer__inner container">
       <div class="footer__brand">
-        <span class="footer__logo">⚾ Max Liu</span>
+        <span class="footer__logo">
+          <svg viewBox="0 0 100 100" class="logo-ball logo-ball--footer" aria-hidden="true" focusable="false">
+            <circle class="logo-ball__body" cx="50" cy="50" r="46" />
+            <path class="logo-ball__seam" d="M50 4 C20 22 20 78 50 96" />
+            <path class="logo-ball__seam" d="M50 4 C80 22 80 78 50 96" />
+          </svg>
+          Max Liu
+        </span>
         <p class="footer__desc">记录成长，追逐梦想</p>
       </div>
       <div class="footer__links">
@@ -154,8 +167,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   }
 
   .header__logo-icon {
-    font-size: var(--text-2xl);
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .logo-ball {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .logo-ball__body {
+    fill: #fff;
+  }
+
+  .logo-ball__seam {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 4;
+    stroke-linecap: round;
   }
 
   .header__logo-text .highlight {
@@ -267,8 +302,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   }
 
   .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
     font-size: var(--text-xl);
     font-weight: 800;
+  }
+
+  .logo-ball--footer {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
   }
 
   .footer__desc {
