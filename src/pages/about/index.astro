@@ -5,6 +5,7 @@ import aboutData from '../../../data/about.json';
 const timeline = aboutData.timeline;
 const honors = aboutData.honors;
 const skills = aboutData.skills;
+const social = aboutData.social;
 
 // 五边形雷达图参数与坐标计算（5 个技能轴，间隔 72°）
 const radar = { cx: 200, cy: 205, R: 125 };
@@ -140,6 +141,38 @@ const dataPoints = skills
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Social Media -->
+  <section class="section" style="background: var(--color-bg-elevated);">
+    <div class="container">
+      <h2 class="section__title">📣 关注 Max</h2>
+      <p class="section__subtitle">欢迎关注 Max 的社媒账号，一起见证成长</p>
+
+      <div class="social-grid">
+        {social.map((s) => (
+          s.url ? (
+            <a href={s.url} target="_blank" rel="noopener" class="social-card card">
+              <span class="social-card__icon">{s.icon}</span>
+              <div class="social-card__body">
+                <h3 class="social-card__name">{s.platform} · {s.name}</h3>
+                <p class="social-card__id">{s.id}</p>
+              </div>
+              <span class="social-card__arrow">→</span>
+            </a>
+          ) : (
+            <div class="social-card card social-card--plain">
+              <span class="social-card__icon">{s.icon}</span>
+              <div class="social-card__body">
+                <h3 class="social-card__name">{s.platform} · {s.name}</h3>
+                <p class="social-card__id">{s.id}</p>
+              </div>
+            </div>
+          )
+        ))}
+      </div>
+      <p class="social-note">💡 请在各 App 内搜索账号关注</p>
     </div>
   </section>
 </BaseLayout>
@@ -401,6 +434,61 @@ const dataPoints = skills
     font-size: var(--text-xs);
     color: var(--color-primary);
     font-weight: 600;
+  }
+
+  /* Social */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .social-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    padding: var(--space-lg) var(--space-xl);
+  }
+
+  .social-card--plain {
+    cursor: default;
+  }
+
+  .social-card__icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .social-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .social-card__name {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .social-card__id {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .social-card__arrow {
+    font-size: var(--text-lg);
+    color: var(--color-primary);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .social-note {
+    margin-top: var(--space-xl);
+    text-align: center;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
   }
 
   /* Responsive */

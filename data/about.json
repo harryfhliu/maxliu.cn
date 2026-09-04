@@ -24,5 +24,10 @@
     { "name": "跑垒 (Baserunning)", "level": 72, "color": "#818CF8" },
     { "name": "球商 (Game IQ)", "level": 80, "color": "#F472B6" },
     { "name": "领导力 (Leadership)", "level": 70, "color": "#FBBF24" }
+  ],
+  "social": [
+    { "platform": "小红书", "name": "於菟子Max", "id": "小红书号 632686919", "url": "https://www.xiaohongshu.com/user/profile/632686919", "icon": "📕" },
+    { "platform": "抖音", "name": "於菟子Max", "id": "抖音号 365599658", "url": "https://www.douyin.com/search/於菟子Max", "icon": "🎵" },
+    { "platform": "视频号", "name": "於菟子Max", "id": "视频号 sph3ywdBYj6kpb2", "url": "", "icon": "🎬" }
   ]
 }
