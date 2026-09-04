@@ -21,5 +21,13 @@
     "type": "比赛",
     "description": "蒲公英棒球联盟集训与比赛画面，配乐为原创歌曲《安打》",
     "video": "/videos/games/pinghu-2025.mp4"
+  },
+  {
+    "id": "xian-aoti-training-2024",
+    "title": "西安奥体中央公园训练",
+    "date": "2024-12-29",
+    "type": "训练",
+    "description": "西安奥体中央公园，小队员们在此进行训练",
+    "video": "/videos/training/xian-aoti-training-2024.mp4"
   }
 ]
