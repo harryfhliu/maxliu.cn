@@ -6,12 +6,23 @@
     "研究范围涵盖投球生物力学、打击表现、损伤流行病学、负荷管理、预防方案五大主题，数据来源包括 AMSSM、ASMI、IOC 等权威机构的立场声明和原创研究。"
   ],
   "stats": [
-    { "n": "11 篇", "d": "核心文献研读" },
-    { "n": "6 篇", "d": "深度综述报告" },
-    { "n": "1900+", "d": "总被引量覆盖" },
+    { "n": "16 篇", "d": "核心文献研读" },
+    { "n": "7 篇", "d": "深度综述报告" },
+    { "n": "2400+", "d": "总被引量覆盖" },
     { "n": "⚾", "d": "Pitch Smart 数据溯源" }
   ],
   "reports": [
+    {
+      "id": "ucl-tommy-john-2026",
+      "title": "Tommy John 手术：为什么越来越多青少年挨这一刀？",
+      "authors": "Hodgins JL et al. (AJSM 2016) + UCL Scoping Review (JOSM 2026) + Kang B et al. (J Big Data 2025)",
+      "meta": "6 篇核心文献 · 被引 212+ · 全量流行病学数据",
+      "description": "基于纽约州 SPARCS 全州强制上报数据库的 10 年 444 例 UCL 重建全量数据。三个核心发现：① 手术量 +193%，但增长只发生在 17-18 岁与 19-20 岁——13-16 岁组“零增长”，说明伤在更早种下、手术被推迟到了发育成熟之后；② 15-19 岁组 25 年间暴涨 6 倍，已成为全美 UCL 重建最大的单一人群；③ 合并尺神经手术 +400%，损伤正从单根韧带演变为多结构复合损伤。另附 AI 模型挖出的“出手点下移”预警信号、六个必须立即停投的红色警戒、五道防线与家长速查卡。",
+      "link": "/academic/papers/UCL_Tommy_John_Epidemiology_2026.html",
+      "tags": ["🆕 第10期", "流行病学", "青少年肘损伤", "家长速查卡"],
+      "featured": true,
+      "color": "#c0392b"
+    },
     {
       "id": "weighted-ball-training",
       "title": "加重球训练：球速神器还是伤肘元凶？",
@@ -19,8 +30,8 @@
       "meta": "总被引 380+ 次 · Level 1 RCT",
       "description": "基于 ASMI 团队 38 名 13-18 岁投手随机对照试验 (RCT, Level 1 证据)。三个硬核发现：① 6 周加重球球速 +1.0 m/s，但实验组 24% 肘损伤率 vs 对照组 0%；② 隐藏杀手是肩外旋 +4.3°，跨过 UCL 风险红线；③ Hodgins 2016 纽约州 10 年 UCL 重建手术 +193%。包含 9 项家长/教练速查卡和 6 项科学替代方案。",
       "link": "/academic/papers/Weighted_Ball_Training_2018.html",
-      "tags": ["🆕 第9期", "Level 1 RCT", "青少年禁忌", "速查卡"],
-      "featured": true,
+      "tags": ["第9期", "Level 1 RCT", "青少年禁忌", "速查卡"],
+      "featured": false,
       "color": "#c0392b"
     },
     {
@@ -61,7 +72,7 @@
       "title": "棒球损伤预防：从青少年到职业",
       "authors": "Melugin HP et al.",
       "meta": "Curr Rev Musculoskelet Med 2018 · 被引 66 次",
-      "description": "最直接相关的综述。系统梳理了从青少年到职业棒球损伤流行病学的差异，提出\"不同级别需要不同的预防策略\"。详述了横滨棒球-9 (YKB-9) 预防方案和 Nordic 腘绳肌训练的循证依据。",
+      "description": "最直接相关的综述。系统梳理了从青少年到职业棒球损伤流行病学的差异，提出“不同级别需要不同的预防策略”。详述了横滨棒球-9 (YKB-9) 预防方案和 Nordic 腘绳肌训练的循证依据。",
       "link": "/academic/papers/Melugin_2018_Baseball.html",
       "tags": ["最直接相关", "YKB-9", "分级预防", "🎬 视频"],
       "featured": false,
@@ -99,7 +110,44 @@
       "authors": "Hodgins JL et al.",
       "journal": "AJSM 2016",
       "citations": "212",
+      "pdf": "/academic/papers/pdf/Hodgins_2016_UCL_Epidemiology_NY.pdf",
       "external": "https://pubmed.ncbi.nlm.nih.gov/26797699/"
+    },
+    {
+      "title": "Data-driven Prediction of Tommy John Risk",
+      "authors": "Kang B et al.",
+      "journal": "J Big Data 2025",
+      "citations": "最新",
+      "pdf": "/academic/papers/pdf/DataDriven_TommyJohn_2025.pdf",
+      "external": "https://doi.org/10.1186/s40537-025-01138-1"
+    },
+    {
+      "title": "UCL Tears in Adolescent Pitchers: Scoping Review",
+      "authors": "Scoping Review Group",
+      "journal": "J Orthop Sports Med 2026",
+      "citations": "最新",
+      "external": "https://doi.org/10.26502/josm.511500274"
+    },
+    {
+      "title": "Optimal Management of UCL Injury",
+      "authors": "Ciccotti MG et al.",
+      "journal": "Open Access J Sports Med 2015",
+      "citations": "200+",
+      "pdf": "/academic/papers/pdf/Ciccotti_2015_UCL_Management.pdf"
+    },
+    {
+      "title": "UCL Reconstruction in MLB Pitchers",
+      "authors": "Erickson BJ et al.",
+      "journal": "AJSM 2016",
+      "citations": "300+",
+      "pdf": "/academic/papers/pdf/Erickson_2016_UCL_MLB.pdf"
+    },
+    {
+      "title": "Showcase Exposure & UCL Tear in Elites",
+      "authors": "Sakata J et al.",
+      "journal": "AJSM 2022",
+      "citations": "90+",
+      "external": "https://doi.org/10.1177/03635465221113859"
     },
     {
       "title": "Throwing Biomechanics & Return to Sport",

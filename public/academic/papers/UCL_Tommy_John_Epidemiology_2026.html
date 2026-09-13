@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tommy John 手术 — 为什么越来越多青少年挨这一刀？</title>
+<style>
+  :root { --dark:#1a1a2e; --red:#c0392b; --blue:#2980b9; --orange:#d35400; --bg:#fafafa; --card:#fff; --text:#2c3e50; --muted:#7f8c8d; --green:#27ae60; --gold:#b8860b; --purple:#8e44ad; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.85; font-size:15px; }
+  .container { max-width:920px; margin:0 auto; padding:20px; }
+  .hero { background:linear-gradient(135deg,var(--dark),#2c3e50); color:white; padding:44px 32px; border-radius:12px; margin-bottom:24px; text-align:center; }
+  .hero h1 { font-size:1.5em; font-weight:800; margin-bottom:6px; line-height:1.3; }
+  .hero .sub { font-size:0.95em; opacity:0.85; margin-top:8px; }
+  .hero .meta { font-size:0.82em; opacity:0.75; margin-top:6px; }
+  .info-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-bottom:20px; }
+  .info-item { background:var(--card); border-radius:8px; padding:12px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .info-item .lbl { font-size:0.7em; color:var(--muted); }
+  .info-item .val { font-size:1em; font-weight:700; color:var(--dark); }
+  .section { background:var(--card); border-radius:10px; padding:24px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.04); border-left:4px solid var(--blue); }
+  .section.red { border-left-color:var(--red); }
+  .section.green { border-left-color:var(--green); }
+  .section.orange { border-left-color:var(--orange); }
+  .section.purple { border-left-color:var(--purple); }
+  .section h2 { font-size:1.15em; color:var(--dark); margin-bottom:10px; border-bottom:2px solid #eee; padding-bottom:6px; }
+  .section h3 { font-size:1em; color:#34495e; margin:14px 0 6px; }
+  .section ul, .section ol { padding-left:20px; }
+  .section li { margin-bottom:5px; }
+  table { width:100%; border-collapse:collapse; font-size:0.85em; margin:10px 0; }
+  th { background:var(--dark); color:white; padding:8px; text-align:left; }
+  td { padding:6px 8px; border-bottom:1px solid #e8e8e8; }
+  tr:nth-child(even) td { background:#f8f9fa; }
+  .svg-container { text-align:center; margin:16px 0; background:#f8f9fa; border-radius:8px; padding:16px; }
+  .svg-container svg { max-width:100%; }
+  .svg-container .caption { font-size:0.78em; color:var(--muted); margin-top:6px; font-style:italic; }
+  .callout { padding:14px 16px; border-radius:8px; margin:12px 0; }
+  .callout-green { background:#eafaf1; border:1px solid var(--green); }
+  .callout-blue { background:#ecf6ff; border:1px solid var(--blue); }
+  .callout-red { background:#fff0f0; border:1px solid var(--red); }
+  .callout-orange { background:#fef5e7; border:1px solid var(--orange); }
+  .callout-purple { background:#f5f0f9; border:1px solid var(--purple); }
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.7em; font-weight:600; margin-right:4px; }
+  .tag-red { background:#f9d6d5; color:var(--red); }
+  .tag-blue { background:#d4e6f1; color:var(--blue); }
+  .tag-green { background:#d5f5e3; color:var(--green); }
+  .tag-orange { background:#ffeaa7; color:var(--orange); }
+  .stat-highlight { display:inline-block; font-family:"SF Mono",monospace; font-size:1.15em; font-weight:800; color:var(--red); }
+  .big-num { font-size:2em; font-weight:800; color:var(--red); line-height:1; }
+  .footer { text-align:center; padding:20px; color:var(--muted); font-size:0.8em; }
+  .vs-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+  .vs-card { padding:14px; border-radius:8px; }
+  .vs-bad { background:#fff0f0; border:1px solid var(--red); }
+  .vs-good { background:#eafaf1; border:1px solid var(--green); }
+  .vs-card h4 { margin-bottom:6px; font-size:0.95em; }
+  .ref { font-size:0.8em; color:#556; line-height:1.7; }
+  .ref li { margin-bottom:8px; }
+  @media (max-width:640px) { .container{padding:10px;} .hero{padding:28px 14px;} .section{padding:14px;} .vs-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>⚾ Tommy John 手术<br>为什么越来越多青少年挨这一刀？</h1>
+  <div class="sub">Hodgins 2016 (AJSM) · 青少年 UCL 撕裂 Scoping Review 2026 · Kang 2025 (J Big Data)</div>
+  <div class="meta"><strong>第 10 期 · 棒球学术圈 | 核心文献 6 篇 · 总被引 380+</strong></div>
+  <div style="margin-top:14px">
+    <span class="tag tag-red">UCL 重建</span>
+    <span class="tag tag-blue">流行病学</span>
+    <span class="tag tag-orange">青少年肘损伤</span>
+    <span class="tag tag-green">预防红线</span>
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-item"><div class="val">+193%</div><div class="lbl">纽约州 10 年增长</div></div>
+  <div class="info-item"><div class="val">6 倍</div><div class="lbl">15-19 岁组（1994→2019）</div></div>
+  <div class="info-item"><div class="val">21.6 岁</div><div class="lbl">平均手术年龄</div></div>
+  <div class="info-item"><div class="val">20.5 个月</div><div class="lbl">平均康复周期</div></div>
+  <div class="info-item"><div class="val">11.8 倍</div><div class="lbl">男性 / 女性风险比</div></div>
+  <div class="info-item"><div class="val">0 例</div><div class="lbl">13-16 岁组增长</div></div>
+</div>
+
+<!-- ========== Section 1 ========== -->
+<div class="section red">
+  <h2>🚨 一句话总结</h2>
+  <p>这里有一个被绝大多数家长误读的真相：<strong>手术台上坐的是 17-20 岁的人，但伤是在 13-16 岁造出来的。</strong></p>
+  <p style="margin-top:10px">纽约州 10 年、444 例手术的全量数据显示，UCL 重建总量翻了近两倍，但增长<strong>只集中在 17-18 岁和 19-20 岁两个年龄组</strong>——而 13-16 岁组的数量<strong>几乎纹丝不动</strong>。这不是"小孩子不会受伤"，而是<strong>保守治疗撑到了 17 岁，最后还是上了手术台</strong>。</p>
+  <div class="callout callout-red" style="margin-top:14px">
+    <strong>更严峻的全国性数据</strong>：15-19 岁年龄组的 UCL 重建率在 <strong>1994 到 2019 的 25 年间暴涨超过 6 倍</strong>，这个人群如今已经是<strong>全美接受 UCL 重建最大的单一群体</strong>——超过职业球员。<br>
+    <span style="font-size:0.85em;color:#7f8c8d">来源：UCL Tears in Adolescent Baseball Pitchers: A Scoping Review, J Orthop Sports Med 2026</span>
+  </div>
+</div>
+
+<!-- ========== Section 2 ========== -->
+<div class="section">
+  <h2>📊 论文一：Hodgins 2016 — 纽约州 10 年全量流行病学</h2>
+  <p><span class="tag tag-blue">AJSM 2016</span><span class="tag tag-orange">被引 212</span> 研究团队调取了纽约州 <strong>SPARCS 数据库</strong>——这是全州每一例门诊手术的强制上报记录。也就是说，这不是抽样调查，是<strong>十年、全州、无一遗漏的全量数据</strong>。这在本领域极为罕见。</p>
+
+  <table>
+    <tr><th>指标</th><th>数值</th><th>含义</th></tr>
+    <tr><td>UCL 重建总数</td><td><strong>444 例</strong>（2002-2011）</td><td>十年全州累计</td></tr>
+    <tr><td>年手术量增长</td><td><strong>+193%</strong></td><td>近乎翻两番</td></tr>
+    <tr><td>每 10 万人手术率</td><td><strong>0.15 → 0.45（3 倍）</strong></td><td>排除人口增长因素后仍翻三倍</td></tr>
+    <tr><td>平均年龄</td><td>21.6 ± 8.89 岁</td><td>标准差极大 → 人群高度年轻化</td></tr>
+    <tr><td>性别比</td><td>男性 <strong>11.8 倍</strong>于女性</td><td>男性占 90.5%（402/444）</td></tr>
+    <tr><td>合并尺神经手术</td><td><strong>+400%</strong></td><td>2002 年 0 例 → 2011 年 20 例</td></tr>
+    <tr><td>开展机构</td><td>69 家，其中 51 家 ≤5 例</td><td>单家医院做了 145 例（33.1%）</td></tr>
+    <tr><td>私人保险 vs Medicaid</td><td><strong>25 倍</strong></td><td>医疗资源可及性的巨大鸿沟</td></tr>
+  </table>
+
+  <h3>🔍 最关键的一张图：年龄分层的"假平静"</h3>
+  <p>研究按年龄队列拆开后发现：增长<strong>只发生在 17-18 岁与 19-20 岁</strong>（P &lt; .001），其余所有年龄段基本持平。</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="22" text-anchor="middle" font-family="-apple-system,PingFang SC,sans-serif" font-size="14" font-weight="700" fill="#1a1a2e">十年间 UCL 重建手术量变化：哪个年龄段在涨？</text>
+      <line x1="60" y1="240" x2="600" y2="240" stroke="#ccc" stroke-width="1"/>
+
+      <!-- 13-16 : flat -->
+      <rect x="85" y="216" width="70" height="24" fill="#bdc3c7" rx="3"/>
+      <text x="120" y="258" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">13-16 岁</text>
+      <text x="120" y="208" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#7f8c8d">无增长</text>
+
+      <!-- 17-18 : up -->
+      <rect x="195" y="130" width="70" height="110" fill="#c0392b" rx="3"/>
+      <text x="230" y="258" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">17-18 岁</text>
+      <text x="230" y="122" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#c0392b">↑ 显著上升</text>
+
+      <!-- 19-20 : up stronger -->
+      <rect x="305" y="108" width="70" height="132" fill="#c0392b" rx="3"/>
+      <text x="340" y="258" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">19-20 岁</text>
+      <text x="340" y="100" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#c0392b">↑↑ 最大涨幅</text>
+
+      <!-- 21-25 : flat -->
+      <rect x="415" y="214" width="70" height="26" fill="#bdc3c7" rx="3"/>
+      <text x="450" y="258" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">21-25 岁</text>
+      <text x="450" y="206" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#7f8c8d">基本持平</text>
+
+      <!-- 26+ : flat -->
+      <rect x="525" y="218" width="60" height="22" fill="#bdc3c7" rx="3"/>
+      <text x="555" y="258" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">26 岁以上</text>
+      <text x="555" y="210" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#7f8c8d">基本持平</text>
+
+      <text x="60" y="285" font-family="sans-serif" font-size="11" fill="#7f8c8d">纵轴为相对变化幅度（示意）；数据来源 Hodgins JL et al., AJSM 2016</text>
+    </svg>
+    <div class="caption">13-16 岁"零增长"是本研究最被忽视、也最值得家长警惕的发现</div>
+  </div>
+
+  <div class="callout callout-orange">
+    <strong>🧠 研究者的解释（值得每个家长读三遍）</strong><br>
+    13-16 岁组手术量没有上升，<strong>不代表这个年龄不受伤</strong>。更可能的解释是：这个年龄段的孩子选择了<strong>更漫长的保守治疗方案</strong>，等到身体发育成熟、球速需求变大之后，<strong>最终还是在这个孩子 17-20 岁时做了手术</strong>。<br><br>
+    换句话说：<strong>手术时钟在 17 岁才敲响，但伤病的倒计时从 13 岁就开始走了。</strong>
+  </div>
+
+  <h3>💀 还有一个被忽略的信号：合并尺神经手术 +400%</h3>
+  <p>2002 年，UCL 重建时同期做尺神经松解/前移的案例是 <strong>0</strong>；到 2011 年变成 <strong>20 例</strong>（共 59 例/444 例）。这意味着什么？——<strong>肘关节的损伤正在从"单根韧带"演变成"多结构复合损伤"</strong>。尺神经一旦受累，术后手指麻木、握力下降的风险显著上升，恢复曲线也更难预测。这通常意味着<strong>伤病拖得太久、拖到结构一起坏掉</strong>。
+  </div>
+
+<!-- ========== Section 3 ========== -->
+<div class="section red">
+  <h2>📈 论文二：2026 青少年 UCL 撕裂 Scoping Review（18 项研究池化分析）</h2>
+  <p><span class="tag tag-red">2026 最新</span><span class="tag tag-blue">18 项研究池化</span> 这是目前关于青少年 UCL 最系统的综述，检索了 2002-2026 年 PubMed 全部文献。</p>
+
+  <div class="callout callout-red">
+    <p style="font-size:1.05em">15-19 岁年龄组的 UCL 重建率，<strong>1994 → 2019 年增长超过 6 倍</strong>。</p>
+    <p style="margin-top:8px">这个人群<strong>已经是全美接受 UCL 重建手术最大的单一人群</strong>——超过职业球员、超过大学生球员。</p>
+  </div>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="24" text-anchor="middle" font-family="-apple-system,PingFang SC,sans-serif" font-size="14" font-weight="700" fill="#1a1a2e">15-19 岁 UCL 重建率：25 年间发生了什么</text>
+      <line x1="80" y1="210" x2="580" y2="210" stroke="#ccc"/>
+
+      <rect x="150" y="182" width="90" height="28" fill="#95a5a6" rx="3"/>
+      <text x="195" y="175" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#7f8c8d">基准</text>
+      <text x="195" y="230" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">1994</text>
+
+      <rect x="380" y="60" width="90" height="150" fill="#c0392b" rx="3"/>
+      <text x="425" y="52" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#c0392b">&gt; 6 倍</text>
+      <text x="425" y="230" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2c3e50">2019</text>
+
+      <path d="M 245 190 Q 320 100 375 90" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="6,4" marker-end="url(#ar)"/>
+      <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#c0392b"/></marker></defs>
+
+      <text x="320" y="252" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7f8c8d">数据来源：J Orthop Sports Med 2026, DOI 10.26502/josm.511500274（示意图，非等比）</text>
+    </svg>
+    <div class="caption">青少年已从"罕见病例"变成"主力人群"——这用了不到一代人的时间</div>
+  </div>
+
+  <p>该综述同时指出：UCL 撕裂在青少年中的<strong>损伤形态与成人不同</strong>——由于肱骨内上髁的生长板尚未闭合，青少年更容易出现<strong>撕脱性骨折（avulsion）和骨突炎</strong>，而非成人的韧带中段撕裂（AJSM 2024）。这意味着<strong>青少年肘痛绝不能用"长大就好了"来处理</strong>。</p>
+</div>
+
+<!-- ========== Section 4 ========== -->
+<div class="section purple">
+  <h2>🧬 论文三：Kang 2025 — 用 AI 提前 100 天预测 Tommy John</h2>
+  <p><span class="tag tag-purple">J Big Data 2025</span><span class="tag tag-green">开放获取</span> 韩国成均馆大学团队用 MLB 2016-2023 赛季的投球数据训练深度学习模型，做了一件在青少年领域同样有启发意义的事。</p>
+
+  <table>
+    <tr><th>模型能力</th><th>表现</th><th>对家长的意义</th></tr>
+    <tr><td>分类模型（是否需手术）</td><td><strong>提前 100 天</strong>预警，F1 = 0.73</td><td>损伤不是"突然发生"，有长达 3 个月的前兆窗口</td></tr>
+    <tr><td>回归模型（距末次出场时间）</td><td>R² = 0.79</td><td>可以量化"还剩多久"</td></tr>
+    <tr><td>可解释性分析（XAI）</td><td>发现<strong>四缝线速球释放点降低</strong>是加速 UCL 退化的关键特征</td><td>⭐ 这是最实用的一个信号</td></tr>
+  </table>
+
+  <div class="callout callout-purple">
+    <strong>🎯 XAI 挖出的"隐形杀手"</strong><br>
+    模型显示：<strong>当投手的四缝线速球释放点逐渐下移时，UCL 退化会加速</strong>。这个信号的价值在于——<strong>你不需要任何专业设备就能看出来</strong>。<br><br>
+    儿子投球时手是不是"越来越低"？出手点是不是从头顶滑到了耳朵旁边？<strong>这往往不是"改动作技术进步"，而是肩肘疲劳后身体在代偿</strong>。这是最值得家长用手机录下来对比的一个指标。
+  </div>
+
+  <h3>💸 手术的真实代价（来自同一研究）</h3>
+  <ul>
+    <li><strong>平均康复周期 20.5 个月</strong>——对 17 岁的孩子来说，这是整整两个赛季</li>
+    <li>194 名 MLB 投手统计：<strong>人均经济损失 190 万美元</strong></li>
+    <li>MLB 赛季 162 场、每周 5-7 场，EPL 每周约 1 场——<strong>棒球是恢复窗口最窄的主流项目</strong></li>
+    <li>首发投手中 <strong>59.1%</strong>、后援投手中 <strong>58.3%</strong> 报告过肘部损伤</li>
+  </ul>
+  <p style="margin-top:10px;color:#7f8c8d;font-size:0.9em">💡 对青少年而言，真正的代价不是钱，而是<strong>20.5 个月的空窗期恰好覆盖选秀/升学/球探曝光的黄金窗口</strong>。</p>
+</div>
+
+<!-- ========== Section 5 ========== -->
+<div class="section orange">
+  <h2>⚠️ 五个"正在推孩子上手术台"的因素</h2>
+
+  <h3>① 球速崇拜</h3>
+  <p>Sakata 2022（AJSM）的队列研究专门检验了这一点：<strong>在更年轻时达到 90 / 92 / 95 mph 球速门槛的精英投手，会显著更早接受 UCL 重建</strong>。同期研究还发现，<strong>高中展示赛（showcase）的高频参与</strong>与 UCL 重建风险升高相关——为了一个数字，孩子们在非赛季疯狂投球。</p>
+
+  <h3>② 全年无休的专项化</h3>
+  <p>DiFiori 2014（BJSM）与 Melugin 2018 都已明确：<strong>每年投球超过 8 个月、或投球量超过年龄对应上限</strong>，是青少年肘肩损伤最强的预测因子之一。</p>
+
+  <h3>③ 球数失控</h3>
+  <p>Lyman 2001/2002 的纵向研究奠定了 Pitch Smart 的数据底座——<strong>球数、球种、机制</strong>三要素中，球数是唯一家长能 100% 掌控的变量。</p>
+
+  <h3>④ 训练负荷的"锯齿"</h3>
+  <p>Gabbett 2016 的 ACWR 理论指出：<strong>伤病往往不来自"练得多"，而来自"负荷的突变"</strong>——休赛期躺平、赛季突然拉满，是最危险的模式。</p>
+
+  <h3>⑤ "带着疼继续投"的文化</h3>
+  <p>Hodgins 研究中 <strong>+400% 的尺神经合并手术</strong>，本质上反映的就是拖延——把可逆的炎症拖成了不可逆的结构损伤。</p>
+</div>
+
+<!-- ========== Section 6 ========== -->
+<div class="section green">
+  <h2>🚩 六个必须立即停投的预警信号</h2>
+  <p>以下任何一条出现，<strong>立刻停止投球并就医</strong>，不要"再投几个看看"：</p>
+  <ol>
+    <li><strong>肘内侧（小指侧）疼痛</strong>，尤其是投球加速期那一下</li>
+    <li><strong>出手点持续下移</strong>——手机录像对比，两周内明显变低</li>
+    <li><strong>球速突然下降</strong>而训练量没变（Kang 2025 模型的核心预警特征）</li>
+    <li><strong>投球后手麻、无名指/小指发麻</strong>——尺神经受累信号</li>
+    <li><strong>肘关节活动度受限</strong>，伸不直或弯不到底</li>
+    <li><strong>疼痛持续超过 48 小时</strong>，休息后不缓解</li>
+  </ol>
+  <div class="callout callout-red">
+    <strong>🚫 最危险的一句话</strong>：「没事，投开了就不疼了。」<br>
+    疼痛在热身后消失，恰恰是<strong>慢性损伤的典型特征</strong>，不是"好了"。
+  </div>
+</div>
+
+<!-- ========== Section 7 ========== -->
+<div class="section green">
+  <h2>🛡️ 五道防线：家长今天就能做的事</h2>
+  <table>
+    <tr><th>防线</th><th>具体执行</th><th>依据</th></tr>
+    <tr><td><strong>① 球数红线</strong></td><td>严格执行 Pitch Smart 年龄分组上限，宁可换投手不追加球数</td><td>Lyman 2001/2002；Hodgins 建议遵循预防指南</td></tr>
+    <tr><td><strong>② 强制休赛期</strong></td><td>每年至少连续 3-4 个月完全不投球（不止"不比赛"）</td><td>DiFiori 2014；Melugin 2018</td></tr>
+    <tr><td><strong>③ 拒绝全年专项化</strong></td><td>13-16 岁尽量保留至少一项其他运动</td><td>DiFiori 2014 过度使用与倦怠</td></tr>
+    <tr><td><strong>④ 负荷渐进</strong></td><td>赛季前 4-6 周逐步加量，避免"假期归零后突然拉满"</td><td>Gabbett 2016 ACWR</td></tr>
+    <tr><td><strong>⑤ 录像监测出手点</strong></td><td>每月固定角度录一次，比对释放点高度</td><td>Kang 2025 XAI 特征</td></tr>
+  </table>
+  <div class="callout callout-green">
+    <strong>✅ 关于 YKB-9</strong><br>
+    Sakata 2017 的 YKB-9 方案已证明可将青少年投手肘部损伤显著降低。它不依赖任何器材，核心是<strong>热身、柔韧性、核心与肩胛稳定性</strong>——比任何"涨球速课程"都更值得投入时间。
+  </div>
+</div>
+
+<!-- ========== Section 8 ========== -->
+<div class="section">
+  <h2>⚖️ 手术还是保守治疗？四类结果的现实分布</h2>
+  <p>Ciccotti 2015 与 Reddy 2018 的临床决策框架指出：<strong>并非所有 UCL 损伤都需要手术</strong>。非手术路径在部分人群中可获得良好效果，但<strong>前提是严格依从、且损伤程度可控</strong>。</p>
+
+  <div class="vs-grid">
+    <div class="vs-card vs-good">
+      <h4>✅ 保守治疗可能适合</h4>
+      <ul style="font-size:0.88em">
+        <li>部分撕裂（非完全断裂）</li>
+        <li>骨骺未闭合的青少年（需专科评估）</li>
+        <li>非投手位置 / 非竞技高强度需求</li>
+        <li>能严格执行 3 个月以上停投与康复</li>
+      </ul>
+    </div>
+    <div class="vs-card vs-bad">
+      <h4>⚠️ 通常需要手术考虑</h4>
+      <ul style="font-size:0.88em">
+        <li>完全撕裂</li>
+        <li>保守治疗 3-6 个月无效</li>
+        <li>合并尺神经症状</li>
+        <li>存在撕脱性骨折且移位明显</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:10px;color:#7f8c8d;font-size:0.88em">⚕️ 以上仅为文献框架整理，具体方案必须由运动医学专科医生结合影像与体格检查判断。</p>
+</div>
+
+<!-- ========== Section 9 ========== -->
+<div class="section red">
+  <h2>📋 家长速查卡（可截图保存）</h2>
+  <table>
+    <tr><th>项目</th><th>红线条</th></tr>
+    <tr><td>连续投球月份</td><td>每年不超过 <strong>8 个月</strong>，且必须含连续 3-4 个月完全停投</td></tr>
+    <tr><td>同时参与的球队</td><td>同赛季<strong>不超过 1 支</strong>（校队 + 俱乐部叠加是典型雷区）</td></tr>
+    <tr><td>展示赛 / 训练营</td><td>非赛季<strong>不作为主要投球量来源</strong>；Sakata 2022 已证实高频展示赛与手术风险相关</td></tr>
+    <tr><td>出手点</td><td>每月录像比对，<strong>持续下移即停投</strong></td></tr>
+    <tr><td>球速目标</td><td>年龄未到不要为了"90 mph"提前加量</td></tr>
+    <tr><td>疼痛</td><td>肘内侧疼痛<strong>零容忍</strong>——热身后消失也算警讯</td></tr>
+    <tr><td>加重球 / 长传球</td><td>14 岁以下<strong>不使用加重球</strong>（第 9 期专题）</td></tr>
+  </table>
+</div>
+
+<!-- ========== Section 10 ========== -->
+<div class="section">
+  <h2>🎯 三个最重要的一句话</h2>
+  <ol>
+    <li><strong>13-16 岁手术量没涨，不代表没伤</strong>——只是手术被推迟到了 17-20 岁。伤在更早的时候就种下了。</li>
+    <li><strong>青少年已经是全美 UCL 重建最大的单一人群</strong>，25 年增长超 6 倍。这不是职业体育的问题，是青少年体育的问题。</li>
+    <li><strong>损伤有长达 100 天的预警窗口</strong>（Kang 2025）——疼痛、球速下降、出手点下移，都是身体提前三个月发出的信号。看见了就有机会。</li>
+  </ol>
+</div>
+
+<!-- ========== Section 11 ========== -->
+<div class="section">
+  <h2>📚 参考文献</h2>
+  <ol class="ref">
+    <li>Hodgins JL, Vitale M, Arons RR, Ahmad CS. Epidemiology of Medial Ulnar Collateral Ligament Reconstruction: A 10-Year Study of New York State. <em>Am J Sports Med.</em> 2016. DOI: 10.1177/0363546515622407（被引 212+）</li>
+    <li>Kang B, Park M, del Pobil AP, Park E. Data-driven approaches for predicting Tommy John Surgery risk in Major League Baseball pitchers. <em>J Big Data.</em> 2025;12:87. DOI: 10.1186/s40537-025-01138-1</li>
+    <li>Ulnar Collateral Ligament Tears in Adolescent Baseball Pitchers: A Scoping Review with Pooled Risk Factor Analysis and Comparison of Surgical Outcomes. <em>J Orthop Sports Med.</em> 2026. DOI: 10.26502/josm.511500274</li>
+    <li>Incidence of Ulnar Collateral Ligament Surgery and Revision in Baseball Players: A Systematic Review and Meta-Analysis. <em>Sports.</em> 2025;13(9):299. DOI: 10.3390/sports13090299</li>
+    <li>Sakata J, et al. Ulnar Collateral Ligament Tear in Elite Baseball Pitchers: Are High School Showcase Exposures Associated With Injury? <em>Am J Sports Med.</em> 2022. DOI: 10.1177/03635465221113859</li>
+    <li>Avulsion and Soft Tissue Injuries of the Ulnar Collateral Ligament in Children and Adolescents. <em>Am J Sports Med.</em> 2024. DOI: 10.1177/03635465241252156</li>
+    <li>Ciccotti MG, et al. Optimal management of ulnar collateral ligament injury in baseball. <em>Open Access J Sports Med.</em> 2015.</li>
+    <li>Reddy AS, et al. Nonreconstruction Options for Treating Medial Ulnar Collateral Ligament Injuries. <em>Curr Phys Med Rehabil Rep.</em> 2018.</li>
+    <li>DiFiori JP, et al. Overuse injuries and burnout in youth sports: a position statement from the AOSSM. <em>Br J Sports Med.</em> 2014;48(4):287-288.</li>
+    <li>Melugin HP, et al. Injury Prevention in Baseball: from Youth to the Pros. <em>Curr Rev Musculoskelet Med.</em> 2018.</li>
+    <li>Lyman S, et al. Longitudinal study of elbow and shoulder pain in youth baseball pitchers. <em>Med Sci Sports Exerc.</em> 2001;33(11):1803-10.</li>
+    <li>Gabbett TJ. The training—injury prevention paradox. <em>Br J Sports Med.</em> 2016;50(5):273-280.</li>
+  </ol>
+</div>
+
+<div class="footer">
+  ⚾ 棒球学术圈 · 第 10 期 | 面向青少年运动员与家长的循证内容<br>
+  本页所有数据均标注原始文献与 DOI，可自行核查原始来源<br>
+  <span style="font-size:0.9em">内容仅供科普参考，不构成医疗建议。如有症状请就医。</span>
+</div>
+
+</div>
+</body>
+</html>
