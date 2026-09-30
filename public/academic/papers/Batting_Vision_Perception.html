@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孩子打不到球，真是「手慢」吗？— 打击表现背后的视觉与预判机制</title>
+<style>
+  :root { --dark:#1a1a2e; --red:#c0392b; --blue:#2980b9; --orange:#d35400; --bg:#fafafa; --card:#fff; --text:#2c3e50; --muted:#7f8c8d; --green:#27ae60; --gold:#b8860b; --purple:#8e44ad; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.85; font-size:15px; }
+  .container { max-width:920px; margin:0 auto; padding:20px; }
+  .hero { background:linear-gradient(135deg,var(--dark),#2c3e50); color:white; padding:44px 32px; border-radius:12px; margin-bottom:24px; text-align:center; }
+  .hero h1 { font-size:1.5em; font-weight:800; margin-bottom:6px; line-height:1.3; }
+  .hero .sub { font-size:0.95em; opacity:0.85; margin-top:8px; }
+  .hero .meta { font-size:0.82em; opacity:0.75; margin-top:6px; }
+  .info-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-bottom:20px; }
+  .info-item { background:var(--card); border-radius:8px; padding:12px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .info-item .lbl { font-size:0.7em; color:var(--muted); }
+  .info-item .val { font-size:1em; font-weight:700; color:var(--dark); }
+  .section { background:var(--card); border-radius:10px; padding:24px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.04); border-left:4px solid var(--blue); }
+  .section.red { border-left-color:var(--red); }
+  .section.green { border-left-color:var(--green); }
+  .section.orange { border-left-color:var(--orange); }
+  .section.purple { border-left-color:var(--purple); }
+  .section.gold { border-left-color:var(--gold); }
+  .section h2 { font-size:1.15em; color:var(--dark); margin-bottom:10px; border-bottom:2px solid #eee; padding-bottom:6px; }
+  .section h3 { font-size:1em; color:#34495e; margin:14px 0 6px; }
+  .section ul, .section ol { padding-left:20px; }
+  .section li { margin-bottom:5px; }
+  table { width:100%; border-collapse:collapse; font-size:0.85em; margin:10px 0; }
+  th { background:var(--dark); color:white; padding:8px; text-align:left; }
+  td { padding:6px 8px; border-bottom:1px solid #e8e8e8; }
+  tr:nth-child(even) td { background:#f8f9fa; }
+  .svg-container { text-align:center; margin:16px 0; background:#f8f9fa; border-radius:8px; padding:16px; }
+  .svg-container svg { max-width:100%; }
+  .svg-container .caption { font-size:0.78em; color:var(--muted); margin-top:6px; font-style:italic; }
+  .callout { padding:14px 16px; border-radius:8px; margin:12px 0; }
+  .callout-green { background:#eafaf1; border:1px solid var(--green); }
+  .callout-blue { background:#ecf6ff; border:1px solid var(--blue); }
+  .callout-red { background:#fff0f0; border:1px solid var(--red); }
+  .callout-orange { background:#fef5e7; border:1px solid var(--orange); }
+  .callout-purple { background:#f5f0f9; border:1px solid var(--purple); }
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.7em; font-weight:600; margin-right:4px; }
+  .tag-red { background:#f9d6d5; color:var(--red); }
+  .tag-blue { background:#d4e6f1; color:var(--blue); }
+  .tag-green { background:#d5f5e3; color:var(--green); }
+  .tag-orange { background:#ffeaa7; color:var(--orange); }
+  .tag-purple { background:#ebdef0; color:var(--purple); }
+  .stat-highlight { display:inline-block; font-family:"SF Mono",monospace; font-size:1.15em; font-weight:800; color:var(--red); }
+  .big-num { font-size:2em; font-weight:800; color:var(--red); line-height:1; }
+  .footer { text-align:center; padding:20px; color:var(--muted); font-size:0.8em; }
+  .vs-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+  .vs-card { padding:14px; border-radius:8px; }
+  .vs-bad { background:#fff0f0; border:1px solid var(--red); }
+  .vs-good { background:#eafaf1; border:1px solid var(--green); }
+  .vs-card h4 { margin-bottom:6px; font-size:0.95em; }
+  .ref { font-size:0.8em; color:#556; line-height:1.7; }
+  .ref li { margin-bottom:8px; }
+  .step { display:flex; gap:10px; margin:12px 0; align-items:flex-start; }
+  .step .num { flex:0 0 28px; height:28px; background:var(--dark); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.85em; font-weight:700; }
+  @media (max-width:640px) { .container{padding:10px;} .hero{padding:28px 14px;} .section{padding:14px;} .vs-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>⚾ 孩子打不到球，真是「手慢」吗？</h1>
+  <div class="sub">打击表现背后的视觉与预判机制 · 13 篇文献系统研读</div>
+  <div class="meta"><strong>第 11 期 · 棒球学术圈 | 核心文献 10 篇 · 总被引 300+ · 全部开放获取原文</strong></div>
+  <div style="margin-top:14px">
+    <span class="tag tag-blue">视觉功能</span>
+    <span class="tag tag-purple">眼动策略</span>
+    <span class="tag tag-orange">预判与决策</span>
+    <span class="tag tag-green">青少年证据</span>
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-item"><div class="val">77% vs 23%</div><div class="lbl">成人 vs 青少年研究占比</div></div>
+  <div class="info-item"><div class="val">1352 名</div><div class="lbl">青少年精英样本</div></div>
+  <div class="info-item"><div class="val">80–220 ms</div><div class="lbl">顶级打者眼跳窗口</div></div>
+  <div class="info-item"><div class="val">0.251→0.285</div><div class="lbl">视觉训练后打击率</div></div>
+  <div class="info-item"><div class="val">+11.6%</div><div class="lbl">视觉优者保送率差</div></div>
+  <div class="info-item"><div class="val">52%</div><div class="lbl">四大能力解释方差</div></div>
+</div>
+
+<!-- ========== Section 1 ========== -->
+<div class="section red">
+  <h2>🚨 一句话总结</h2>
+  <p>这里有一个被绝大多数家长和教练搞反的因果关系：<strong>孩子打不到球，往往不是手挥得太慢，而是眼睛「看得不够好」。</strong></p>
+  <p style="margin-top:10px">打击在运动科学里被归类为<strong>拦截任务（interceptive task）</strong>——和接高飞球、网球截击、板球击球同类。这类任务的核心不是「力量」，而是<strong>在 0.5 秒内完成「识别 → 预判 → 决策 → 启动 → 调整」这一整条信息链</strong>。而 2025 年的一篇系统综述明确指出：现有打击研究<strong>几乎全部集中在体能和形态学测量上</strong>，视觉、知觉、视觉运动技能这三个维度<strong>被严重忽视</strong>——尽管它们对拦截任务至关重要。</p>
+  <div class="callout callout-red" style="margin-top:14px">
+    <strong>更反直觉的是这一条</strong>：顶级打者的眼睛，不是「动得更快」，而是<strong>「动得更晚」</strong>。真实比赛场景下的眼动追踪显示，最好的几名打者<strong>刻意延迟</strong>他们的预测性眼跳，用更多时间从球上提取信息。<br>
+    <span style="font-size:0.85em;color:#7f8c8d">来源：Kishita Y, et al. Eye and Head Movements of Elite Baseball Players in Real Batting. Front Sports Act Living 2020;2:3. doi:10.3389/fspor.2020.00003</span>
+  </div>
+</div>
+
+<!-- ========== Section 2 ========== -->
+<div class="section">
+  <h2>📊 第一层：打击研究自己承认「漏了一块」</h2>
+  <p><span class="tag tag-blue">Sports Med Open 2025</span><span class="tag tag-green">Scoping Review</span> Tremblay 等人的这篇综述池化了 20 项打击表现研究，覆盖从描述性实验室研究到纵向观察性研究。它的核心结论不是某个具体数字，而是<strong>一张「研究地图的空白分布」</strong>。</p>
+
+  <h3>空白一：被研究的是成年人，不是你的孩子</h3>
+  <div class="svg-container">
+    <svg viewBox="0 0 640 210" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">打击研究的样本年龄分布</text>
+      <text x="320" y="38" text-anchor="middle" font-size="10.5" fill="#7f8c8d">Tremblay 等 2025 池化 20 项研究 · 按研究数统计</text>
+
+      <!-- 堆叠条 -->
+      <rect x="40" y="62" width="421" height="44" fill="#c0392b" rx="4"/>
+      <rect x="461" y="62" width="126" height="44" fill="#27ae60" rx="4"/>
+      <text x="250" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">成年 / 大学 / 职业球员  77%</text>
+      <text x="524" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">青少年</text>
+      <text x="524" y="99" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">23%</text>
+
+      <!-- 箭头与说明 -->
+      <path d="M 461 118 L 461 128" stroke="#27ae60" stroke-width="2"/>
+      <text x="461" y="145" text-anchor="middle" font-size="10.5" font-weight="700" fill="#27ae60">最被忽视</text>
+      <text x="461" y="160" text-anchor="middle" font-size="10" fill="#7f8c8d">青少年证据最少</text>
+
+      <text x="250" y="145" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c0392b">研究最密集</text>
+      <text x="250" y="160" text-anchor="middle" font-size="10" fill="#7f8c8d">成人结论被直接外推到孩子身上</text>
+
+      <text x="320" y="192" text-anchor="middle" font-size="10.5" fill="#34495e">详细分布：青少年 9% · 高中 18% · 大学 14% · 业余 9% · 职业小联盟 23% · 职业大联盟 18% · 职业不限 9%</text>
+    </svg>
+    <div class="caption">图 1｜研究者关注的人群，与球场上真正需要指导的人群，存在结构性错位</div>
+  </div>
+  <p>对家长的直白含义：<strong>你从短视频、教练、训练营听来的「打击训练建议」，绝大多数是从成年运动员身上得出的结论，被直接外推到 12 岁孩子身上</strong>。这在投手领域恰恰相反——因为 UCL 流行病学的推动，投手的青少年研究反而密集得多。</p>
+
+  <h3>空白二：被测量的是力量，不是信息处理</h3>
+  <p>综述的原文表述极为直接：</p>
+  <div class="callout callout-purple">
+    <em>「最常被报道的、与打击表现相关的个体特征或技能类别，是形态学测量与体能测试，主要集中在上下肢的力量与爆发力素质。相比之下，<strong>视觉、知觉与视觉运动技能报道得少得多——尽管它们在棒球打击这类拦截任务中扮演重要角色。</strong>」</em>
+    <div style="font-size:0.82em;color:#7f8c8d;margin-top:8px">原文：…visual, perceptual, and visuomotor skills are less reported despite their important role in interceptive tasks such as batting in baseball.</div>
+  </div>
+
+  <table>
+    <tr><th>维度</th><th>被研究程度</th><th>具体测量内容</th></tr>
+    <tr><td><strong>形态学测量</strong></td><td>🔴 最密集（n=8）</td><td>身高、体重等</td></tr>
+    <tr><td><strong>体能测试</strong></td><td>🔴 最密集（n=9）</td><td>卧推 / 深蹲 1RM、握力、纵跳、实心球投掷、冲刺、躯干柔韧</td></tr>
+    <tr><td><strong>视觉技能</strong></td><td>🟡 报道不足</td><td>视力、对比敏感度</td></tr>
+    <tr><td><strong>知觉技能</strong></td><td>🟡 报道不足</td><td>预判、视觉识别</td></tr>
+    <tr><td><strong>视觉运动技能</strong></td><td>🟡 报道不足</td><td>眼手协调、反应时</td></tr>
+  </table>
+  <p style="font-size:0.9em;color:#556">—— 这构成了本期内容的起点：<strong>既然主流叙事只讲力量，那我们把被忽视的那一半讲清楚。</strong></p>
+</div>
+
+<!-- ========== Section 3 ========== -->
+<div class="section purple">
+  <h2>🧠 第二层：视觉能力到底能预测什么？不能预测什么？</h2>
+  <p><span class="tag tag-purple">Sci Rep 2018</span><span class="tag tag-blue">n=252</span> Burris 等人在 <strong>252 名职业棒球球员</strong>身上做了一件很诚实的事：他们不是笼统地问「视觉重不重要」，而是<strong>逐项检验哪些场上统计指标与感觉运动能力相关、哪些无关</strong>。研究方法用的是贝叶斯分层潜变量模型，把年龄、守备位置、所属联盟都作为控制变量纳入。</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">感觉运动能力与场上表现的关系</text>
+      <text x="320" y="38" text-anchor="middle" font-size="10.5" fill="#7f8c8d">Sci Rep 2018 · 252 名职业球员 · Nike Sensory Station 8 项心理运动任务</text>
+
+      <!-- 左：预测 -->
+      <rect x="24" y="56" width="290" height="165" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+      <text x="169" y="80" text-anchor="middle" font-size="13" font-weight="800" fill="#27ae60">✅ 显著预测</text>
+      <line x1="46" y1="92" x2="292" y2="92" stroke="#27ae60" stroke-width="1" opacity="0.4"/>
+      <text x="169" y="116" text-anchor="middle" font-size="12" fill="#2c3e50">上垒率 OBP</text>
+      <text x="169" y="144" text-anchor="middle" font-size="12" fill="#2c3e50">保送率 BB%</text>
+      <text x="169" y="172" text-anchor="middle" font-size="12" fill="#2c3e50">三振率 K%</text>
+      <text x="169" y="203" text-anchor="middle" font-size="10" fill="#7f8c8d">＝ 「看出好坏球」的能力</text>
+
+      <!-- 右：不预测 -->
+      <rect x="326" y="56" width="290" height="165" rx="8" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="471" y="80" text-anchor="middle" font-size="13" font-weight="800" fill="#c0392b">❌ 无显著关系</text>
+      <line x1="348" y1="92" x2="594" y2="92" stroke="#c0392b" stroke-width="1" opacity="0.4"/>
+      <text x="471" y="116" text-anchor="middle" font-size="12" fill="#2c3e50">长打率 SLG</text>
+      <text x="471" y="144" text-anchor="middle" font-size="12" fill="#2c3e50">投手独立防御率 FIP</text>
+      <text x="471" y="172" text-anchor="middle" font-size="12" fill="#2c3e50">（即纯力量型产出）</text>
+      <text x="471" y="203" text-anchor="middle" font-size="10" fill="#7f8c8d">力量仍由身体决定</text>
+    </svg>
+    <div class="caption">图 2｜视觉不是万能的——它管「判断」，不管「力量」</div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>这张图的价值在于它的「边界」。</strong>如果一篇科普告诉你「练视觉就能变强打者」，那它一定夸大了。研究给出的结论是精确的：感觉运动能力显著预测<strong>上垒率、保送率和三振率</strong>——这些指标的本质是<strong>「能不能分辨好球坏球、挥不挥棒」</strong>；但它<strong>不预测长打率和投手独立防御率</strong>——那部分仍然由力量与身体能力决定。
+    <br><br>
+    换句话说：<strong>视觉决定你「会不会挥」，身体决定你「挥得多远」。</strong>这是两个独立的输赢通道。
+  </div>
+
+  <h3>另一篇：585 名职业球员的「打者纪律」</h3>
+  <p><span class="tag tag-blue">Sci Rep 2019</span><span class="tag tag-blue">n=585</span> Laby 等人用一套叫 <strong>EVTS</strong> 的视觉功能测试（把<strong>目标大小、对比度、呈现时间</strong>三个变量合成一个综合分数）測了 585 名职业球员，然后与打者纪律指标做相关分析。</p>
+  <table>
+    <tr><th>发现的指标</th><th>数值</th><th>含义</th></tr>
+    <tr><td>显著相关的纪律指标</td><td>InzoneSwing%、InzoneFbSwing%、Chase%、FbChase%、BBperPa</td><td>核心是「识别好球区 + 忍住坏球」</td></tr>
+    <tr><td>视觉最好 vs 最差 20% 分组</td><td>BBperPa <strong>+11.6%</strong>；InzoneSwing% +3.5%</td><td>视觉好的孩子，选球能力高出一成</td></tr>
+    <tr><td>效应量</td><td><strong>0.278 – 0.387</strong></td><td>小到中等效应——不是玄学，也不是神话</td></tr>
+    <tr><td>大联盟服役年数 vs 视觉能力</td><td><strong>无关系</strong></td><td>⚠️ 关键：视觉能力不是「打久了练出来的」</td></tr>
+  </table>
+  <div class="callout callout-orange">
+    <strong>最后一行是最值得家长记住的。</strong>「服役年数」代表经验积累——但它与视觉能力<strong>不相关</strong>。这意味着视觉能力更接近一项<strong>筛选性特质</strong>，而不是随时间自然增长的技能。这条结论也解释了为什么职业球队会把感觉运动筛查用于球员选拔。<br>
+    <span style="font-size:0.85em;color:#7f8c8d">原文：Years of major league service did not appear to be related to visual ability.</span>
+  </div>
+</div>
+
+<!-- ========== Section 4 ========== -->
+<div class="section green">
+  <h2>🧩 第三层：1352 名青少年精英球员的「四大能力」</h2>
+  <p><span class="tag tag-green">PLoS ONE 2023</span><span class="tag tag-blue">n=1352</span> 这是本期<strong>唯一一篇青少年大样本研究</strong>，也是最有分量的证据。Ho 等人分析了 <strong>1352 名 14–21 岁的精英青少年球员</strong>——他们都来自 MLB 与 USA Baseball 合办的「Prospect Development Pipeline（PDP）」计划，数据采集于 2017–2020 年。</p>
+
+  <h3>方法：22 个指标，压缩成 4 种能力</h3>
+  <p>研究者先把 22 项测量变量（体能、速度、视觉功能、场上天赋）用<strong>探索性因子分析（EFA）</strong>降维，结果浮现出四种潜在能力：</p>
+  <div class="svg-container">
+    <svg viewBox="0 0 640 168" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">精英青少年球员的四大潜在能力</text>
+      <text x="320" y="35" text-anchor="middle" font-size="10.5" fill="#7f8c8d">PLoS ONE 2023 · n=1352 · 四因子共同解释 52% 的总方差</text>
+
+      <rect x="22"  y="52" width="140" height="86" rx="8" fill="#ecf6ff" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="92"  y="80" text-anchor="middle" font-size="26">💪</text>
+      <text x="92"  y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2980b9">握力</text>
+      <text x="92"  y="124" text-anchor="middle" font-size="9.5" fill="#7f8c8d">Grip Strength</text>
+
+      <rect x="175" y="52" width="140" height="86" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="2.5"/>
+      <text x="245" y="80" text-anchor="middle" font-size="26">👁️</text>
+      <text x="245" y="106" text-anchor="middle" font-size="12.5" font-weight="800" fill="#27ae60">功能性视觉</text>
+      <text x="245" y="124" text-anchor="middle" font-size="9.5" fill="#7f8c8d">Functional Vision</text>
+
+      <rect x="328" y="52" width="140" height="86" rx="8" fill="#fef5e7" stroke="#d35400" stroke-width="1.5"/>
+      <text x="398" y="80" text-anchor="middle" font-size="26">⚡</text>
+      <text x="398" y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#d35400">爆发力</text>
+      <text x="398" y="124" text-anchor="middle" font-size="9.5" fill="#7f8c8d">Explosiveness</text>
+
+      <rect x="481" y="52" width="140" height="86" rx="8" fill="#f5f0f9" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="551" y="80" text-anchor="middle" font-size="26">🧠</text>
+      <text x="551" y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8e44ad">快速决策</text>
+      <text x="551" y="124" text-anchor="middle" font-size="9.5" fill="#7f8c8d">Rapid Decision-Making</text>
+    </svg>
+    <div class="caption">图 3｜「功能性视觉」与「快速决策」占据了四席中的两席</div>
+  </div>
+  <p><strong>请注意这个构成</strong>：四种能力里，<strong>握力、爆发力</strong>属于身体，<strong>功能性视觉、快速决策</strong>属于信息处理。<strong>一半是身体，一半是眼睛和脑子。</strong>而在大众叙事里，后一半几乎不被提及。</p>
+
+  <h3>位置分化：谁的眼睛最好？</h3>
+  <p>回归分析在控制了年龄、体重、身高之后，发现四种能力与守备位置存在显著关联（<span class="stat-highlight">p &lt; 0.001</span>）：</p>
+  <table>
+    <tr><th>守备位置</th><th>最突出的能力</th><th>怎么理解</th></tr>
+    <tr><td><strong>外野手</strong></td><td>爆发力最强</td><td>需要长距离跑动覆盖</td></tr>
+    <tr><td><strong>内野手</strong></td><td>心理运动测量最好</td><td>近距反应、快速处理</td></tr>
+    <tr><td><strong>捕手</strong></td><td><strong>功能性视觉测试最好</strong></td><td>🔑 全场最需要「看球预判」的位置</td></tr>
+  </table>
+  <div class="callout callout-green">
+    <strong>捕手排第一，这一点特别值得琢磨。</strong>捕手是全场唯一需要<strong>在每一球都紧盯投球出手</strong>的人——他要接住 130+ km/h 的球、抢断跑者、判断好球带。研究结果与这个任务的直觉完全吻合：<strong>功能性视觉最好的孩子，最后去了捕手位。</strong><br><br>
+    这不代表「练视觉就能当捕手」，但说明一件事：<strong>在青少年精英层级，视觉能力已经是一个能够区分位置、被教练和球探实际感知到的真实变量。</strong>
+  </div>
+</div>
+
+<!-- ========== Section 5 ========== -->
+<div class="section red">
+  <h2>🔬 第四层（高潮）：顶级打者的眼睛，为什么「动得更晚」？</h2>
+  <p>这是本期最反直觉的一部分。<span class="tag tag-red">Front Sports Act Living 2020</span> Kishita 等人在日本做了一个<strong>生态效度极高</strong>的实验：<strong>6 名现役职业打者</strong>，面对<strong>前职业投手</strong>，在接近实战的场景下击球——而且研究设计中最关键的一点是：<strong>打者事先不被告知球种</strong>。</p>
+  <p>他们用<strong>可穿戴眼动仪</strong>记录眼球运动，用<strong>光学动作捕捉系统</strong>同步记录头部运动和球棒轨迹。</p>
+
+  <h3>核心发现一：预测性眼跳发生在触球前 80–220 ms</h3>
+  <div class="svg-container">
+    <svg viewBox="0 0 660 260" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">0.5 秒里的视觉时间线</text>
+      <text x="330" y="35" text-anchor="middle" font-size="10.5" fill="#7f8c8d">Kishita 2020 · 6 名现役职业打者 · 不预告球种的真实场景</text>
+
+      <!-- 时间轴 -->
+      <line x1="50" y1="120" x2="610" y2="120" stroke="#1a1a2e" stroke-width="2.5"/>
+      <path d="M 610 120 L 600 114 L 600 126 Z" fill="#1a1a2e"/>
+
+      <!-- 起点 -->
+      <circle cx="50" cy="120" r="6" fill="#2980b9"/>
+      <text x="50" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="#2980b9">投手出手</text>
+      <text x="50" y="145" text-anchor="middle" font-size="9.5" fill="#7f8c8d">0 ms</text>
+
+      <!-- 球飞行期 -->
+      <rect x="50" y="112" width="440" height="16" fill="#2980b9" opacity="0.15"/>
+      <text x="270" y="103" text-anchor="middle" font-size="10.5" fill="#34495e">球飞行途中 ── 眼球持续追踪</text>
+
+      <!-- 预测性眼跳区间 -->
+      <rect x="380" y="108" width="120" height="24" rx="4" fill="#c0392b" opacity="0.85"/>
+      <text x="440" y="124" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">预测性眼跳</text>
+      <path d="M 440 100 L 440 106" stroke="#c0392b" stroke-width="2"/>
+      <text x="440" y="92" text-anchor="middle" font-size="11" font-weight="800" fill="#c0392b">触球前 80–220 ms</text>
+
+      <!-- 触球 -->
+      <circle cx="500" cy="120" r="6" fill="#d35400"/>
+      <text x="500" y="145" text-anchor="middle" font-size="11" font-weight="700" fill="#d35400">触球</text>
+
+      <!-- 关键推断区 -->
+      <rect x="500" y="175" width="120" height="52" rx="6" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="560" y="196" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c0392b">眼睛已追不上</text>
+      <text x="560" y="213" text-anchor="middle" font-size="10" fill="#7f8c8d">只能靠预判 + 头部</text>
+      <path d="M 512 170 L 530 132" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+      <!-- 头部追踪说明 -->
+      <rect x="60" y="175" width="230" height="52" rx="6" fill="#ecf6ff" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="175" y="196" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2980b9">头部角速度在此阶段显著加快</text>
+      <text x="175" y="213" text-anchor="middle" font-size="10" fill="#7f8c8d">Higuchi 2018 · 眼球角速度无变化</text>
+      <path d="M 250 170 L 330 132" stroke="#2980b9" stroke-width="1.2" stroke-dasharray="3,3"/>
+    </svg>
+    <div class="caption">图 4｜「一直盯着球看」在物理上是不可能的——最后关头只能靠预判</div>
+  </div>
+
+  <h3>核心发现二：球种不确定时，眼跳反而「更晚」</h3>
+  <div class="callout callout-red">
+    <strong>这是全篇最值得反复读的一条。</strong>研究发现：当打者<strong>事先知道球种</strong>时，预测性眼跳的发动时间<strong>显著更晚</strong>（也就是更靠近触球点）。而当他们<strong>不知道</strong>球种时，眼跳发动得更早。
+    <br><br>
+    翻译成训练语言：<strong>预判不是「越早越好」，而是「越准越好」。</strong>当信息充足时，顶级打者会<strong>压哨出手</strong>，把更多时间留给观察；只有在信息不足时，才不得不提前赌一个方向。
+  </div>
+
+  <h3>核心发现三：最好的打者「动眼更晚、误差更小」</h3>
+  <table>
+    <tr><th>对比项</th><th>最好的 3 名打者</th><th>其余 3 名打者</th></tr>
+    <tr><td>预测性眼跳发动时机</td><td><strong>显著更晚</strong></td><td>更早</td></tr>
+    <tr><td>注视-球误差</td><td><strong>更少</strong></td><td>更多</td></tr>
+    <tr><td>球棒位置 vs 头部方向（触球时）</td><td>正相关</td><td>正相关</td></tr>
+    <tr><td>球棒位置 vs <strong>注视方向</strong>（触球时）</td><td><strong>无相关</strong></td><td>有相关</td></tr>
+  </table>
+  <div class="callout callout-blue">
+    <strong>倒数第二行和最后一行构成一个很深的洞察。</strong>所有打者在触球瞬间，<strong>球棒位置都与头部朝向正相关</strong>——头在跟着挥棒方向转，这是身体的自然协同。但<strong>更好的打者，球棒位置与「注视方向」没有相关</strong>。<br><br>
+    意思是：<strong>顶尖打者不会「用眼睛盯着球棒打到哪里」</strong>。他们的注视被保留给了球本身，而不是跟着动作走。原文的解释是：优秀打者通过<strong>延迟眼跳</strong>来争取「稍微多一点的时间」获取视觉信息。
+  </div>
+</div>
+
+<!-- ========== Section 6 ========== -->
+<div class="section orange">
+  <h2>👀 第五层：三篇研究共同推翻「盯球」这个说法</h2>
+  <p>「眼睛要一直盯着球」——这可能是棒球界流传最广、也最站不住脚的一句话。三篇不同团队、不同方法的论文，从三个角度指向了同一个结论。</p>
+
+  <h3>证据 A：快速眼动无法精确估计球的落点</h3>
+  <p><span class="tag tag-orange">PLoS ONE 2018</span> Higuchi 等人让 6 名大学球员面对发球机（慢球 31.9 m/s、快球 40.3 m/s），把球飞行时间切成 4 段（I-40、I-60、I-80、I-100，即球飞行的 21–40%、41–60%、61–80%、81–100%）逐段分析。</p>
+  <table>
+    <tr><th>身体部位</th><th>结果</th><th>统计</th></tr>
+    <tr><td><strong>头部</strong></td><td>球越接近，水平角速度<strong>显著加快</strong></td><td>慢球 I-80 &gt; I-40；快球 I-80 &gt; I-40 且 &gt; I-60（p &lt; 0.05）</td></tr>
+    <tr><td><strong>眼球</strong></td><td>角追踪运动<strong>没有变化</strong></td><td>—</td></tr>
+  </table>
+  <div class="callout callout-orange">
+    研究者据此明确写道：<strong>「快速的眼动可能并不适合用来精确估计速球被击打时球的未来位置。」</strong><br>
+    <span style="font-size:0.85em;color:#7f8c8d">原文：rapid eye movement may not be suitable to accurately estimate the ball's future location during fastball hitting</span><br><br>
+    <strong>换成家长能懂的话</strong>：球速一快，眼睛的转动已经跟不上球了。<strong>最后那段路，靠的是头跟着转 + 大脑根据前半段轨迹做预判。</strong>
+  </div>
+
+  <h3>证据 B：运动员的动态视力优势，来自眼动而不是眼睛</h3>
+  <p><span class="tag tag-orange">PLoS ONE 2012</span> Uchida 等人设计了一个巧妙的对照实验，用「移动的 Landolt 环」测动态视力（DVA），分两种条件：</p>
+  <div class="vs-grid">
+    <div class="vs-card vs-good">
+      <h4>① 自由眼动条件</h4>
+      <p>允许受试者转动眼球追踪目标</p>
+      <p><strong style="color:#27ae60">→ 运动员 DVA 显著优于非运动员</strong></p>
+    </div>
+    <div class="vs-card vs-bad">
+      <h4>② 固视条件</h4>
+      <p>要求受试者盯住固定点，不许追</p>
+      <p><strong style="color:#c0392b">→ 两组无显著差异</strong></p>
+    </div>
+  </div>
+  <p>结论写得很清楚：运动员更好的动态视力，<strong>主要来自「用眼睛追踪移动目标的能力」的提升，而不是视网膜上移动图像感知能力的提升</strong>。</p>
+  <p style="margin-top:10px"><strong>这个实验把「眼睛好不好」和「眼睛用得对不对」彻底分开了。</strong>而后者，是可以练的。</p>
+
+  <h3>证据 C：视觉信息影响的是「精确度」，不是「平均值」</h3>
+  <p><span class="tag tag-orange">PLoS ONE 2017</span> Higuchi 团队又做了遮蔽实验：10 名大学球员，三种条件——投球后 150 ms 起遮蔽（R+150）、预计到达本垒前 150 ms 起遮蔽（A-150）、完全不遮蔽（NO），两种球速各 12 次试打。</p>
+  <div class="callout callout-purple">
+    <strong>结果很精细，也很重要</strong>：视觉遮蔽<strong>不影响</strong>球棒接触点的平均位置（不管在球棒长轴、短轴还是投捕方向）。但增加可见时间（从 R+150 到 A-150 再到 NO），<strong>只在球棒短轴方向显著降低了标准化变异</strong>。<br><br>
+    <strong>什么意思</strong>：眼睛看不看得见，不影响你「大致能不能打到」，但显著影响你<strong>「打得多准」</strong>。视觉信息的价值集中在<strong>最后阶段的时间校准</strong>上——这正是「差一点点」和「扎实击中」之间的距离。
+  </div>
+</div>
+
+<!-- ========== Section 7 ========== -->
+<div class="section gold">
+  <h2>📈 第六层：那视觉能练吗？两个正面证据 + 一个诚实的边界</h2>
+
+  <h3>证据 A：6 周视觉训练，球队打击率从 .251 涨到 .285</h3>
+  <p><span class="tag tag-orange">PLoS ONE 2012</span><span class="tag tag-blue">被引 74</span> 这是本期引用量最高的实证研究，也是最有话题性的。辛辛那提大学棒球队在 2011 赛季开始前 <strong>6 周</strong>引入标准视觉训练，并在赛季中以维持性方案持续执行，然后与上一赛季（2009–10）的数据做对比。</p>
+  <div class="svg-container">
+    <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="320" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">同一赛季，两条相反的曲线</text>
+      <text x="320" y="36" text-anchor="middle" font-size="10.5" fill="#7f8c8d">Clark 等 2012 · 辛辛那提大学 vs 大东联盟其他球队 · 长打率变化</text>
+
+      <!-- 零基准线 -->
+      <line x1="150" y1="130" x2="600" y2="130" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="140" y="134" text-anchor="end" font-size="10" fill="#7f8c8d">0</text>
+
+      <!-- 辛辛那提（增长） -->
+      <rect x="200" y="70" width="90" height="60" fill="#27ae60" rx="3"/>
+      <text x="245" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#27ae60">+0.033</text>
+      <text x="245" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#27ae60">辛辛那提大学</text>
+      <text x="245" y="168" text-anchor="middle" font-size="9.5" fill="#7f8c8d">引入视觉训练</text>
+
+      <!-- 其他队（下降） -->
+      <rect x="400" y="130" width="90" height="60" fill="#c0392b" rx="3"/>
+      <text x="445" y="208" text-anchor="middle" font-size="15" font-weight="800" fill="#c0392b">−0.082</text>
+      <text x="445" y="118" text-anchor="middle" font-size="11" font-weight="700" fill="#c0392b">大东联盟其他队</text>
+      <text x="445" y="103" text-anchor="middle" font-size="9.5" fill="#7f8c8d">同期自然下滑</text>
+
+      <!-- 差异标注 -->
+      <path d="M 300 100 L 390 100" stroke="#1a1a2e" stroke-width="1.5"/>
+      <path d="M 390 100 L 390 150" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="345" y="93" text-anchor="middle" font-size="11" font-weight="800" fill="#1a1a2e">差异 0.115</text>
+      <text x="320" y="190" text-anchor="middle" font-size="10" fill="#34495e">95% CI (0.024, 0.206) · p = 0.02</text>
+    </svg>
+    <div class="caption">图 5｜该队长打率上升，同期同联盟其他球队集体下滑</div>
+  </div>
+  <table>
+    <tr><th>指标</th><th>变化</th></tr>
+    <tr><td>球队打击率</td><td><strong>0.251 → 0.285</strong></td></tr>
+    <tr><td>长打率</td><td><strong>+0.033</strong>（同期联盟其他队 −0.082）</td></tr>
+    <tr><td>组间差异</td><td>0.115，95% CI (0.024, 0.206)，<strong>p = 0.02</strong></td></tr>
+    <tr><td>总体表现</td><td>「几乎所有打击参数提升 ≥ 10%」</td></tr>
+  </table>
+  <div class="callout callout-red">
+    <strong>⚠️ 必须诚实标注这个研究的局限</strong>：它<strong>不是随机对照试验（RCT）</strong>，而是<strong>单支球队的赛季前后对照</strong>。样本只有一支队，无法排除「该批球员本身进步」「对手变弱」「训练量叠加」等混杂因素。原文作者自己也在结论中使用了「<em>may improve</em>（可能提升）」这样的谨慎措辞。
+    <br><br>
+    所以正确的读法是：<strong>这是一个很有说服力的信号，但不是铁证。</strong>把它当作「值得试一试」的理由，而不是「必须去买视觉训练产品」的理由。
+  </div>
+
+  <h3>证据 B：80 人对照试验——虚拟训练能迁移到真实打击</h3>
+  <p><span class="tag tag-blue">Front Psychol 2017</span><span class="tag tag-blue">被引 75</span> Gray 的这项研究设计质量明显更高：<strong>80 名参与者随机分成 4 组</strong>，训练周期为<strong>每周 2 次、每次 45 分钟、持续 6 周</strong>。</p>
+  <table>
+    <tr><th>分组</th><th>训练内容</th><th>结果</th></tr>
+    <tr><td><strong>① 适应式虚拟训练组</strong></td><td>虚拟环境中的<strong>自适应</strong>打击训练</td><td>🏆 <strong>在多数指标上显著优于其他所有组</strong></td></tr>
+    <tr><td>② 额外虚拟练习组</td><td>在虚拟环境中加练</td><td>一般</td></tr>
+    <tr><td>③ 额外真实练习组</td><td>在真实场地加练</td><td>一般</td></tr>
+    <tr><td>④ 对照组</td><td>仅常规训练</td><td>—</td></tr>
+  </table>
+  <p>更值得注意的是<strong>长期追踪结果</strong>：适应式虚拟训练组的球员，<strong>在训练后赛季的联赛数据更好，并在随后 5 年中达到了更高的竞技水平</strong>。</p>
+  <div class="callout callout-green">
+    <strong>关键设计洞察（原文特别强调）</strong>：训练能迁移，是因为研究者<strong>利用了模拟环境独有的优势（自适应训练）</strong>，而<strong>不是简单地复制真实训练场景</strong>。<br><br>
+    这对家长的启发很直接：<strong>「多打几十个球」是复制，价值有限；「让每一次来球都不一样、难度随能力动态变化」才是训练。</strong>
+  </div>
+
+  <h3>证据 C：训练改变的是「协调」和「好的变异性」</h3>
+  <p><span class="tag tag-blue">Front Psychol 2020</span><span class="tag tag-blue">被引 30</span> Gray 又在次年分析了同一批训练的地面反作用力（GRF）数据，看训练到底在身体层面改变了什么：</p>
+  <table>
+    <tr><th>指标</th><th>训练后变化</th><th>含义</th></tr>
+    <tr><td>相邻挥棒阶段的关联强度</td><td><strong>显著提高</strong></td><td>各阶段「咬合」得更紧</td></tr>
+    <tr><td>「好变异性」</td><td><strong>显著增加</strong></td><td>仍留在时机窗口内的调整</td></tr>
+    <tr><td>「坏变异性」</td><td><strong>显著减少</strong></td><td>跑到时机窗口外的失误</td></tr>
+    <tr><td>在线调整证据</td><td><strong>更强</strong></td><td>挥棒中途能修正</td></tr>
+  </table>
+  <p>而且这些效应<strong>在练习条件变异性更高的虚拟环境适应组中更大</strong>。研究者的结论是：打者是通过<strong>发展「功能性变异」和阶段间的耦合</strong>来解决协调问题的。</p>
+  <div class="callout callout-blue">
+    <strong>「好变异性」这个概念值得单独讲</strong>：它不是「动作越稳定越好」。打击需要的是<strong>在该稳的地方稳、该弹性的地方有弹性</strong>——每次来球不同，身体必须实时调整，但调整结果仍要落在命中窗口内。所以训练不该追求「把动作练成机器」，而要练「在变化中保持命中」。
+  </div>
+</div>
+
+<!-- ========== Section 8 ========== -->
+<div class="section">
+  <h2>🎯 那么，家长和教练到底该做什么？</h2>
+  <p>把上面 10 篇文献的结论收敛，落到可执行层面，是这样的五件事。</p>
+
+  <div class="step"><div class="num">1</div><div>
+    <strong>先把「打不到球」的原因分层，别再默认是力量问题。</strong><br>
+    如果是<strong>挥空、追打坏球</strong> → 更可能是视觉/预判问题（对应上垒率、保送率、三振率）。<br>
+    如果是<strong>打到了但没力量、打不远</strong> → 才是身体与力量问题（对应长打率）。<br>
+    <span style="font-size:0.88em;color:#556">依据：Sci Rep 2018（视觉预测 OBP/BB/K，不预测 SLG/FIP）</span>
+  </div></div>
+
+  <div class="step"><div class="num">2</div><div>
+    <strong>做一次基础视觉检查，而不是直接买训练产品。</strong><br>
+    EVTS 测的是<strong>目标大小、对比度、呈现时间</strong>三个维度。日常可类比的是：<strong>孩子能不能在光线不足时看清快速移动的物体</strong>。常规视力表（静态视力）远不足以反映动态场景需求。<br>
+    <span style="font-size:0.88em;color:#556">依据：Sci Rep 2019（EVTS 与打者纪律指标相关，效应量 0.278–0.387）</span>
+  </div></div>
+
+  <div class="step"><div class="num">3</div><div>
+    <strong>把「盯着球看」的口令，改成「头跟着球转、眼睛别追死」。</strong><br>
+    这是本期最可以直接改的一句话。球速一快，眼球转动跟不上；真正在最后阶段工作的是<strong>头部追踪 + 大脑预判</strong>。<br>
+    <span style="font-size:0.88em;color:#556">依据：PLoS ONE 2018（头部角速度显著加快，眼球无变化）、PLoS ONE 2012（DVA 优势源于眼动而非视网膜）、Front Sports 2020（顶级打者延迟眼跳）</span>
+  </div></div>
+
+  <div class="step"><div class="num">4</div><div>
+    <strong>喂球要「不可预测」，不要「固定节奏」。</strong><br>
+    研究显示，<strong>事先知道球种时，顶级打者仍会延迟眼跳</strong>；真正的能力体现在<strong>信息不足时如何决策</strong>。所以训练中混合球速、混合球种、混入中途遮蔽，比机械重复更接近真实比赛。<br>
+    <span style="font-size:0.88em;color:#556">依据：Front Sports 2020、Front Psychol 2017（自适应训练组效果最好）、Front Psychol 2025（VR 混合快球/变化球 + 中途遮蔽）</span>
+  </div></div>
+
+  <div class="step"><div class="num">5</div><div>
+    <strong>别用「专项化」换「早出成绩」。</strong><br>
+    本期四篇青少年相关研究中，样本量最大的那一篇（1352 人）提示视觉能力是精英球员的<strong>独立能力维度</strong>，而另一篇 2026 年的研究仍在探索青少年打者的训练方式。结合第 1 期 DiFiori 的结论——<strong>过早全年专项化带来的是损伤风险，而不是发展优势</strong>。<br>
+    <span style="font-size:0.88em;color:#556">依据：PLoS ONE 2023、Front Psychol 2026、DiFiori 2014（本系列第 1 期）</span>
+  </div></div>
+</div>
+
+<!-- ========== Section 9 ========== -->
+<div class="section green">
+  <h2>📋 速查卡：家长能贴墙上的 6 句话</h2>
+  <table>
+    <tr><th>#</th><th>记住这句</th><th>出处</th></tr>
+    <tr><td>1</td><td><strong>打不到球，先怀疑眼睛，别急着怪手慢。</strong>视觉预测的是「会不会挥」，不是「挥得多远」。</td><td>Sci Rep 2018</td></tr>
+    <tr><td>2</td><td><strong>视觉能力不是「打久了自然有」。</strong>服役年数与视觉能力无关。</td><td>Sci Rep 2019</td></tr>
+    <tr><td>3</td><td><strong>精英青少年的四大能力里，两个是「眼睛和脑子」。</strong>功能性视觉 + 快速决策。</td><td>PLoS ONE 2023 (n=1352)</td></tr>
+    <tr><td>4</td><td><strong>顶尖打者的眼睛动得更晚，不是更快。</strong>预判求准，不求早。</td><td>Front Sports 2020</td></tr>
+    <tr><td>5</td><td><strong>「全程盯球」在物理上做不到。</strong>最后 100 毫秒靠头和预判，不靠眼球。</td><td>PLoS ONE 2018 / 2012</td></tr>
+    <tr><td>6</td><td><strong>练「变化中保持命中」，别练「机器一样重复」。</strong>自适应训练才迁移得到比赛。</td><td>Front Psychol 2017 / 2020</td></tr>
+  </table>
+  <div class="callout callout-red" style="margin-top:16px">
+    <strong>⚠️ 一个必要的提醒</strong>：视觉训练在商业市场上是一个<strong>噪音极大的领域</strong>——各种「眼动仪」「视觉训练课程」「动态视力神器」质量参差不齐。本期引用的正面证据中，被引最高的那篇（PLoS ONE 2012）本身<strong>并非随机对照试验</strong>。因此本期的立场是：<strong>优先做基础视觉检查、优先改正训练口令与喂球方式（零成本），再考虑付费产品。</strong>
+  </div>
+</div>
+
+<!-- ========== Section 10 ========== -->
+<div class="section purple">
+  <h2>🔭 与既有内容的关系 &amp; 下期预告</h2>
+  <p>本期是本系列<strong>第 11 期</strong>，也是打击线的<strong>第 2 篇</strong>——它补齐了此前内容结构中最明显的一个失衡。</p>
+  <table>
+    <tr><th>期数</th><th>主题线</th><th>与本期关系</th></tr>
+    <tr><td>第 1–3 期</td><td>投手过度使用 / 负荷</td><td>DiFiori 的「过早专项化」在本期第 5 条建议中被重新引用</td></tr>
+    <tr><td>第 4 期</td><td>投掷生物力学六阶段</td><td>对应本期「0.5 秒里的视觉时间线」——投手视角 vs 打者视角</td></tr>
+    <tr><td>第 5 期</td><td>打击表现个体特征（Tremblay 2025）</td><td><strong>本期的直接上游</strong>：该综述指出视觉维度被忽视，本期即是对这一空白的展开</td></tr>
+    <tr><td>第 9–10 期</td><td>加重球 / Tommy John</td><td>「投手该练什么」的另一半；本期换到打者一侧</td></tr>
+  </table>
+  <div class="callout callout-purple">
+    <strong>下期预告候选</strong>：① <strong>长传球（Long Toss）</strong>——人人都在练，但科学证据怎么说；② <strong>球速训练方法学</strong>——加重球有风险，药球与超等长训练（上肢 plyometric）的证据等级如何。<br>
+    <span style="font-size:0.85em;color:#7f8c8d">（顺带说明：本系列此前「打击」主题的图文套件是空缺的，本期已补齐小红书图文全套。）</span>
+  </div>
+</div>
+
+<!-- ========== 参考文献 ========== -->
+<div class="section">
+  <h2>📚 参考文献（全部开放获取，原文 PDF 已存档）</h2>
+  <ol class="ref">
+    <li>Tremblay M, et al. <strong>What are the Individual Characteristics or Skills Associated with Baseball Batting Performance?</strong> <em>Sports Medicine - Open</em> 2025;11:150. doi:10.1186/s40798-025-00947-1</li>
+    <li>Burris K, Vittetoe K, Ramger B, et al. <strong>Sensorimotor abilities predict on-field performance in professional baseball.</strong> <em>Scientific Reports</em> 2018;8:116. doi:10.1038/s41598-017-18565-7</li>
+    <li>Laby DM, Kirschen DG, Govindarajulu U, DeLand P. <strong>The Effect of Visual Function on the Batting Performance of Professional Baseball Players.</strong> <em>Scientific Reports</em> 2019;9:16847. doi:10.1038/s41598-019-52546-2</li>
+    <li>Ho J, Liu S, Feng Z, Appelbaum LG. <strong>Psychomotor and visual skills underlying position specialization in 1352 elite youth baseball players.</strong> <em>PLoS ONE</em> 2023;18(1):e0278689. doi:10.1371/journal.pone.0278689</li>
+    <li>Kishita Y, Ueda H, Kashino M. <strong>Eye and Head Movements of Elite Baseball Players in Real Batting.</strong> <em>Frontiers in Sports and Active Living</em> 2020;2:3. doi:10.3389/fspor.2020.00003</li>
+    <li>Higuchi T, Nagami T, Nakata H, Kanosue K. <strong>Head-eye movement of collegiate baseball batters during fastball hitting.</strong> <em>PLoS ONE</em> 2018;13(7):e0200443. doi:10.1371/journal.pone.0200443</li>
+    <li>Uchida Y, Kudoh D, Murakami A, Honda M, Kitazawa S. <strong>Origins of Superior Dynamic Visual Acuity in Baseball Players: Superior Eye Movements or Superior Image Processing.</strong> <em>PLoS ONE</em> 2012;7(2):e31530. doi:10.1371/journal.pone.0031530</li>
+    <li>Higuchi T, Nagami T, Nakata H, Watanabe M, Isaka T, Kanosue K. <strong>Contribution of Visual Information about Ball Trajectory to Baseball Hitting Accuracy.</strong> <em>PLoS ONE</em> 2016;11(2):e0148498. doi:10.1371/journal.pone.0148498</li>
+    <li>Clark JF, Ellis JK, Bench J, Khoury J, Graman P. <strong>High-Performance Vision Training Improves Batting Statistics for University of Cincinnati Baseball Players.</strong> <em>PLoS ONE</em> 2012;7(1):e29109. doi:10.1371/journal.pone.0029109</li>
+    <li>Gray R. <strong>Transfer of Training from Virtual to Real Baseball Batting.</strong> <em>Frontiers in Psychology</em> 2017;8:2183. doi:10.3389/fpsyg.2017.02183</li>
+    <li>Gray R. <strong>Changes in Movement Coordination Associated With Skill Acquisition in Baseball Batting: Freezing/Freeing Degrees of Freedom and Functional Variability.</strong> <em>Frontiers in Psychology</em> 2020;11:1295. doi:10.3389/fpsyg.2020.01295</li>
+    <li>Saijo N, Fukuda T, Kashino M. <strong>The temporal structure of multiple visuomotor processes in baseball batting: insights from a virtual reality system.</strong> <em>Frontiers in Psychology</em> 2025;16:1514301. doi:10.3389/fpsyg.2025.1514301</li>
+    <li>Chen C-F, Lin-Zhu, Ge T-X, Liu H-Q, Wu H-J, Shen Y-Q. <strong>The impact of whole-body vibration training on adolescent baseball batting performance.</strong> <em>Frontiers in Psychology</em> 2026;17:1758424. doi:10.3389/fpsyg.2026.1758424</li>
+  </ol>
+</div>
+
+<div class="footer">
+  <p><strong>棒球学术圈 · 第 11 期</strong>｜孩子打不到球，真是「手慢」吗？</p>
+  <p style="margin-top:6px">作者：於菟子Max爱棒球 ｜ 全部数据来自开放获取原始论文，已标注 DOI 供查证</p>
+  <p style="margin-top:10px;font-size:0.95em">⚕️ 科普内容，不构成医疗建议</p>
+</div>
+
+</div>
+</body>
+</html>
