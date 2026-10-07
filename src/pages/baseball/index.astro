@@ -65,8 +65,10 @@ const formatDate = (date: string) => {
 const positionMap: Record<string, string> = {
   SS: '游击手(SS)', '2B': '二垒手(2B)', '3B': '三垒手(3B)',
   '1B': '一垒手(1B)', OF: '外野手(OF)', C: '捕手(C)', P: '投手(P)',
-  LF: '左外野(LF)', RF: '右外野(RF)', PH: '代打(PH)',
+  LF: '左外野(LF)', RF: '右外野(RF)', CF: '中外野(CF)', PH: '代打(PH)',
   'LF-RF': '左外野·右外野(LF-RF)',
+  'RF-1B': '右外野·一垒(RF-1B)',
+  '1B-RF': '一垒·右外野(1B-RF)',
 };
 
 const games = (gamesData as Array<Record<string, any>>).map(g => ({
