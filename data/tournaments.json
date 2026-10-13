@@ -250,5 +250,19 @@
     "place": 2,
     "status": "completed",
     "level": "省级"
+  },
+  {
+    "id": "2026-sx-sport-school",
+    "date": "2026-10",
+    "year": 2026,
+    "month": 10,
+    "location": "西安",
+    "name": "2026年陕西省体育特色学校棒垒球联赛",
+    "category": null,
+    "team": "光照棒垒球俱乐部",
+    "result": "待定",
+    "place": null,
+    "status": "upcoming",
+    "level": "省级"
   }
 ]
