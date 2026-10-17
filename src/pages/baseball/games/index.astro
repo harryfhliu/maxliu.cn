@@ -5,8 +5,13 @@ import gamesData from '../../../../data/games.json';
 const positionMap: Record<string, string> = {
   SS: '游击手(SS)', '2B': '二垒手(2B)', '3B': '三垒手(3B)',
   '1B': '一垒手(1B)', OF: '外野手(OF)', C: '捕手(C)', P: '投手(P)',
-  LF: '左外野(LF)', RF: '右外野(RF)', PH: '代打(PH)',
+  LF: '左外野(LF)', RF: '右外野(RF)', CF: '中外野(CF)', PH: '代打(PH)',
   'LF-RF': '左外野·右外野(LF-RF)',
+  'RF-1B': '右外野·一垒(RF-1B)',
+  '1B-RF': '一垒·右外野(1B-RF)',
+  '2B-SS': '二垒·游击(2B-SS)',
+  '2B-P': '二垒·投手(2B-P)',
+  '2B-LF-P': '二垒·左外·投手(2B-LF-P)',
 };
 
 const games = (gamesData as Array<Record<string, any>>).map(g => ({
@@ -14,7 +19,11 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
   date: g.date,
   title: `${g.league} - ${g.round}`,
   opponent: g.opponent,
-  result: g.result === 'win' ? `胜 ${g.score}` : `负 ${g.score}`,
+  result:
+    g.result === 'win' ? `胜 ${g.score}`
+    : g.result === 'loss' ? `负 ${g.score}`
+    : '友谊赛',
+  resultKind: g.result,
   position: positionMap[g.position] || g.position,
   stats: g.stats,
   highlight: g.highlight,
@@ -43,7 +52,7 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
               <time class="game-card__date" datetime={game.date}>
                 {new Date(game.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}
               </time>
-              <span class={`game-card__result ${game.result.startsWith('胜') ? 'win' : 'loss'}`}>
+              <span class={`game-card__result ${game.resultKind === 'win' ? 'win' : game.resultKind === 'loss' ? 'loss' : 'friendly'}`}>
                 {game.result}
               </span>
             </div>
@@ -129,6 +138,11 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
   .game-card__result.loss {
     background: rgba(196, 30, 58, 0.15);
     color: #E57373;
+  }
+
+  .game-card__result.friendly {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
   }
 
   .game-card__title {

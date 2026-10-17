@@ -69,6 +69,9 @@ const positionMap: Record<string, string> = {
   'LF-RF': '左外野·右外野(LF-RF)',
   'RF-1B': '右外野·一垒(RF-1B)',
   '1B-RF': '一垒·右外野(1B-RF)',
+  '2B-SS': '二垒·游击(2B-SS)',
+  '2B-P': '二垒·投手(2B-P)',
+  '2B-LF-P': '二垒·左外·投手(2B-LF-P)',
 };
 
 const games = (gamesData as Array<Record<string, any>>).map(g => ({
@@ -76,7 +79,11 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
   date: g.date,
   title: `${g.league} - ${g.round}`,
   opponent: g.opponent,
-  result: g.result === 'win' ? `胜 ${g.score}` : `负 ${g.score}`,
+  result:
+    g.result === 'win' ? `胜 ${g.score}`
+    : g.result === 'loss' ? `负 ${g.score}`
+    : '友谊赛',
+  resultKind: g.result,
   position: positionMap[g.position] || g.position,
   stats: g.stats,
   highlight: g.highlight,
@@ -99,6 +106,8 @@ const videos = videosData as Array<Record<string, any>>;
 
 // 成长曲线数据（月度打击率趋势）
 const trend = (statsData as any).monthlyTrend || [];
+// 2026 年 10 月合并打击表现拆解（长沙 PONY + 西安省体传校）
+const october = (statsData as any).october2026;
 const chart = {
   x0: 50, x1: 580,
   y0: 20, y1: 200, // y0 对应 .400，y1 对应 .200
@@ -229,7 +238,7 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
     <div class="container">
       <div class="section-header">
         <h2 class="section__title">📋 比赛记录（单场）</h2>
-        <p>2025全国青少年棒球锦标赛 U10俱乐部组 · 个人单场表现</p>
+        <p>按比赛日期倒序 · 展示最近 5 场，共 {games.length} 场单场技术统计</p>
       </div>
 
       <div class="games-list">
@@ -239,7 +248,7 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
               <time class="game-card__date" datetime={game.date}>
                 {new Date(game.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })}
               </time>
-              <span class={`game-card__result ${game.result.startsWith('胜') ? 'win' : 'loss'}`}>
+              <span class={`game-card__result ${game.resultKind === 'win' ? 'win' : game.resultKind === 'loss' ? 'loss' : 'friendly'}`}>
                 {game.result}
               </span>
             </div>
@@ -391,6 +400,45 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
           <span class="chart-note">数据来自实际比赛统计</span>
         </div>
       </div>
+
+      {october && (
+        <div class="oct-split">
+          <div class="oct-split__head">
+            <h3>{october.title}</h3>
+            <span class="tag tag--accent">AVG .286 · OBP .737</span>
+          </div>
+          <p class="oct-split__note">{october.note}</p>
+
+          <div class="oct-table-wrap">
+            <table class="oct-table">
+              <thead>
+                <tr>
+                  <th>赛区</th><th>场次</th><th>PA</th><th>AB</th><th>H</th>
+                  <th>BB</th><th>SO</th><th>AVG</th><th>OBP</th><th>OPS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {october.splits.map((s: any) => (
+                  <tr {...(s.highlight ? { class: 'is-total' } : {})}>
+                    <td class="oct-table__label">{s.label}</td>
+                    <td>{s.games}</td>
+                    <td>{s.pa}</td>
+                    <td>{s.ab}</td>
+                    <td>{s.h}</td>
+                    <td>{s.bb}</td>
+                    <td>{s.so}</td>
+                    <td class="oct-table__num">{s.avg}</td>
+                    <td class="oct-table__num">{s.obp}</td>
+                    <td class="oct-table__num">{s.ops}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p class="oct-split__insight">💡 {october.insight}</p>
+        </div>
+      )}
     </div>
   </section>
 </BaseLayout>
@@ -583,6 +631,11 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
   .game-card__result.loss {
     background: rgba(196, 30, 58, 0.15);
     color: #E57373;
+  }
+
+  .game-card__result.friendly {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
   }
 
   .game-card__title {
@@ -799,6 +852,104 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
     font-size: var(--text-xs);
     color: var(--text-muted);
     font-style: italic;
+  }
+
+  /* 10 月打击率拆解 */
+  .oct-split {
+    margin-top: var(--space-xl);
+    padding: var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .oct-split__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  .oct-split__head h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .oct-split__note {
+    margin: 0 0 var(--space-lg);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .oct-table-wrap {
+    overflow-x: auto;
+  }
+
+  .oct-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .oct-table th {
+    padding: var(--space-sm);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .oct-table td {
+    padding: var(--space-sm);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .oct-table th:first-child,
+  .oct-table td:first-child {
+    text-align: left;
+  }
+
+  .oct-table__label {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+  }
+
+  .oct-table__num {
+    font-weight: 800;
+    color: var(--text-primary) !important;
+  }
+
+  .oct-table tr.is-total td {
+    background: rgba(255, 107, 53, 0.08);
+    border-bottom: none;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .oct-table tr.is-total .oct-table__num {
+    color: var(--color-primary) !important;
+  }
+
+  .oct-split__insight {
+    margin: var(--space-lg) 0 0;
+    padding: var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.8;
+    color: var(--text-secondary);
+    background: rgba(0, 212, 170, 0.07);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-sm);
   }
 
   /* Tournament List */
