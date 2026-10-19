@@ -260,9 +260,9 @@
     "name": "2026年陕西省体育特色学校棒垒球联赛",
     "category": null,
     "team": "光照棒垒球俱乐部",
-    "result": "待定",
-    "place": null,
-    "status": "upcoming",
+    "result": "第七名",
+    "place": 7,
+    "status": "completed",
     "level": "省级"
   }
 ]
