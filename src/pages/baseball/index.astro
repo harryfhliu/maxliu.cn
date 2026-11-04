@@ -92,14 +92,38 @@ const games = (gamesData as Array<Record<string, any>>).map(g => ({
 }));
 
 // 训练日志（从 data/trainings.json 统一读取）
+type TrainingType = 'camp' | 'self' | 'gameDay' | 'daily';
+
 interface Training {
   start: string;
   end: string;
   title: string;
+  type: TrainingType;
   gain: string;
 }
-const trainings = trainingsData as Training[];
+
+const trainingTypeMeta: Record<TrainingType, { label: string; icon: string; cls: string }> = {
+  camp: { label: '集训', icon: '🏕️', cls: 't-badge--camp' },
+  self: { label: '自主训练', icon: '🏃', cls: 't-badge--self' },
+  gameDay: { label: '比赛日', icon: '🏟️', cls: 't-badge--gameday' },
+  daily: { label: '日常训练', icon: '⚾', cls: 't-badge--daily' },
+};
+
+const parseTrainingDate = (d: string) => {
+  const [y, m, day] = d.split('.').map(Number);
+  return new Date(y, m - 1, day).getTime();
+};
+
+const trainings = (trainingsData as Training[])
+  .slice()
+  .sort((a, b) => parseTrainingDate(b.start) - parseTrainingDate(a.start));
 const isDateRange = (end: string) => end.includes('.');
+// 累计时长（仅统计明确记录时长的单次训练，集训按自然日另计）
+const trainingHours = trainings.reduce((sum, t) => {
+  if (isDateRange(t.end)) return sum;
+  const m = t.end.match(/^(\d+(?:\.\d+)?)/);
+  return sum + (m ? Number(m[1]) : 0);
+}, 0);
 
 // 比赛/训练视频（从 data/videos.json 统一读取）
 const videos = videosData as Array<Record<string, any>>;
@@ -309,7 +333,9 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
   <section class="section">
     <div class="container">
       <h2 class="section__title">🏋️ 训练日志</h2>
-      <p class="section__subtitle">真实训练记录 · 从集训到日常，每一滴汗水都被记录</p>
+      <p class="section__subtitle">
+        真实训练记录 · 从集训到日常，每一滴汗水都被记录 · 共 {trainings.length} 场 / 累计 {trainingHours} 小时
+      </p>
 
       <div class="training-list">
         {trainings.slice(0, 5).map((t) => (
@@ -319,7 +345,12 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
               <span class="training-item__end">{isDateRange(t.end) ? `→ ${t.end}` : `· ${t.end}`}</span>
             </div>
             <div class="training-item__main">
-              <h3 class="training-item__title">{t.title}</h3>
+              <div class="training-item__top">
+                <h3 class="training-item__title">{t.title}</h3>
+                <span class={`t-badge ${trainingTypeMeta[t.type].cls}`}>
+                  {trainingTypeMeta[t.type].icon} {trainingTypeMeta[t.type].label}
+                </span>
+              </div>
               <p class="training-item__content">{t.gain}</p>
             </div>
           </div>
@@ -724,6 +755,14 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
     min-width: 0;
   }
 
+  .training-item__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+  }
+
   .training-item__title {
     font-size: var(--text-base);
     font-weight: 700;
@@ -731,10 +770,46 @@ const areaPoints = `${chart.x0},${chart.y1} ${polylinePoints} ${chart.x1},${char
     color: var(--text-primary);
   }
 
+  .training-item__top .training-item__title {
+    margin-bottom: 0;
+  }
+
   .training-item__content {
     color: var(--text-secondary);
     font-size: var(--text-sm);
     line-height: 1.7;
+  }
+
+  /* 训练类型徽章 */
+  .t-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .t-badge--camp {
+    color: var(--color-baseball-red);
+    background: rgba(196, 30, 58, 0.14);
+  }
+
+  .t-badge--self {
+    color: #818CF8;
+    background: rgba(129, 140, 248, 0.14);
+  }
+
+  .t-badge--gameday {
+    color: #FBBF24;
+    background: rgba(251, 191, 36, 0.14);
+  }
+
+  .t-badge--daily {
+    color: var(--color-accent);
+    background: rgba(0, 212, 170, 0.12);
   }
 
   /* View More */
